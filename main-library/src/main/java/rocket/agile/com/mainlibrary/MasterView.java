@@ -7,7 +7,7 @@ import android.os.Bundle;
 public class MasterView extends AppCompatActivity {
 
     // TODO: Value needs to be pulled from data fetch / persistence
-    int layoutValue = 0;
+    int layoutValue = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
