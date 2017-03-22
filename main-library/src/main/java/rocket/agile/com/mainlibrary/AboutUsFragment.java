@@ -12,6 +12,8 @@ import android.view.ViewGroup;
  */
 public class AboutUsFragment extends Fragment {
 
+    DataManager dataManager = DataManager.getInstance();
+
     public AboutUsFragment() {
         // Required empty public constructor
     }
