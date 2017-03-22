@@ -1,0 +1,29 @@
+The purpose of this file is to provide naming conventions for this app to adhere to.
+
+-- XML Rules -----
+------------------
+
+    [Layout View Files]:  [description]_[name]
+
+    [Examples]:           [side_menu]_[nav_header_nav_drawer_main]
+
+------------------
+
+    [Layout View ids]:    [filename]_[type]_[location]
+
+    [Examples]:           [aboutus]_[text]_[header]
+                          [aboutus]_[text]_[body]
+------------------
+
+
+
+------------------
+------------------
+
+-- Java Rules ----
+------------------
+
+
+
+------------------
+------------------
