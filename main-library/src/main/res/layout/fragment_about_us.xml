@@ -6,6 +6,7 @@
     tools:context="rocket.agile.com.mainlibrary.AboutUsFragment">
 
     <LinearLayout
+        android:id="@+id/background_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/side_nav_bar"
@@ -35,7 +36,7 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="25px"/>
+            android:layout_height="25px" />
 
         <TextView
             android:id="@+id/aboutus_text_email"
