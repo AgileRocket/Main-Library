@@ -3,18 +3,34 @@ package rocket.agile.com.mainlibrary;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import java.io.File;
+
 
 public class MasterView extends AppCompatActivity {
 
-    DataManager dataManager = DataManager.getInstance();
+    Networking networking = Networking.getInstance();
 
     // TODO: Value needs to be pulled from data fetch / persistence
-    int layoutValue = dataManager.layoutValue;
+    int layoutValue = networking.layoutValue;
+
+    boolean fileExists = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.master_activity_master_view);
+
+        PersistentStore persistentStore = new PersistentStore();
+        persistentStore.writeToInternalStorage("Test-File", networking.aboutUs_Header);
+
+        fileExists = fileExistance("Test-File");
+
+        if(fileExists) {
+            Log.d("EXISTS", "FILE EXISTS");
+        } else {
+            Log.d("Does NOT Exist", "FILE DOES NOT EXIST");
+        }
 
         switch (layoutValue) {
 
@@ -35,4 +51,8 @@ public class MasterView extends AppCompatActivity {
         }
     }
 
+    public boolean fileExistance(String fname){
+        File file = getApplicationContext().getFileStreamPath(fname);
+        return file.exists();
+    }
 }

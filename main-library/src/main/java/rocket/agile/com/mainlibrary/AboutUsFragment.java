@@ -33,6 +33,8 @@ public class AboutUsFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        dataManager.openFile("Test-File");
+
         // Set Header Text
         TextView textView_title = (TextView) view.findViewById(R.id.aboutus_text_title);
         textView_title.setText(dataManager.aboutUs_Header);
