@@ -1,9 +1,5 @@
 package rocket.agile.com.mainlibrary;
 
-import android.content.Context;
-
-import static rocket.agile.com.mainlibrary.PersistentStore.writeToInternalStorage;
-
 /**
  * Created by keithkowalski on 3/29/17.
  */
@@ -30,9 +26,4 @@ public class Networking {
     public String aboutUs_Email = "BusinessName@gmail.com";
 
     public String aboutUs_Header = "Company Name";
-
-
-    // Persistent Store Call
-    PersistentStore save = writeToInternalStorage("Test-File", aboutUs_Header);
-
 }

@@ -1,21 +1,20 @@
 package rocket.agile.com.mainlibrary;
 
-import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+
 import java.io.FileInputStream;
 
 /**
  * Created by keithkowalski on 3/21/17.
  */
 
-public class DataManager extends AppCompatActivity {
-    private static final DataManager ourInstance = new DataManager();
+public class DataManager extends MasterView {
 
+    // Create Singleton
+    private static final DataManager ourInstance = new DataManager();
     public static DataManager getInstance() {
         return ourInstance;
     }
-
-    static Context context;
 
     // Layout Value
     public int layoutValue = 0;
@@ -27,16 +26,19 @@ public class DataManager extends AppCompatActivity {
     public String aboutUs_Email = "BusinessName@gmail.com";
     public String aboutUs_Header = "FILE NOT FOUND";
 
+
     // Persistence Storage Access
     public PersistentStore openFile(String fileName) {
 
         FileInputStream inputStream;
 
         try {
-            inputStream = context.openFileInput(fileName);
+            inputStream = openFileInput(fileName);
             inputStream.read();
 
             this.aboutUs_Header = inputStream.toString();
+
+            Log.d("ABOUTUS_HEADER", aboutUs_Header);
 
             inputStream.close();
         } catch (Exception e) {

@@ -3,6 +3,7 @@ package rocket.agile.com.mainlibrary;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,7 @@ public class AboutUsFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // MOVE THIS TO MASTER VIEW - STORE TO DATA MANAGER FROM PERSISTENCE
         dataManager.openFile("Test-File");
 
         // Set Header Text

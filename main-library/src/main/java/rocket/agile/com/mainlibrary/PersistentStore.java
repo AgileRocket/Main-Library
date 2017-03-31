@@ -1,28 +1,45 @@
 package rocket.agile.com.mainlibrary;
 
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+
+import java.io.File;
 import java.io.FileOutputStream;
 
 /**
  * Created by keithkowalski on 3/29/17.
  */
 
-public class PersistentStore extends AppCompatActivity {
+public class PersistentStore extends MasterView {
 
-    static Context context;
+    // Create Singleton
+    private static final PersistentStore ourInstance = new PersistentStore();
+    public static PersistentStore getInstance() {
+        return ourInstance;
+    }
 
-    public static PersistentStore writeToInternalStorage(String fileName, String string) {
+    public PersistentStore writeToInternalStorage(String fileName, String string) {
 
         FileOutputStream outputStream;
 
         try {
-            outputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
+            outputStream = openFileOutput(fileName, Context.MODE_PRIVATE);
             outputStream.write(string.getBytes());
             outputStream.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    // Internal check to make sure persistence file is being written
+    public void fileExistence(String fname){
+
+        File file = getApplicationContext().getFileStreamPath(fname);
+
+        if(file.exists())
+            Log.d("EXISTS", "FILE EXISTS");
+        else
+            Log.d("Does NOT Exist", "FILE DOES NOT EXIST");
     }
 }
