@@ -1,16 +1,19 @@
 package rocket.agile.com.mainlibrary;
 
+import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
 /**
  * Created by keithkowalski on 3/29/17.
  */
 
-public class PersistentStore extends MasterView {
+public class PersistentStore extends Activity {
 
     // Create Singleton
     private static final PersistentStore ourInstance = new PersistentStore();
@@ -18,13 +21,13 @@ public class PersistentStore extends MasterView {
         return ourInstance;
     }
 
-    public PersistentStore writeToInternalStorage(String fileName, String string) {
+    public PersistentStore writeToInternalStorage(String fileName, String actionType) {
 
         FileOutputStream outputStream;
 
         try {
             outputStream = openFileOutput(fileName, Context.MODE_PRIVATE);
-            outputStream.write(string.getBytes());
+            outputStream.write(actionType.getBytes());
             outputStream.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -32,14 +35,23 @@ public class PersistentStore extends MasterView {
         return null;
     }
 
-    // Internal check to make sure persistence file is being written
-    public void fileExistence(String fname){
+    // Persistence Storage Access
+    public String openFile(String fileName) {
 
-        File file = getApplicationContext().getFileStreamPath(fname);
+        FileInputStream inputStream;
+        String testString = "";
 
-        if(file.exists())
-            Log.d("EXISTS", "FILE EXISTS");
-        else
-            Log.d("Does NOT Exist", "FILE DOES NOT EXIST");
+            try {
+            inputStream = openFileInput(fileName);
+            inputStream.read();
+
+            testString = inputStream.toString();
+
+            inputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return testString;
     }
 }

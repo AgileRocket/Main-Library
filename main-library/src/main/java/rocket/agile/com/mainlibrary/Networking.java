@@ -6,8 +6,8 @@ package rocket.agile.com.mainlibrary;
 
 public class Networking {
 
+    // Create Singleton
     private static final Networking ourInstance = new Networking();
-
     public static Networking getInstance() {
         return ourInstance;
     }

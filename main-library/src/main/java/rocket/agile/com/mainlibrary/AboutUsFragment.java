@@ -3,7 +3,6 @@ package rocket.agile.com.mainlibrary;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +17,10 @@ import org.w3c.dom.Text;
 public class AboutUsFragment extends Fragment {
 
     DataManager dataManager = DataManager.getInstance();
+
+    // TEMP
+    PersistentStore persistentStore = PersistentStore.getInstance();
+    String test = "TEST";
 
     public AboutUsFragment() {
         // Required empty public constructor
@@ -35,11 +38,11 @@ public class AboutUsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // MOVE THIS TO MASTER VIEW - STORE TO DATA MANAGER FROM PERSISTENCE
-        dataManager.openFile("Test-File");
+        test = persistentStore.openFile("Test-File");
 
         // Set Header Text
         TextView textView_title = (TextView) view.findViewById(R.id.aboutus_text_title);
-        textView_title.setText(dataManager.aboutUs_Header);
+        textView_title.setText(test);
 
         // Set Email Text
         TextView textView_email = (TextView) view.findViewById(R.id.aboutus_text_email);
