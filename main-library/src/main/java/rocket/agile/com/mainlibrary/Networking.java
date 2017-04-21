@@ -16,7 +16,6 @@ public class Networking {
     public int layoutValue = 0;
     public int phoneNumber = 01234567;
 
-    // ToDo: Consider making this into an object-like value for 'about us'
     // About Us Info
     public String aboutUs_Body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. " +
             "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure " +

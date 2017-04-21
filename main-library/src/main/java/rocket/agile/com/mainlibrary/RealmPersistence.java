@@ -1,28 +1,32 @@
 package rocket.agile.com.mainlibrary;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
+
 import io.realm.Realm;
 import io.realm.RealmQuery;
 import rocket.agile.com.mainlibrary.ActionItems.AboutUs_ActionItem;
 import rocket.agile.com.mainlibrary.ActionItems.LayoutValue;
 
 /**
- * Created by keithkowalski on 3/29/17.
+ * Created by keithkowalski on 4/21/17.
  */
 
-public class PersistentStore extends AppCompatActivity {
+public class RealmPersistence {
+//    private static final RealmPersistence ourInstance = new RealmPersistence();
+//
+//    public static RealmPersistence getInstance() {
+//        return ourInstance;
+//    }
+//
+//    private RealmPersistence() {}
 
-    // Create Singleton
-    private static final PersistentStore ourInstance = new PersistentStore();
-    public static PersistentStore getInstance() {
-        return ourInstance;
-    }
 
     // Create Realm instance
-    public Realm realm = Realm.getDefaultInstance();
+//    public Realm realm = Realm.getDefaultInstance();
 
     // Class updates persistently stored data
-    public void updateActionItemValues() {
+    public void updateActionItemValues(Realm realm) {
 
         realm.beginTransaction();
 
@@ -56,19 +60,20 @@ public class PersistentStore extends AppCompatActivity {
     }
 
     // Class returns object stored in persistent data
-    public Object getRealmValues(String className) {
+//    public Object getRealmValues(String className) {
+//
+//        try {
+//            Class actionItemValue = Class.forName(className);
+//
+//            RealmQuery<LayoutValue> query = realm.where(actionItemValue);
+//
+//            return query.equals(actionItemValue);
+//
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return null;
+//    }
 
-        try {
-            Class actionItemValue = Class.forName(className);
-
-            RealmQuery<LayoutValue> query = realm.where(actionItemValue);
-
-            return query.equals(actionItemValue);
-
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
 }

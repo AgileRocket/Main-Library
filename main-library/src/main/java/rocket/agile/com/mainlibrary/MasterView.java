@@ -4,26 +4,44 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import io.realm.Realm;
+import io.realm.RealmQuery;
+import rocket.agile.com.mainlibrary.ActionItems.LayoutValue;
+
 public class MasterView extends AppCompatActivity {
 
-    PersistentStore persistentStore = PersistentStore.getInstance();
-    DataManager dataManager = DataManager.getInstance();
+//    RealmPersistence realmPersistence = RealmPersistence.getInstance();
+    private LayoutValue layoutValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Realm.init(this);
+        Realm realm = Realm.getDefaultInstance();
+
+        RealmPersistence realmPersistence = new RealmPersistence();
+
+        // TODO: Check here to see if JSON date reports an update signaling changes made
+
+        // If update is true, or first time app is run, execute persistence
+        realmPersistence.updateActionItemValues(realm);
+
         setContentView(R.layout.master_activity_master_view);
 
-        // TEST CHECK - no functional intent
-        persistentStore.writeToInternalStorage("Test-File", "IT WORKS!");
+        // TODO: Consider storing string value (i.e. 'LayoutValue' here, in some sort of Enum maybe?
 
-        // TODO: Networking data needs to be called to be stored here
 
-        // TODO: DataManager needs to pull from persistent store
-        int layoutValue = dataManager.layoutValue;
+//        layoutValue = (LayoutValue) realmPersistence.getRealmValues("LayoutValue");
 
-        switch (layoutValue) {
+//        LayoutValue test = new LayoutValue();
 
+//        RealmQuery<LayoutValue> layoutValue = realm.where(LayoutValue.class);
+
+//        RealmQuery<LayoutValue> layoutValue = realm.where(LayoutValue.class).equalTo("layoutValue", test.getLayoutValue());
+
+
+        switch (0) {
             case 0:
                 startActivity(new Intent(this, NavDrawerMain.class));
                 break;

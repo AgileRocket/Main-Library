@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'maven'
 apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'realm-android'
 
 group = 'com.github.SBKeith'
 
@@ -42,4 +43,5 @@ dependencies {
     compile 'com.android.support:support-vector-drawable:25.3.0'
     testCompile 'junit:junit:4.12'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+
 }
