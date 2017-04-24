@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import io.realm.Realm;
+import io.realm.RealmModel;
 import io.realm.RealmQuery;
 import rocket.agile.com.mainlibrary.ActionItems.LayoutValue;
 
@@ -54,9 +55,10 @@ public class MasterView extends AppCompatActivity {
     public int getLayoutValue() {
         Realm realm = Realm.getDefaultInstance();
 
-        RealmQuery<LayoutValue> layoutValue = realm.where(LayoutValue.class);
-//        LayoutValue unManagedLayoutValue = realm.copyFromRealm(layoutValue);
+        LayoutValue layoutValue = realm.where(LayoutValue.class).findFirst();
+        LayoutValue unManagedLayoutValue = realm.copyFromRealm(layoutValue);
         realm.close();
-        return layoutValue.findFirst().getLayoutValue();
+
+        return unManagedLayoutValue.getLayoutValue();
     }
 }
