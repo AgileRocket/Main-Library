@@ -6,8 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import io.realm.Realm;
-import io.realm.RealmModel;
-import io.realm.RealmQuery;
+import io.realm.RealmResults;
 import rocket.agile.com.mainlibrary.ActionItems.LayoutValue;
 
 public class MasterView extends AppCompatActivity {
@@ -26,13 +25,7 @@ public class MasterView extends AppCompatActivity {
 
         // TODO: Consider storing string value (i.e. 'LayoutValue' here, in some sort of Enum maybe?
 
-//        RealmResults<LayoutValue> layoutValueResults = realm.where(LayoutValue.class).findAll();
-//
-//        for(LayoutValue value:layoutValueResults) {
-//            Log.d("Layout Value Results = ", value.getLayoutValue() + "");
-//        }
-
-        Log.d("Layout Value ", String.valueOf(getLayoutValue()));
+        getLayoutValue();
 
         switch (0) {
             case 0:
@@ -52,13 +45,15 @@ public class MasterView extends AppCompatActivity {
         }
     }
 
-    public int getLayoutValue() {
+    public void getLayoutValue() {
         Realm realm = Realm.getDefaultInstance();
 
-        LayoutValue layoutValue = realm.where(LayoutValue.class).findFirst();
-        LayoutValue unManagedLayoutValue = realm.copyFromRealm(layoutValue);
-        realm.close();
+        RealmResults<LayoutValue> layoutValueResults = realm.where(LayoutValue.class).findAll();
 
-        return unManagedLayoutValue.getLayoutValue();
+        for(LayoutValue value:layoutValueResults) {
+            Log.d("Layout Value Results = ", value.getLayoutValue() + "");
+        }
+
+        realm.close();
     }
 }
