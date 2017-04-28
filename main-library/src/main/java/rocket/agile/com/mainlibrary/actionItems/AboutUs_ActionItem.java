@@ -9,32 +9,18 @@ import io.realm.annotations.PrimaryKey;
 
 public class AboutUs_ActionItem extends RealmObject {
 
-    @PrimaryKey
-    public String company;
-
-    public String email;
-    public String aboutUsBody;
-
+    @PrimaryKey public int id;
+    public String body;
 
     // Getters
-    public String getCompany() {
-        return company;
-    }
-    public String getEmail() {
-        return email;
-    }
+    public int getId() { return id; }
     public String getAboutUsBody() {
-        return aboutUsBody;
+        return body;
     }
 
     // Setters
-    public void setCompany(final String company) {
-        this.company = company;
-    }
-    public void setEmail(final String email) {
-        this.email = email;
-    }
+    public void setId(final int id) { this.id = id; }
     public void setAboutUsBody(final String aboutUsBody) {
-        this.aboutUsBody = aboutUsBody;
+        this.body = aboutUsBody;
     }
 }

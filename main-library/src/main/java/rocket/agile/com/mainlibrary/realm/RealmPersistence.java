@@ -2,6 +2,7 @@ package rocket.agile.com.mainlibrary.realm;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import rocket.agile.com.mainlibrary.actionItems.AboutUs_ActionItem;
 import rocket.agile.com.mainlibrary.actionItems.LayoutValue;
 import rocket.agile.com.mainlibrary.activity.MasterView;
 
@@ -20,10 +21,13 @@ public class RealmPersistence extends MasterView {
                 build();
         Realm.setDefaultConfiguration(config);
 
+        // Temporary data saves
         saveLayoutValue();
+        createFromJson();
     }
 
-    // Initialize Layout Value
+
+    // Save Layout Value statically
     public static void saveLayoutValue() {
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
@@ -31,12 +35,25 @@ public class RealmPersistence extends MasterView {
         // Create Layout Value
         LayoutValue layoutValue = new LayoutValue();
         layoutValue.setId(0);
-        layoutValue.setLayoutValue(0);
+        layoutValue.setLayoutValue(1);
 
         // Overwrite previous persisted object
         realm.copyToRealmOrUpdate(layoutValue);
 
         realm.commitTransaction();
         realm.close();
+    }
+
+    // Save values via JSON
+    public static void createFromJson() {
+        Realm realm = Realm.getDefaultInstance();
+
+        // About Us
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.createAllFromJson(AboutUs_ActionItem.class, "{ body: \"THIS IS A TEST\", id: 0 }");
+            }
+        });
     }
 }

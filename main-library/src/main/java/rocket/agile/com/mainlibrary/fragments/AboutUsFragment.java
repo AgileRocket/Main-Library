@@ -34,18 +34,8 @@ public class AboutUsFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // MOVE THIS TO MASTER VIEW - STORE TO DATA MANAGER FROM PERSISTENCE
-
-        // Set Header Text
-        TextView textView_title = (TextView) view.findViewById(R.id.aboutus_text_title);
-//        textView_title.setText(dataManager.aboutUs_Header);
-
-        // Set Email Text
-        TextView textView_email = (TextView) view.findViewById(R.id.aboutus_text_email);
-//        textView_email.setText(dataManager.aboutUs_Email);
-
         // Set Body Text
         TextView textView_body = (TextView) view.findViewById(R.id.aboutus_text_body);
-//        textView_body.setText(dataManager.aboutUs_Body);
+        textView_body.setText(dataManager.aboutUsBody);
     }
 }
