@@ -1,4 +1,4 @@
-package rocket.agile.com.mainlibrary;
+package rocket.agile.com.mainlibrary.model;
 
 /**
  * Created by keithkowalski on 3/29/17.

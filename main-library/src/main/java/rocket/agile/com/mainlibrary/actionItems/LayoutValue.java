@@ -1,4 +1,4 @@
-package rocket.agile.com.mainlibrary.ActionItems;
+package rocket.agile.com.mainlibrary.actionItems;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -9,19 +9,16 @@ import io.realm.annotations.PrimaryKey;
 
 public class LayoutValue extends RealmObject {
 
-    @PrimaryKey
-    public static long id;
-
+    @PrimaryKey public long id;
     public int layoutValue;
 
     public void setId(long id) {
-        LayoutValue.id = id;
+        this.id = id;
     }
     public void setLayoutValue(int layoutValue) {
         this.layoutValue = layoutValue;
     }
 
-
     public int getLayoutValue() { return layoutValue; }
-    public static long getId() { return id; }
+    public long getId() { return this.id; }
 }

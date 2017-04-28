@@ -1,4 +1,4 @@
-package rocket.agile.com.mainlibrary;
+package rocket.agile.com.mainlibrary.activity;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -6,6 +6,8 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
+
+import rocket.agile.com.mainlibrary.R;
 
 public class TabMenuMain extends AppCompatActivity {
 

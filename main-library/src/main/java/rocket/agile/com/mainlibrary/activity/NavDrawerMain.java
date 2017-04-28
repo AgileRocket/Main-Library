@@ -1,10 +1,7 @@
-package rocket.agile.com.mainlibrary;
+package rocket.agile.com.mainlibrary.activity;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -15,6 +12,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import rocket.agile.com.mainlibrary.R;
+import rocket.agile.com.mainlibrary.fragments.AboutUsFragment;
+import rocket.agile.com.mainlibrary.fragments.WebsiteFragment;
+
 public class NavDrawerMain extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -24,16 +25,6 @@ public class NavDrawerMain extends AppCompatActivity
         setContentView(R.layout.side_menu_activity_nav_drawer_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-//        TODO: Ask about possible snackbar for quick contact feature
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "<Email Option>", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

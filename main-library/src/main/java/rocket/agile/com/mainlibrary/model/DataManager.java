@@ -1,9 +1,6 @@
-package rocket.agile.com.mainlibrary;
+package rocket.agile.com.mainlibrary.model;
 
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-
-import java.io.FileInputStream;
 
 /**
  * Created by keithkowalski on 3/21/17.

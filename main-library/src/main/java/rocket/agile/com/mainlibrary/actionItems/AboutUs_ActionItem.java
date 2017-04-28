@@ -1,4 +1,4 @@
-package rocket.agile.com.mainlibrary.ActionItems;
+package rocket.agile.com.mainlibrary.actionItems;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -11,6 +11,7 @@ public class AboutUs_ActionItem extends RealmObject {
 
     @PrimaryKey
     public String company;
+
     public String email;
     public String aboutUsBody;
 

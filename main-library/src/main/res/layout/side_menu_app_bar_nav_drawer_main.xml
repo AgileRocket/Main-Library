@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="rocket.agile.com.mainlibrary.NavDrawerMain">
+    tools:context="rocket.agile.com.mainlibrary.activity.NavDrawerMain">
 
     <!-- Consider making this a separate file to *include* -->
     <RelativeLayout

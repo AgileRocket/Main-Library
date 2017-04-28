@@ -1,4 +1,4 @@
-package rocket.agile.com.mainlibrary;
+package rocket.agile.com.mainlibrary.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,9 +7,13 @@ import android.util.Log;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
-import rocket.agile.com.mainlibrary.ActionItems.LayoutValue;
+import rocket.agile.com.mainlibrary.actionItems.LayoutValue;
+import rocket.agile.com.mainlibrary.R;
+import rocket.agile.com.mainlibrary.realm.RealmPersistence;
 
 public class MasterView extends AppCompatActivity {
+
+    public int layoutValue = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,9 +29,9 @@ public class MasterView extends AppCompatActivity {
 
         // TODO: Consider storing string value (i.e. 'LayoutValue' here, in some sort of Enum maybe?
 
-        getLayoutValue();
+        layoutValue = getLayoutValue();
 
-        switch (0) {
+        switch (layoutValue) {
             case 0:
                 startActivity(new Intent(this, NavDrawerMain.class));
                 break;
@@ -45,15 +49,17 @@ public class MasterView extends AppCompatActivity {
         }
     }
 
-    public void getLayoutValue() {
+    public int getLayoutValue() {
         Realm realm = Realm.getDefaultInstance();
 
         RealmResults<LayoutValue> layoutValueResults = realm.where(LayoutValue.class).findAll();
 
         for(LayoutValue value:layoutValueResults) {
             Log.d("Layout Value Results = ", value.getLayoutValue() + "");
+            layoutValue = value.getLayoutValue();
         }
 
         realm.close();
+        return layoutValue;
     }
 }

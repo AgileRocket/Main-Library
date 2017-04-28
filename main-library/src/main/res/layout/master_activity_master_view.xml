@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="rocket.agile.com.mainlibrary.MasterView">
+    tools:context="rocket.agile.com.mainlibrary.activity.MasterView">
 
 </android.support.constraint.ConstraintLayout>
