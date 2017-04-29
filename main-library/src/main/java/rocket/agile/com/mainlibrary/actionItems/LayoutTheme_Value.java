@@ -7,7 +7,7 @@ import io.realm.annotations.PrimaryKey;
  * Created by keithkowalski on 4/21/17.
  */
 
-public class LayoutValue extends RealmObject {
+public class LayoutTheme_Value extends RealmObject {
 
     @PrimaryKey public long id;
     public int layoutValue;

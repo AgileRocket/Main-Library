@@ -3,7 +3,8 @@ package rocket.agile.com.mainlibrary.realm;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import rocket.agile.com.mainlibrary.actionItems.AboutUs_ActionItem;
-import rocket.agile.com.mainlibrary.actionItems.LayoutValue;
+import rocket.agile.com.mainlibrary.actionItems.LayoutTheme_Value;
+import rocket.agile.com.mainlibrary.actionItems.PrimaryBackgroundColor_Value;
 import rocket.agile.com.mainlibrary.activity.MasterView;
 
 /**
@@ -23,9 +24,9 @@ public class RealmPersistence extends MasterView {
 
         // Temporary data saves
         saveLayoutValue();
-        createFromJson();
+        createOrUpdateAboutUsFromJson();
+        createOrUpdatePrimaryBGColorFromJson();
     }
-
 
     // Save Layout Value statically
     public static void saveLayoutValue() {
@@ -33,22 +34,35 @@ public class RealmPersistence extends MasterView {
         realm.beginTransaction();
 
         // Create Layout Value
-        LayoutValue layoutValue = new LayoutValue();
-        layoutValue.setId(0);
-        layoutValue.setLayoutValue(0);
+        LayoutTheme_Value layoutThemeValue = new LayoutTheme_Value();
+        layoutThemeValue.setId(0);
+        layoutThemeValue.setLayoutValue(0);
 
         // Overwrite previous persisted object
-        realm.copyToRealmOrUpdate(layoutValue);
+        realm.copyToRealmOrUpdate(layoutThemeValue);
 
         realm.commitTransaction();
         realm.close();
     }
 
-    // Save values via JSON
-    public static void createFromJson() {
+    // Save values via JSON asynchronously
+
+//    PRIMARY BACKGROUND COLOR
+    public static void createOrUpdatePrimaryBGColorFromJson() {
         Realm realm = Realm.getDefaultInstance();
 
-        // About Us
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.createOrUpdateObjectFromJson(PrimaryBackgroundColor_Value.class, "{ primaryBGColor: \"#34495e\", id: 0 }");
+            }
+        });
+    }
+
+    // ABOUT US
+    public static void createOrUpdateAboutUsFromJson() {
+        Realm realm = Realm.getDefaultInstance();
+
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
