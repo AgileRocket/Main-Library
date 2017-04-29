@@ -31,7 +31,7 @@ public class DataManager extends AppCompatActivity {
     public void getValuesFromRealmPersistence() {
 
         getLayoutValue();
-        getAboutUsBody();
+        getAboutUsBody();   // JSON Creation
 
         // Close Realm
         realm.close();
