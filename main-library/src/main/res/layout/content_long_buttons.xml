@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="rocket.agile.com.mainlibrary.activity.LongButtonsActivity"
+    tools:context="rocket.agile.com.mainlibrary.activity.LayoutView_Buttons_Long"
     tools:showIn="@layout/buttons_activity_long_buttons">
 
 </android.support.v4.widget.NestedScrollView>

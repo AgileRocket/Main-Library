@@ -18,18 +18,18 @@
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.NavDrawerMain"
+        <activity android:name=".activity.LayoutView_SideMenu"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".activity.TabMenuMain"
+            android:name=".activity.LayoutView_TabBar"
             android:label="@string/app_name"/>
         <activity
-            android:name=".activity.GridButtonsActivity"
+            android:name=".activity.LayoutView_Buttons_Grid"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".activity.LongButtonsActivity"
+            android:name=".activity.LayoutView_Buttons_Long"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"/>
 

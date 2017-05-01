@@ -27,16 +27,16 @@ public class MasterView extends AppCompatActivity {
 
         switch (dataManager.layoutValue) {
             case 0:
-                startActivity(new Intent(this, NavDrawerMain.class));
+                startActivity(new Intent(this, LayoutView_SideMenu.class));
                 break;
             case 1:
-                startActivity(new Intent(this, TabMenuMain.class));
+                startActivity(new Intent(this, LayoutView_TabBar.class));
                 break;
             case 2:
-                startActivity(new Intent(this, GridButtonsActivity.class));
+                startActivity(new Intent(this, LayoutView_Buttons_Grid.class));
                 break;
             case 3:
-                startActivity(new Intent(this, LongButtonsActivity.class));
+                startActivity(new Intent(this, LayoutView_Buttons_Long.class));
                 break;
 
             default: break;

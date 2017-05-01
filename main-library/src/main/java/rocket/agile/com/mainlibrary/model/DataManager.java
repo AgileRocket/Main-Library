@@ -99,7 +99,7 @@ public class DataManager extends AppCompatActivity {
         }
     }
 
-    // ABOUT US BODY
+    // SET PRIMARY BACKGROUND COLOR
     public void getPrimaryBGColor() {
 
         RealmResults<PrimaryBackgroundColor_Value> primaryBGColor_valueResults = realm.where(PrimaryBackgroundColor_Value.class).findAll();
@@ -107,6 +107,16 @@ public class DataManager extends AppCompatActivity {
         for(PrimaryBackgroundColor_Value value:primaryBGColor_valueResults) {
             primaryBackgroundColor = value.getPrimaryBGColor();
         }
+    }
+
+    // SET PRIMARY HEADER COLOR
+    public void getPrimaryHeaderColor() {
+
+//        RealmResults<PrimaryBackgroundColor_Value> primaryBGColor_valueResults = realm.where(PrimaryBackgroundColor_Value.class).findAll();
+//
+//        for(PrimaryBackgroundColor_Value value:primaryBGColor_valueResults) {
+//            primaryBackgroundColor = value.getPrimaryBGColor();
+//        }
     }
 
     // ABOUT US BODY

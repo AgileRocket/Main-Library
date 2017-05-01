@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import rocket.agile.com.mainlibrary.R;
 
-public class TabMenuMain extends AppCompatActivity {
+public class LayoutView_TabBar extends AppCompatActivity {
 
     private TextView mTextMessage;
 

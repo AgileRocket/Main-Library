@@ -20,7 +20,7 @@ import rocket.agile.com.mainlibrary.fragments.AboutUsFragment;
 import rocket.agile.com.mainlibrary.fragments.WebsiteFragment;
 import rocket.agile.com.mainlibrary.model.DataManager;
 
-public class NavDrawerMain extends AppCompatActivity
+public class LayoutView_SideMenu extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     // Call singleton class for data manager
@@ -30,21 +30,26 @@ public class NavDrawerMain extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.side_menu_activity_nav_drawer_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        Toolbar primaryHeader = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(primaryHeader);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, primaryHeader, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        // NULL ERROR on creation
-        View primaryBackground = (View) findViewById(R.id.id_primary_background);
-        primaryBackground.setBackgroundColor(Color.parseColor("#34495e"));
+// CUSTOM PRIMARY SETTINGS
+
+        // PRIMARY COLOR
+        View primaryBackground = findViewById(R.id.id_main);
+        primaryBackground.setBackgroundColor(Color.parseColor(dataManager.primaryBackgroundColor));
+
+        // PRIMARY HEADER COLOR
+        primaryHeader.setBackgroundColor(Color.GREEN);
     }
 
     @Override
