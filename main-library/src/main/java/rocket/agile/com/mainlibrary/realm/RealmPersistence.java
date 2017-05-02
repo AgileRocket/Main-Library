@@ -68,7 +68,7 @@ public class RealmPersistence extends MasterView {
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                realm.createOrUpdateObjectFromJson(PrimaryHeaderColor_Value.class, "{primarysHeaderColor: \"#ecf0f1\", id: 0 }");
+                realm.createOrUpdateObjectFromJson(PrimaryHeaderColor_Value.class, "{ primaryHeaderColor: \"#d35400\", id: 0 }");
             }
         });
     }

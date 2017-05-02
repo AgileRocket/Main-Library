@@ -8,6 +8,7 @@ import io.realm.RealmResults;
 import rocket.agile.com.mainlibrary.actionItems.AboutUs_ActionItem;
 import rocket.agile.com.mainlibrary.actionItems.LayoutTheme_Value;
 import rocket.agile.com.mainlibrary.actionItems.PrimaryBackgroundColor_Value;
+import rocket.agile.com.mainlibrary.actionItems.PrimaryHeaderColor_Value;
 
 /**
  * Created by keithkowalski on 3/21/17.
@@ -31,11 +32,11 @@ public class DataManager extends AppCompatActivity {
 //    HEADER TITLE
     public String headerTitle;
 
+//    PRIMARY HEADER COLOR
+    public String primaryHeaderColor;
+
 //    PRIMARY BACKGROUND COLOR
     public String primaryBackgroundColor;
-
-//    PRIMARY HEADER COLOR
-    public int primaryHeaderColor;
 
 //    EMAIL ADDRESS
     public String emailAddress;
@@ -80,8 +81,14 @@ public class DataManager extends AppCompatActivity {
     // Get all values from Realm Persistence
     public void getValuesFromRealmPersistence() {
 
+        // Layout Value
         getLayoutValue();
+
+        // Primary Colors
         getPrimaryBGColor();
+        getPrimaryHeaderColor();
+
+        // About Us
         getAboutUsBody();   // JSON Creation
 
         // Close Realm
@@ -112,11 +119,11 @@ public class DataManager extends AppCompatActivity {
     // SET PRIMARY HEADER COLOR
     public void getPrimaryHeaderColor() {
 
-//        RealmResults<PrimaryBackgroundColor_Value> primaryBGColor_valueResults = realm.where(PrimaryBackgroundColor_Value.class).findAll();
-//
-//        for(PrimaryBackgroundColor_Value value:primaryBGColor_valueResults) {
-//            primaryBackgroundColor = value.getPrimaryBGColor();
-//        }
+        RealmResults<PrimaryHeaderColor_Value> primaryHeaderColor_values = realm.where(PrimaryHeaderColor_Value.class).findAll();
+
+        for(PrimaryHeaderColor_Value value:primaryHeaderColor_values) {
+            primaryHeaderColor = value.getPrimaryHeaderColor();
+        }
     }
 
     // ABOUT US BODY

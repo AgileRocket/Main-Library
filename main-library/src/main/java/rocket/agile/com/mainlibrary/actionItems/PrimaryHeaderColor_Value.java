@@ -1,12 +1,13 @@
 package rocket.agile.com.mainlibrary.actionItems;
 
+import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by keithkowalski on 5/1/17.
  */
 
-public class PrimaryHeaderColor_Value {
+public class PrimaryHeaderColor_Value extends RealmObject {
 
     @PrimaryKey
     public long id;

@@ -49,7 +49,7 @@ public class LayoutView_SideMenu extends AppCompatActivity
         primaryBackground.setBackgroundColor(Color.parseColor(dataManager.primaryBackgroundColor));
 
         // PRIMARY HEADER COLOR
-        primaryHeader.setBackgroundColor(Color.GREEN);
+        primaryHeader.setBackgroundColor(Color.parseColor(dataManager.primaryHeaderColor));
     }
 
     @Override
