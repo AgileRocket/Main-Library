@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     tools:context="rocket.agile.com.mainlibrary.activity.LayoutView_SideMenu">
 
-    <!-- Consider making this a separate file to *include* -->
     <RelativeLayout
         android:id="@+id/id_main"
         android:layout_width="match_parent"

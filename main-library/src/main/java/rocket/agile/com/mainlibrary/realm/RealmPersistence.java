@@ -3,6 +3,7 @@ package rocket.agile.com.mainlibrary.realm;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import rocket.agile.com.mainlibrary.actionItems.AboutUs_ActionItem;
+import rocket.agile.com.mainlibrary.actionItems.HeaderTitle_Value;
 import rocket.agile.com.mainlibrary.actionItems.LayoutTheme_Value;
 import rocket.agile.com.mainlibrary.actionItems.PrimaryBackgroundColor_Value;
 import rocket.agile.com.mainlibrary.actionItems.PrimaryHeaderColor_Value;
@@ -25,9 +26,10 @@ public class RealmPersistence extends MasterView {
 
         // Temporary data saves
         saveLayoutValue();
-        createOrUpdateAboutUsFromJson();
+        createOrUpdateHeaderTitle();
         createOrUpdatePrimaryBGColorFromJson();
         createOrUpdatePrimaryHeaderColorFromJson();
+        createOrUpdateAboutUsFromJson();
     }
 
     // Save Layout Value statically
@@ -48,6 +50,18 @@ public class RealmPersistence extends MasterView {
     }
 
     // Save values via JSON asynchronously
+
+//    PRIMARY BACKGROUND COLOR
+    public static void createOrUpdateHeaderTitle() {
+        Realm realm = Realm.getDefaultInstance();
+
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.createOrUpdateObjectFromJson(HeaderTitle_Value.class, "{ title: \"APP TITLE\", id: 0 }");
+            }
+        });
+    }
 
 //    PRIMARY BACKGROUND COLOR
     public static void createOrUpdatePrimaryBGColorFromJson() {

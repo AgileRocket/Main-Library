@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import rocket.agile.com.mainlibrary.actionItems.AboutUs_ActionItem;
+import rocket.agile.com.mainlibrary.actionItems.HeaderTitle_Value;
 import rocket.agile.com.mainlibrary.actionItems.LayoutTheme_Value;
 import rocket.agile.com.mainlibrary.actionItems.PrimaryBackgroundColor_Value;
 import rocket.agile.com.mainlibrary.actionItems.PrimaryHeaderColor_Value;
@@ -24,10 +25,12 @@ public class DataManager extends AppCompatActivity {
 
     Realm realm = Realm.getDefaultInstance();
 
-//----- Available Data ----------
+//----- App Data -------------------
 
 //    LAYOUT THEME
     public int layoutValue;
+
+//----- Main Activity Data ---------------
 
 //    HEADER TITLE
     public String headerTitle;
@@ -37,6 +40,9 @@ public class DataManager extends AppCompatActivity {
 
 //    PRIMARY BACKGROUND COLOR
     public String primaryBackgroundColor;
+
+
+//----- Fragment Data --------------------
 
 //    EMAIL ADDRESS
     public String emailAddress;
@@ -48,7 +54,7 @@ public class DataManager extends AppCompatActivity {
     public String aboutUsBody;
 
 
-//----- Available Social Media Data ----------
+//----- Available Social Media Data ------
 
 //    BUSINESS WEBSITE
     public String website;
@@ -72,7 +78,8 @@ public class DataManager extends AppCompatActivity {
     public String google;
 
 
-//----- Available Action-Items Data ----------
+
+//----- Action-Items Getter Methods --------
 
 //    DIRECTIONS
 
@@ -84,18 +91,21 @@ public class DataManager extends AppCompatActivity {
         // Layout Value
         getLayoutValue();
 
+        // Header Title
+        getHeaderTitle();
+
         // Primary Colors
         getPrimaryBGColor();
         getPrimaryHeaderColor();
 
         // About Us
-        getAboutUsBody();   // JSON Creation
+        getAboutUsBody();
 
         // Close Realm
         realm.close();
     }
 
-    // LAYOUT VALUE
+    // GET LAYOUT VALUE
     public void getLayoutValue() {
 
         RealmResults<LayoutTheme_Value> layoutThemeValueResults = realm.where(LayoutTheme_Value.class).findAll();
@@ -106,7 +116,17 @@ public class DataManager extends AppCompatActivity {
         }
     }
 
-    // SET PRIMARY BACKGROUND COLOR
+    // GET PRIMARY BACKGROUND COLOR
+    public void getHeaderTitle() {
+
+        RealmResults<HeaderTitle_Value> headerTitle_values = realm.where(HeaderTitle_Value.class).findAll();
+
+        for(HeaderTitle_Value value:headerTitle_values) {
+            headerTitle = value.getTitle();
+        }
+    }
+
+    // GET PRIMARY BACKGROUND COLOR
     public void getPrimaryBGColor() {
 
         RealmResults<PrimaryBackgroundColor_Value> primaryBGColor_valueResults = realm.where(PrimaryBackgroundColor_Value.class).findAll();
@@ -116,7 +136,7 @@ public class DataManager extends AppCompatActivity {
         }
     }
 
-    // SET PRIMARY HEADER COLOR
+    // GET PRIMARY HEADER COLOR
     public void getPrimaryHeaderColor() {
 
         RealmResults<PrimaryHeaderColor_Value> primaryHeaderColor_values = realm.where(PrimaryHeaderColor_Value.class).findAll();
@@ -126,7 +146,7 @@ public class DataManager extends AppCompatActivity {
         }
     }
 
-    // ABOUT US BODY
+    // GET ABOUT US BODY
     public void getAboutUsBody() {
 
         RealmResults<AboutUs_ActionItem> aboutUs_actionItemResults = realm.where(AboutUs_ActionItem.class).findAll();
