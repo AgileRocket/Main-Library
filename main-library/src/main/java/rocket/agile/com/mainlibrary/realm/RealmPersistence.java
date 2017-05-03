@@ -51,6 +51,8 @@ public class RealmPersistence extends MasterView {
 
     // Save values via JSON asynchronously
 
+//    TODO: Look into bringing JSON in one list, not just individual calls with 1 line of JSON
+
 //    PRIMARY BACKGROUND COLOR
     public static void createOrUpdateHeaderTitle() {
         Realm realm = Realm.getDefaultInstance();
