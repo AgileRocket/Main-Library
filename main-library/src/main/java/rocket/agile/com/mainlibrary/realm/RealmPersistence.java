@@ -1,6 +1,10 @@
 package rocket.agile.com.mainlibrary.realm;
 
 
+import android.content.res.Resources;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.ContextThemeWrapper;
 
 import java.io.IOException;
@@ -8,6 +12,7 @@ import java.io.InputStream;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import rocket.agile.com.mainlibrary.R;
 import rocket.agile.com.mainlibrary.actionItems.AboutUs_ActionItem;
 import rocket.agile.com.mainlibrary.actionItems.HeaderTitle_Value;
 import rocket.agile.com.mainlibrary.actionItems.LayoutTheme_Value;
@@ -21,6 +26,15 @@ import rocket.agile.com.mainlibrary.activity.MasterView;
 
 public class RealmPersistence extends MasterView {
 
+//    private Realm realm;
+//
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState){
+//        super.onCreate(savedInstanceState);
+//
+//        realm = Realm.getDefaultInstance();
+//    }
+
     // Initialize Realm
     public static void initRealm() {
         RealmConfiguration config = new RealmConfiguration.
@@ -31,6 +45,11 @@ public class RealmPersistence extends MasterView {
         Realm.setDefaultConfiguration(config);
 
         // Temporary data saves
+        try {
+            loadJsonFromArray();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 //        try {
 //            loadJsonFromStream();
@@ -45,7 +64,25 @@ public class RealmPersistence extends MasterView {
 //        createOrUpdateAboutUsFromJson();
     }
 
-    private static void loadJsonFromStream() throws IOException {
+    private static void loadJsonFromArray() throws IOException {
+
+        Realm realm = Realm.getDefaultInstance();
+
+//        InputStream is = new FileInputStream(new File("/Users/keithkowalski/Documents/Development/Android/Main-Library/main-library/src/main/test.json"));
+
+        AppCompatActivity appCompatActivity = new AppCompatActivity();
+
+        Resources resources = appCompatActivity.getResources();
+        InputStream is = resources.openRawResource(R.raw.test);
+
+        Log.d("is: ", is.toString());
+
+//        realm.beginTransaction();
+//        realm.createOrUpdateAllFromJson(HeaderTitle_Value.class, is);
+//        realm.commitTransaction();
+    }
+
+//    private static void loadJsonFromStream() throws IOException {
         // Use streams if you are worried about the size of the JSON whether it was persisted on disk
         // or received from the network.
 
@@ -64,7 +101,7 @@ public class RealmPersistence extends MasterView {
 //                stream.close();
 //            }
 //        }
-    }
+//    }
 
     // Save Layout Value statically
 //    public static void saveLayoutValue() {

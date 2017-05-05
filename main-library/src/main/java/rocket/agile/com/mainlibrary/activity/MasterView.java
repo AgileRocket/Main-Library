@@ -1,14 +1,8 @@
 package rocket.agile.com.mainlibrary.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-
-import java.io.IOException;
-import java.io.InputStream;
-
 import io.realm.Realm;
 import rocket.agile.com.mainlibrary.R;
 import rocket.agile.com.mainlibrary.model.DataManager;
@@ -19,13 +13,6 @@ public class MasterView extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        try {
-//            loadJsonFromStream();
-            Log.d("INPUT STREAM: ", loadJsonFromStream().toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         Realm.init(this);
 
@@ -54,10 +41,5 @@ public class MasterView extends AppCompatActivity {
 
             default: break;
         }
-    }
-
-    private InputStream loadJsonFromStream() throws IOException {
-
-        return getApplicationContext().getAssets().open("test.json");
     }
 }
