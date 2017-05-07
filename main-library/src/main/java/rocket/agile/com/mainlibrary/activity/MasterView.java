@@ -25,7 +25,7 @@ public class MasterView extends AppCompatActivity {
 
         setContentView(R.layout.master_activity_master_view);
 
-        switch (0) {
+        switch (dataManager.layoutValue) {
             case 0:
                 startActivity(new Intent(this, LayoutView_SideMenu.class));
                 break;
