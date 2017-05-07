@@ -37,5 +37,8 @@ public class AboutUsFragment extends Fragment {
         // Set Body Text
         TextView textView_body = (TextView) view.findViewById(R.id.aboutus_text_body);
         textView_body.setText(dataManager.aboutUsBody);
+
+        TextView textView_title = (TextView) view.findViewById(R.id.aboutus_text_title);
+        textView_title.setText(dataManager.aboutUsIcon);
     }
 }

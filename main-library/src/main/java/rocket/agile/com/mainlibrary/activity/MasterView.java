@@ -21,7 +21,7 @@ public class MasterView extends AppCompatActivity {
         RealmPersistence.initRealm();
 
         DataManager dataManager = DataManager.getInstance();
-        dataManager.getValuesFromRealmPersistence();
+        dataManager.getDataFromRealmPersistence();
 
         setContentView(R.layout.master_activity_master_view);
 
