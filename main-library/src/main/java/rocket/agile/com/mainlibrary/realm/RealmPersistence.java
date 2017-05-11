@@ -40,7 +40,7 @@ public class RealmPersistence extends MasterView {
             @Override
             public void execute(Realm realm) {
                 realm.createOrUpdateObjectFromJson(ActionItems_Values.class, "{ versionID: 0, " +
-                                                                               "layoutValue: 0, " +
+                                                                               "layoutValue: 1, " +
                                                                                "headerTitle: \"JSON ARRAY WORKS!\", " +
                                                                                "primaryBGColor: \"#34495e\", " +
                                                                                "primaryHeaderColor: \"#d35400\" }");
