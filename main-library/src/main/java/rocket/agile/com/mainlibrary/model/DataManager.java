@@ -20,33 +20,42 @@ public class DataManager extends AppCompatActivity {
         return ourInstance;
     }
 
+    // Create Realm instance
     Realm realm = Realm.getDefaultInstance();
 
 //----- App Data -------------------
 
 //    LAYOUT THEME
-    public int layoutValue;
+    public int layoutValue = 0;     // TODO: MAKE NETWORK CALL
 
-//----- Main Activity Data ---------------
+//----- Primary Values ---------------
 
 //    HEADER TITLE
-    public String headerTitle;
+    public String headerTitle = "WORKS! :)";      // TODO: MAKE NETWORK CALL
 
 //    PRIMARY HEADER COLOR
-    public String primaryHeaderColor;
+    public String primaryHeaderColor = "#d35400";
 
 //    PRIMARY BACKGROUND COLOR
-    public String primaryBackgroundColor;
+    public String primaryBackgroundColor = "#34495e";
+
+//    ADDRESS
+    public String address;
+
+//    APP NAME
+    public String appName;
+
+//    EMAIL
+    public String email;
+
+//    HOURS
+    public String mondayHours;
+
+//    PHONE
+    public String phone;
 
 
 //----- Fragment Data --------------------
-
-//    EMAIL ADDRESS
-    public String emailAddress;
-    public String emailIcon;
-
-//    PHONE NUMBER
-    public int phoneNumber;
 
 //    ABOUT US
     public String aboutUsBody;
@@ -84,23 +93,24 @@ public class DataManager extends AppCompatActivity {
     public void getDataFromRealmPersistence() {
 
         // Layout Value
-        getPrimaryValues();
-        getActionItems();
+        getValues();
+//        getActionItems();
 
         // Close Realm
         realm.close();
     }
 
     // GET LAYOUT VALUE
-    public void getPrimaryValues() {
+    public void getValues() {
 
-        RealmResults<ActionItems_Values> actionItems_values = realm.where(ActionItems_Values.class).findAll();
+        RealmResults<Values> values = realm.where(Values.class).findAll();
 
-        for(ActionItems_Values value: actionItems_values) {
-            layoutValue = value.getLayoutValue();
-            headerTitle = value.getHeaderTitle();
-            primaryHeaderColor = value.getPrimaryHeaderColor();
-            primaryBackgroundColor = value.getPrimaryBGColor();
+        for(Values value: values) {
+            address = value.getAddress();
+            appName = value.getAppName();
+            email = value.getEmail();
+            mondayHours = value.getHours().getMonday();
+            phone = value.getPhone();
         }
     }
 

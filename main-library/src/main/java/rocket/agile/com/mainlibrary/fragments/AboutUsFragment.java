@@ -34,11 +34,16 @@ public class AboutUsFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Set Title Text
+        TextView textView_title = (TextView) view.findViewById(R.id.aboutus_text_title);
+        textView_title.setText(dataManager.email);
+
+        // Set Details Text
+        TextView textView_details = (TextView) view.findViewById(R.id.aboutus_text_details);
+        textView_details.setText(dataManager.address);
+
         // Set Body Text
         TextView textView_body = (TextView) view.findViewById(R.id.aboutus_text_body);
-        textView_body.setText(dataManager.aboutUsBody);
-
-        TextView textView_title = (TextView) view.findViewById(R.id.aboutus_text_title);
-        textView_title.setText(dataManager.aboutUsIcon);
+        textView_body.setText(dataManager.mondayHours);
     }
 }

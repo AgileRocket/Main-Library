@@ -39,7 +39,7 @@
             android:layout_height="25px" />
 
         <TextView
-            android:id="@+id/aboutus_text_email"
+            android:id="@+id/aboutus_text_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="android.studio@android.com\n"

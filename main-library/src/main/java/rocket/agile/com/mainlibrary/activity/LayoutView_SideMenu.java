@@ -50,7 +50,7 @@ public class LayoutView_SideMenu extends AppCompatActivity
 
 //        // PRIMARY HEADER COLOR AND TITLE
         primaryHeader.setBackgroundColor(Color.parseColor(dataManager.primaryHeaderColor));
-        this.setTitle(dataManager.headerTitle);
+        this.setTitle(dataManager.appName);
     }
 
     @Override

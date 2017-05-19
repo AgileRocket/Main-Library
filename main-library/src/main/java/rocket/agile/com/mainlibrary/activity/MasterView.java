@@ -1,5 +1,6 @@
 package rocket.agile.com.mainlibrary.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,20 +12,28 @@ import rocket.agile.com.mainlibrary.realm.RealmPersistence;
 
 public class MasterView extends AppCompatActivity {
 
+    private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Set Progress Dialog Message
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Please wait...");
+        progressDialog.setCancelable(false);
+
         Realm.init(this);
 
+        // TODO: Check here to see if JSON reports any updates
         // Networking call
         NetworkingManager networkingManager = NetworkingManager.getInstance();
-        networkingManager.getValues();
+        networkingManager.getValues(progressDialog);
 
-        // TODO: Check here to see if JSON reports any updates
-        // If update is true, or first time app is run, execute persistence
+        // Realm Persistence
         RealmPersistence.initRealm();
 
+        // Data Manager Update
         DataManager dataManager = DataManager.getInstance();
         dataManager.getDataFromRealmPersistence();
 
