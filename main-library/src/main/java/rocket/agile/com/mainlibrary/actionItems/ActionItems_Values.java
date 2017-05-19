@@ -13,7 +13,7 @@ public class ActionItems_Values extends RealmObject {
 
     //    LAYOUT
     @PrimaryKey
-    public int versionID;   // TODO: Change to Date
+    public int versionID;
     public int layoutValue;
 
     //    PRIMARY VALUES

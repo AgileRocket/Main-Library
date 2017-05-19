@@ -6,6 +6,7 @@ import android.os.Bundle;
 import io.realm.Realm;
 import rocket.agile.com.mainlibrary.R;
 import rocket.agile.com.mainlibrary.model.DataManager;
+import rocket.agile.com.mainlibrary.model.NetworkingManager;
 import rocket.agile.com.mainlibrary.realm.RealmPersistence;
 
 public class MasterView extends AppCompatActivity {
@@ -16,7 +17,11 @@ public class MasterView extends AppCompatActivity {
 
         Realm.init(this);
 
-        // TODO: Check here to see if JSON date reports an update signaling changes made
+        // Networking call
+        NetworkingManager networkingManager = NetworkingManager.getInstance();
+        networkingManager.getValues();
+
+        // TODO: Check here to see if JSON reports any updates
         // If update is true, or first time app is run, execute persistence
         RealmPersistence.initRealm();
 
