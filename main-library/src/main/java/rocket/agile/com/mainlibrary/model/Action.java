@@ -10,7 +10,7 @@ import io.realm.RealmObject;
 public class Action extends RealmObject {
 
     @SerializedName("actionType")
-    private Integer actionType;
+    private int actionType;
 
     @SerializedName("email")
     private String email;
@@ -28,11 +28,11 @@ public class Action extends RealmObject {
     private String number;
 
     //    GETTERS and SETTERS
-    public Integer getActionType() {
+    public int getActionType() {
         return actionType;
     }
 
-    public void setActionType(Integer actionType) {
+    public void setActionType(int actionType) {
         this.actionType = actionType;
     }
 

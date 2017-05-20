@@ -60,6 +60,9 @@ public class DataManager extends AppCompatActivity {
 
 //----- Fragment Data --------------------
 
+//    TYPE
+    public int actionType;
+
 //    ABOUT US
     public String aboutUsBody;
     public String aboutUsIcon;
@@ -97,7 +100,7 @@ public class DataManager extends AppCompatActivity {
 
         // Layout Value
         getValues();
-//        getActionItems();
+        getActionItems();
 
         // Close Realm
         realm.close();
@@ -124,18 +127,13 @@ public class DataManager extends AppCompatActivity {
         String temp = "";
 
         for(ActionList actionList: actionLists) {
-            aboutUsBody = actionList.getActions().get(0).getName();
-            aboutUsIcon = actionList.getActions().get(1).getName();
+            for(int i = 0; i < actionList.getTotal(); i++) {
+                actionType = actionList.getActions().get(i).getActionType();
+                aboutUsIcon = actionList.getActions().get(i).getFaIcon();
 
-            temp = aboutUsBody + "/n" + aboutUsIcon;
+                temp = actionType + " " + aboutUsIcon + "\n\n";
+                Log.d("Actions", temp);
+            }
         }
-
-        Log.d("TEMP!", temp);
-
-//        RealmResults<Email_ActionItem> email_actionItems = realm.where(Email_ActionItem.class).findAll();
-//        for(Email_ActionItem actionItem: email_actionItems) {
-//            emailAddress = actionItem.getEmailAddress();
-//            emailIcon = actionItem.getEmailIcon();
-//        }
     }
 }

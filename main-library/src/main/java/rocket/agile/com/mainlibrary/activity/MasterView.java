@@ -12,23 +12,18 @@ import rocket.agile.com.mainlibrary.realm.RealmPersistence;
 
 public class MasterView extends AppCompatActivity {
 
-    private ProgressDialog progressDialog;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Set Progress Dialog Message
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Please wait...");
-        progressDialog.setCancelable(false);
+        // TODO: Check here for network connectivity
 
         Realm.init(this);
 
-        // TODO: Check here to see if JSON reports any updates
+        // TODO: Check here to see if JSON reports any updates or 1st time app is run
         // Networking call
         NetworkingManager networkingManager = NetworkingManager.getInstance();
-        networkingManager.getValues(progressDialog);
+        networkingManager.getValues();
         networkingManager.getActions();
 
         // Realm Persistence

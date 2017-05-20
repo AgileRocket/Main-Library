@@ -1,5 +1,6 @@
 package rocket.agile.com.mainlibrary.model;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import com.google.gson.annotations.SerializedName;
@@ -15,7 +16,7 @@ public class ActionList extends RealmObject {
     private int id;
 
     @SerializedName("actions")
-    private List<Action> actions;
+    private RealmList<Action> actions;
 
     @SerializedName("total")
     private Integer total;
@@ -27,8 +28,8 @@ public class ActionList extends RealmObject {
 
     public List<Action> getActions() { return actions; }
 
-    public void setActions(Action actions) {
-        this.actions = (List<Action>) actions;
+    public void setActions(RealmList<Action> actions) {
+        this.actions = actions;
     }
 
     public Integer getTotal() {
