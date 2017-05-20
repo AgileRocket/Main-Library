@@ -1,8 +1,13 @@
 package rocket.agile.com.mainlibrary.realm;
 
+import java.util.Collection;
+
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import io.realm.RealmModel;
+import io.realm.internal.IOException;
 import rocket.agile.com.mainlibrary.activity.MasterView;
+import rocket.agile.com.mainlibrary.model.ActionList;
 import rocket.agile.com.mainlibrary.model.Values;
 
 /**
@@ -34,13 +39,18 @@ public class RealmPersistence extends MasterView {
         });
     }
 
-//    public static void createOrUpdateActionItemsFromJson() {
-//        Realm realm = Realm.getDefaultInstance();
-//
-//        realm.executeTransaction(new Realm.Transaction() {
-//            @Override
-//            public void execute(Realm realm) {
-//                try {
+    public static void createOrUpdateActionItems(final ActionList actionList) {
+        Realm realm = Realm.getDefaultInstance();
+
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                try {
+
+                    realm.insertOrUpdate(actionList);
+
+//                    realm.copyToRealmOrUpdate(actionList.getActions());
+
 //                    realm.createOrUpdateAllFromJson(AboutUs_ActionItem.class, "[{aboutUsID: 0, aboutUsBody: \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, " +
 //                                                                                "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation " +
 //                                                                                "ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse " +
@@ -48,10 +58,10 @@ public class RealmPersistence extends MasterView {
 //                                                                                "mollit anim id est laborum.\", aboutUsIcon: \"about.png\"}], " +
 //
 //                                                                              "[{emailID: 0, emailAddress: \"test@gmail.com\", emailIcon: \"email.png\"}]");
-//                } catch (IOException e) {
-//                    throw new RuntimeException(e);
-//                }
-//            }
-//        });
-//    }
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+    }
 }

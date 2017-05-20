@@ -1,7 +1,6 @@
 package rocket.agile.com.mainlibrary.model;
 
 import com.google.gson.annotations.SerializedName;
-
 import io.realm.RealmObject;
 
 /**

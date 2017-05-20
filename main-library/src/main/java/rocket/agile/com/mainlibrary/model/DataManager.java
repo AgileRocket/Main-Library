@@ -1,7 +1,10 @@
 package rocket.agile.com.mainlibrary.model;
 
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+
 import io.realm.Realm;
+import io.realm.RealmList;
 import io.realm.RealmResults;
 import rocket.agile.com.mainlibrary.actionItems.AboutUs_ActionItem;
 import rocket.agile.com.mainlibrary.actionItems.ActionItems_Values;
@@ -116,11 +119,18 @@ public class DataManager extends AppCompatActivity {
 
     public void getActionItems() {
 
-        RealmResults<AboutUs_ActionItem> aboutUs_actionItems = realm.where(AboutUs_ActionItem.class).findAll();
-        for(AboutUs_ActionItem actionItem: aboutUs_actionItems) {
-            aboutUsBody = actionItem.getAboutUsBody();
-            aboutUsIcon = actionItem.getAboutUsIcon();
+        RealmResults<ActionList> actionLists = realm.where(ActionList.class).findAll();
+
+        String temp = "";
+
+        for(ActionList actionList: actionLists) {
+            aboutUsBody = actionList.getActions().get(0).getName();
+            aboutUsIcon = actionList.getActions().get(1).getName();
+
+            temp = aboutUsBody + "/n" + aboutUsIcon;
         }
+
+        Log.d("TEMP!", temp);
 
 //        RealmResults<Email_ActionItem> email_actionItems = realm.where(Email_ActionItem.class).findAll();
 //        for(Email_ActionItem actionItem: email_actionItems) {

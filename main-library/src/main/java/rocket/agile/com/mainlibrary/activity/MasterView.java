@@ -29,6 +29,7 @@ public class MasterView extends AppCompatActivity {
         // Networking call
         NetworkingManager networkingManager = NetworkingManager.getInstance();
         networkingManager.getValues(progressDialog);
+        networkingManager.getActions();
 
         // Realm Persistence
         RealmPersistence.initRealm();

@@ -3,6 +3,8 @@ package rocket.agile.com.mainlibrary.model;
 import android.app.ProgressDialog;
 import android.util.Log;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -59,6 +61,62 @@ public class NetworkingManager extends MasterView {
             Log.d("On Response", "There is an error");
             e.printStackTrace();
             hidepDialog(progressDialog);
+        }
+    }
+
+    public void getActions() {
+
+//        showpDialog();
+
+        try {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(baseURL).
+                            addConverterFactory(GsonConverterFactory.create())
+                    .build();
+
+            RetrofitAPI service = retrofit.create(RetrofitAPI.class);
+
+            Call<ActionList> call = service.getActionList();
+
+            call.enqueue(new Callback<ActionList>() {
+                @Override
+                public void onResponse(Call<ActionList> call, Response<ActionList> response) {
+                    ActionList actionLists = response.body();
+
+                    RealmPersistence.createOrUpdateActionItems(actionLists);
+
+                    String actions = "";
+
+                    for(int i = 0; i < actionLists.getTotal(); i++) {
+                        int actionType = actionLists.getActions().get(i).getActionType();
+                        String email = actionLists.getActions().get(i).getEmail();
+                        String icon = actionLists.getActions().get(i).getFaIcon();
+                        String name = actionLists.getActions().get(i).getName();
+                        String subject = actionLists.getActions().get(i).getSubject();
+
+                        actions += "Action: "  + actionType + "\n" +
+                                "Email: "   + email      + "\n" +
+                                "FA Icon: " + icon       + "\n" +
+                                "Name: "    + name       + "\n" +
+                                "Subject: " + subject    + "\n\n";
+                    }
+
+                    String total = actionLists.getTotal().toString();
+                    actions += "Total Actions: " + total;
+
+                    Log.d("ACTION LIST", actions);
+                }
+
+                @Override
+                public void onFailure(Call<ActionList> call, Throwable t) {
+                    Log.d("On Failure", t.toString());
+//                    hidepDialog();
+                }
+            });
+        } catch (Exception e) {
+            Log.d("On Response", "There is an error");
+            e.printStackTrace();
+//            hidepDialog();
         }
     }
 
