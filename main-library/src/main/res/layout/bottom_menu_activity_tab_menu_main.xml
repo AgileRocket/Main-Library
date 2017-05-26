@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="rocket.agile.com.mainlibrary.TabMenuMain">
+    tools:context="rocket.agile.com.mainlibrary.activity.LayoutView_TabBar">
 
     <FrameLayout
         android:id="@+id/content"

@@ -1,4 +1,4 @@
-package rocket.agile.com.mainlibrary;
+package rocket.agile.com.mainlibrary.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -7,12 +7,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-public class GridButtonsActivity extends AppCompatActivity {
+import rocket.agile.com.mainlibrary.R;
+
+public class LayoutView_Buttons_Long extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.buttons_activity_grid_buttons);
+        setContentView(R.layout.buttons_activity_long_buttons);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

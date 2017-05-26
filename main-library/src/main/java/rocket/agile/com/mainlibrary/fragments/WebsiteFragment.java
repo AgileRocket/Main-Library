@@ -1,4 +1,4 @@
-package rocket.agile.com.mainlibrary;
+package rocket.agile.com.mainlibrary.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import rocket.agile.com.mainlibrary.R;
 
 /**
  * A simple {@link Fragment} subclass.
