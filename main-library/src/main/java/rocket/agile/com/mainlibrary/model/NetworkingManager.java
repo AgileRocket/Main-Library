@@ -25,9 +25,9 @@ public class NetworkingManager extends MasterView {
 
     private String baseURL = "http://rocketdepot.com/api/";
 
-    // TODO: Change to match change values from server
+    // TODO: Update to match change values from server
     public boolean getChangeState() {
-         return false;
+         return true;
     }
 
     public void getValues() {
