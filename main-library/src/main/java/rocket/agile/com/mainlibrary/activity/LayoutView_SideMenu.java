@@ -1,8 +1,9 @@
 package rocket.agile.com.mainlibrary.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -29,6 +30,7 @@ public class LayoutView_SideMenu extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.side_menu_activity_nav_drawer_main);
         Toolbar primaryHeader = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(primaryHeader);
@@ -53,13 +55,29 @@ public class LayoutView_SideMenu extends AppCompatActivity
         this.setTitle(dataManager.appName);
     }
 
+
+//    Back Button pressed override is to check for user intent on tapping back button
+    private Boolean exit = false;
     @Override
     public void onBackPressed() {
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if(exit) {
+                moveTaskToBack(true); // finish activity
+            } else {
+                Toast.makeText(this, "Press Back again to Exit.",
+                        Toast.LENGTH_SHORT).show();
+                exit = true;
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        exit = false;
+                    }
+                }, 3 * 1000);
+            }
         }
     }
 
@@ -106,9 +124,6 @@ public class LayoutView_SideMenu extends AppCompatActivity
                     R.id.relative_layout_for_fragment,
                     aboutUsFragment,
                     aboutUsFragment.getTag()).commit();
-
-            // Announce the tab the user is viewing
-            Toast.makeText(this, "About Us", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_home && manager.findFragmentById(R.id.relative_layout_for_fragment) != null) {
             manager.beginTransaction().remove(manager.findFragmentById(R.id.relative_layout_for_fragment)).commit();
         }

@@ -25,6 +25,11 @@ public class NetworkingManager extends MasterView {
 
     private String baseURL = "http://rocketdepot.com/api/";
 
+    // TODO: Change to match change values from server
+    public boolean getChangeState() {
+         return false;
+    }
+
     public void getValues() {
 
         try {
@@ -96,7 +101,7 @@ public class NetworkingManager extends MasterView {
             progressDialog.dismiss();
     }
 
-    private void logOut() {
+    private void logOutString() {
         //                    String actions = "";
 //
 //                    for(int i = 0; i < actionLists.getTotal(); i++) {

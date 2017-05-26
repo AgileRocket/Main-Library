@@ -2,9 +2,7 @@ package rocket.agile.com.mainlibrary.model;
 
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-
 import io.realm.Realm;
-import io.realm.RealmList;
 import io.realm.RealmResults;
 import rocket.agile.com.mainlibrary.actionItems.AboutUs_ActionItem;
 import rocket.agile.com.mainlibrary.actionItems.ActionItems_Values;
@@ -26,7 +24,7 @@ public class DataManager extends AppCompatActivity {
     // Create Realm instance
     Realm realm = Realm.getDefaultInstance();
 
-//----- App Data -------------------
+//----- Layout Selected --------------
 
 //    LAYOUT THEME
     public int layoutValue = 0;     // TODO: MAKE NETWORK CALL
@@ -34,7 +32,7 @@ public class DataManager extends AppCompatActivity {
 //----- Primary Values ---------------
 
 //    HEADER TITLE
-    public String headerTitle = "WORKS! :)";      // TODO: MAKE NETWORK CALL
+    public String headerTitle = "WORKS! :)";      // TODO: MAKE NETWORK CALLS
 
 //    PRIMARY HEADER COLOR
     public String primaryHeaderColor = "#d35400";
@@ -67,7 +65,6 @@ public class DataManager extends AppCompatActivity {
     public String aboutUsBody;
     public String aboutUsIcon;
 
-
 //----- Available Social Media Data ------
 
 //    BUSINESS WEBSITE
@@ -91,9 +88,7 @@ public class DataManager extends AppCompatActivity {
 //    GOOGLE+
     public String google;
 
-
-
-//----- Values Getter Method --------
+//----- Values and Action-Items Getter Methods --------
 
     // Get all values from Realm Persistence
     public void getDataFromRealmPersistence() {
@@ -124,7 +119,7 @@ public class DataManager extends AppCompatActivity {
 
         RealmResults<ActionList> actionLists = realm.where(ActionList.class).findAll();
 
-        String temp = "";
+        String temp;
 
         for(ActionList actionList: actionLists) {
             for(int i = 0; i < actionList.getTotal(); i++) {

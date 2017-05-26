@@ -1,11 +1,11 @@
 package rocket.agile.com.mainlibrary.activity;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import io.realm.Realm;
-import rocket.agile.com.mainlibrary.R;
 import rocket.agile.com.mainlibrary.model.DataManager;
 import rocket.agile.com.mainlibrary.model.NetworkingManager;
 import rocket.agile.com.mainlibrary.realm.RealmPersistence;
@@ -16,24 +16,25 @@ public class MasterView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // TODO: Check here for network connectivity
-
+        // Realm Initialization
         Realm.init(this);
-
-        // TODO: Check here to see if JSON reports any updates or 1st time app is run
-        // Networking call
-        NetworkingManager networkingManager = NetworkingManager.getInstance();
-        networkingManager.getValues();
-        networkingManager.getActions();
-
-        // Realm Persistence
         RealmPersistence.initRealm();
 
-        // Data Manager Update
-        DataManager dataManager = DataManager.getInstance();
-        dataManager.getDataFromRealmPersistence();
+        // TODO: Check here to see if JSON reports any updates or 1st time app is run
+        // Networking Singleton
+        NetworkingManager networkingManager = NetworkingManager.getInstance();
 
-        setContentView(R.layout.master_activity_master_view);
+        boolean networkIsAvailable = isNetworkAvailable();
+
+        if(networkIsAvailable && networkingManager.getChangeState()) {
+            networkingManager.getValues();
+            networkingManager.getActions();
+        }
+
+        // Data Manager Singleton
+        DataManager dataManager = DataManager.getInstance();
+        // Load data from Realm Storage
+        dataManager.getDataFromRealmPersistence();
 
         switch (dataManager.layoutValue) {
             case 0:
@@ -48,8 +49,15 @@ public class MasterView extends AppCompatActivity {
             case 3:
                 startActivity(new Intent(this, LayoutView_Buttons_Long.class));
                 break;
-
             default: break;
         }
+    }
+
+    public boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(this.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 }
