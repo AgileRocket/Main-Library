@@ -6,7 +6,6 @@ import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import io.realm.Realm;
-import rocket.agile.com.mainlibrary.R;
 import rocket.agile.com.mainlibrary.model.DataManager;
 import rocket.agile.com.mainlibrary.model.NetworkingManager;
 import rocket.agile.com.mainlibrary.realm.RealmPersistence;
@@ -17,9 +16,6 @@ public class MasterView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Set content view for apps using library
-        setContentView(R.layout.master_activity_master_view);
-
         // Realm Initialization
         Realm.init(this);
         RealmPersistence.initRealm();
@@ -28,8 +24,9 @@ public class MasterView extends AppCompatActivity {
         // Networking Singleton
         NetworkingManager networkingManager = NetworkingManager.getInstance();
 
-        boolean networkIsAvailable = isNetworkAvailable();
+        boolean networkIsAvailable = isNetworkAvailable();  // Check to make sure this works
 
+        // TODO: Networking and saving needs to finish before accessing Realm data
         if(networkIsAvailable && networkingManager.getChangeState()) {
             networkingManager.getValues();
             networkingManager.getActions();
