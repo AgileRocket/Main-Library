@@ -1,6 +1,10 @@
 package rocket.agile.com.mainlibrary.model;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.util.Log;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -15,18 +19,29 @@ import rocket.agile.com.mainlibrary.realm.RealmPersistence;
  * Created by keithkowalski on 3/29/17.
  */
 
-public class NetworkingManager extends MasterView {
+public class NetworkingManager extends AsyncTask<Object, Object, Void> {
+
+    private Context context;
+
+    public NetworkingManager(Context context) {
+        this.context = context;
+    }
 
     // Create Singleton
-    private static final NetworkingManager ourInstance = new NetworkingManager();
+    private static final NetworkingManager ourInstance = new NetworkingManager(null);
     public static NetworkingManager getInstance() {
         return ourInstance;
     }
 
+    // Create Progress Dialog indicator
+    private ProgressDialog dialog;
+
+    // Set base URL
     private String baseURL = "http://rocketdepot.com/api/";
 
     // TODO: Update to match change values from server
     public boolean getChangeState() {
+
          return true;
     }
 
@@ -91,16 +106,6 @@ public class NetworkingManager extends MasterView {
         }
     }
 
-    private void showpDialog(ProgressDialog progressDialog) {
-        if (!progressDialog.isShowing())
-            progressDialog.show();
-    }
-
-    private void hidepDialog(ProgressDialog progressDialog) {
-        if (progressDialog.isShowing())
-            progressDialog.dismiss();
-    }
-
     private void logOutString() {
         //                    String actions = "";
 //
@@ -122,5 +127,45 @@ public class NetworkingManager extends MasterView {
 //                    actions += "Total Actions: " + total;
 //
 //                    Log.d("ACTION LIST", actions);
+    }
+
+// TODO:  See if network availability can be checked here...
+    public boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager;
+        connectivityManager = (ConnectivityManager) context.getSystemService();
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    @Override
+    protected void onPreExecute() {
+        dialog = new ProgressDialog(context);
+        dialog.setMessage("Loading data...");
+        dialog.show();
+        super.onPreExecute();
+    }
+
+    @Override
+    protected Void doInBackground(Object... voids) {
+
+        if(getChangeState()) {
+            getValues();
+            getActions();
+        }
+        return null;
+    }
+
+    @Override
+    protected void onPostExecute(Void result) {
+
+        // Dismiss Progress Dialog
+        dialog.dismiss();
+        // Data Manager Singleton
+        DataManager dataManager = DataManager.getInstance();
+        // Load data from Realm Storage to DataManager Class
+        dataManager.getDataFromRealmPersistence();
+
+        super.onPostExecute(null);
     }
 }
