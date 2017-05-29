@@ -1,5 +1,7 @@
 package rocket.agile.com.mainlibrary.realm;
 
+import android.util.Log;
+
 import java.util.Collection;
 
 import io.realm.Realm;
@@ -7,6 +9,7 @@ import io.realm.Realm.Transaction;
 import io.realm.RealmConfiguration;
 import io.realm.internal.IOException;
 import rocket.agile.com.mainlibrary.activity.MasterView;
+import rocket.agile.com.mainlibrary.model.ActionEmail;
 import rocket.agile.com.mainlibrary.model.ActionList;
 import rocket.agile.com.mainlibrary.model.DataManager;
 import rocket.agile.com.mainlibrary.model.Values;
@@ -54,7 +57,15 @@ public class RealmPersistence extends MasterView {
             @Override
             public void execute(Realm realm) {
                 try {
-                    realm.insertOrUpdate(actionList);
+//                    realm.insertOrUpdate(actionList);
+
+                    switch(actionList.getActions().get(0).getActionType()) {
+                        case 0:
+
+                    }
+
+                    Log.d("IN REALM", actionList.getActions().get(0).getEmail());
+
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

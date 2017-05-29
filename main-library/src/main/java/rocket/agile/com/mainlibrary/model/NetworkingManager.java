@@ -120,19 +120,11 @@ public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
                 @Override
                 public void onResponse(Call<ActionList> call, Response<ActionList> response) {
                     ActionList actionLists = response.body();
-
 //                    int temp = actionLists.getActions().get(0).getActionType();
 //                    String email = actionLists.getActions().get(0).getEmail();
-
-                    ActionEmail actionEmail = new ActionEmail();
-
-
-                    Log.d("TYPE", temp + "");
-                    Log.d("EMAIL", email);
-
-
-
-//                    RealmPersistence.createOrUpdateActionItems(actionLists);
+//                    Log.d("TYPE", temp + "");
+//                    Log.d("EMAIL", email);
+                    RealmPersistence.createOrUpdateActionItems(actionLists);
                 }
 
                 @Override
