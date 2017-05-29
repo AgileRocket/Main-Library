@@ -12,9 +12,6 @@ import java.util.List;
 
 public class ActionList extends RealmObject {
 
-    @PrimaryKey @SerializedName("id")
-    private int id;
-
     @SerializedName("actions")
     private RealmList<Action> actions;
 
@@ -22,12 +19,7 @@ public class ActionList extends RealmObject {
     private Integer total;
 
 // GETTERS and SETTERS
-    public int getId() { return id; }
-
-    public void setId(int id) { this.id = id; }
-
     public List<Action> getActions() { return actions; }
-
     public void setActions(RealmList<Action> actions) {
         this.actions = actions;
     }
@@ -35,7 +27,6 @@ public class ActionList extends RealmObject {
     public Integer getTotal() {
         return total;
     }
-
     public void setTotal(Integer total) {
         this.total = total;
     }
