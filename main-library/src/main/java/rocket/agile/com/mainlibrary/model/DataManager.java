@@ -21,9 +21,6 @@ public class DataManager extends AppCompatActivity {
         return ourInstance;
     }
 
-    // Create Realm instance
-    Realm realm = Realm.getDefaultInstance();
-
 //----- Layout Selected --------------
 
 //    LAYOUT THEME
@@ -31,8 +28,8 @@ public class DataManager extends AppCompatActivity {
 
 //----- Primary Values ---------------
 
-//    HEADER TITLE
-    public String headerTitle = "WORKS! :)";      // TODO: MAKE NETWORK CALLS
+    //    APP NAME
+    public String appName;
 
 //    PRIMARY HEADER COLOR
     public String primaryHeaderColor = "#d35400";
@@ -42,9 +39,6 @@ public class DataManager extends AppCompatActivity {
 
 //    ADDRESS
     public String address;
-
-//    APP NAME
-    public String appName;
 
 //    EMAIL
     public String email;
@@ -93,29 +87,32 @@ public class DataManager extends AppCompatActivity {
     // Get all values from Realm Persistence
     public void getDataFromRealmPersistence() {
 
+        // Create Realm instance
+        Realm realm = Realm.getDefaultInstance();
+
         // Layout Value
-        getValues();
-        getActionItems();
+        getValues(realm);
+        getActionItems(realm);
 
         // Close Realm
         realm.close();
     }
 
     // GET LAYOUT VALUE
-    public void getValues() {
+    public void getValues(Realm realm) {
 
         RealmResults<Values> values = realm.where(Values.class).findAll();
 
         for(Values value: values) {
-            address = value.getAddress();
             appName = value.getAppName();
+            address = value.getAddress();
             email = value.getEmail();
             mondayHours = value.getHours().getMonday();
             phone = value.getPhone();
         }
     }
 
-    public void getActionItems() {
+    public void getActionItems(Realm realm) {
 
         RealmResults<ActionList> actionLists = realm.where(ActionList.class).findAll();
 

@@ -2,8 +2,6 @@ package rocket.agile.com.mainlibrary.model;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.util.Log;
 import retrofit2.Call;
@@ -12,14 +10,13 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rocket.agile.com.mainlibrary.Interface.RetrofitAPI;
-import rocket.agile.com.mainlibrary.activity.MasterView;
 import rocket.agile.com.mainlibrary.realm.RealmPersistence;
 
 /**
  * Created by keithkowalski on 3/29/17.
  */
 
-public class NetworkingManager extends AsyncTask<Object, Object, Void> {
+public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
 
     private Context context;
 
@@ -27,11 +24,8 @@ public class NetworkingManager extends AsyncTask<Object, Object, Void> {
         this.context = context;
     }
 
-    // Create Singleton
-    private static final NetworkingManager ourInstance = new NetworkingManager(null);
-    public static NetworkingManager getInstance() {
-        return ourInstance;
-    }
+    // Data Manager Singleton
+    DataManager dataManager = DataManager.getInstance();
 
     // Create Progress Dialog indicator
     private ProgressDialog dialog;
@@ -45,7 +39,42 @@ public class NetworkingManager extends AsyncTask<Object, Object, Void> {
          return true;
     }
 
-    public void getValues() {
+    @Override
+    protected Boolean doInBackground(Void... voids) {
+
+        if(getChangeState()) {
+            Log.d("ASYNC CHECK", "GOT HERE DO");
+            getValuesFromNetworkAPI();
+            getActionsFromNetworkAPI();
+        }
+
+        return true;
+    }
+
+    @Override
+    protected void onPreExecute() {
+
+        Log.d("ASYNC CHECK", "GOT HERE PRE");
+
+        dialog = new ProgressDialog(context);
+        dialog.setMessage("Loading data...");
+        dialog.show();
+        super.onPreExecute();
+    }
+
+    @Override
+    protected void onPostExecute(Boolean bool) {
+
+        // Dismiss Progress Dialog
+        dialog.dismiss();
+        // Load data from Realm Storage to DataManager Class
+
+        Log.d("ASYNC CHECK", "GOT HERE POST /// appName = " + dataManager.appName);
+
+        super.onPostExecute(null);
+    }
+
+    public void getValuesFromNetworkAPI() {
 
         try {
             Retrofit retrofit = new Retrofit.Builder()
@@ -75,7 +104,7 @@ public class NetworkingManager extends AsyncTask<Object, Object, Void> {
         }
     }
 
-    public void getActions() {
+    public void getActionsFromNetworkAPI() {
 
         try {
             Retrofit retrofit = new Retrofit.Builder()
@@ -110,11 +139,11 @@ public class NetworkingManager extends AsyncTask<Object, Object, Void> {
         //                    String actions = "";
 //
 //                    for(int i = 0; i < actionLists.getTotal(); i++) {
-//                        int actionType = actionLists.getActions().get(i).getActionType();
-//                        String email = actionLists.getActions().get(i).getEmail();
-//                        String icon = actionLists.getActions().get(i).getFaIcon();
-//                        String name = actionLists.getActions().get(i).getName();
-//                        String subject = actionLists.getActions().get(i).getSubject();
+//                        int actionType = actionLists.getActionsFromNetworkAPI().get(i).getActionType();
+//                        String email = actionLists.getActionsFromNetworkAPI().get(i).getEmail();
+//                        String icon = actionLists.getActionsFromNetworkAPI().get(i).getFaIcon();
+//                        String name = actionLists.getActionsFromNetworkAPI().get(i).getName();
+//                        String subject = actionLists.getActionsFromNetworkAPI().get(i).getSubject();
 //
 //                        actions += "Action: "  + actionType + "\n" +
 //                                "Email: "   + email      + "\n" +
@@ -127,45 +156,5 @@ public class NetworkingManager extends AsyncTask<Object, Object, Void> {
 //                    actions += "Total Actions: " + total;
 //
 //                    Log.d("ACTION LIST", actions);
-    }
-
-// TODO:  See if network availability can be checked here...
-    public boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager;
-        connectivityManager = (ConnectivityManager) context.getSystemService();
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
-
-    @Override
-    protected void onPreExecute() {
-        dialog = new ProgressDialog(context);
-        dialog.setMessage("Loading data...");
-        dialog.show();
-        super.onPreExecute();
-    }
-
-    @Override
-    protected Void doInBackground(Object... voids) {
-
-        if(getChangeState()) {
-            getValues();
-            getActions();
-        }
-        return null;
-    }
-
-    @Override
-    protected void onPostExecute(Void result) {
-
-        // Dismiss Progress Dialog
-        dialog.dismiss();
-        // Data Manager Singleton
-        DataManager dataManager = DataManager.getInstance();
-        // Load data from Realm Storage to DataManager Class
-        dataManager.getDataFromRealmPersistence();
-
-        super.onPostExecute(null);
     }
 }
