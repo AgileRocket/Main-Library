@@ -40,21 +40,7 @@ public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
     }
 
     @Override
-    protected Boolean doInBackground(Void... voids) {
-
-        if(getChangeState()) {
-            Log.d("ASYNC CHECK", "GOT HERE DO");
-            getValuesFromNetworkAPI();
-            getActionsFromNetworkAPI();
-        }
-
-        return true;
-    }
-
-    @Override
     protected void onPreExecute() {
-
-        Log.d("ASYNC CHECK", "GOT HERE PRE");
 
         dialog = new ProgressDialog(context);
         dialog.setMessage("Loading data...");
@@ -63,14 +49,21 @@ public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
     }
 
     @Override
+    protected Boolean doInBackground(Void... voids) {
+
+        if(getChangeState()) {
+            getValuesFromNetworkAPI();
+            getActionsFromNetworkAPI();
+        }
+
+        return true;
+    }
+
+    @Override
     protected void onPostExecute(Boolean bool) {
 
         // Dismiss Progress Dialog
         dialog.dismiss();
-        // Load data from Realm Storage to DataManager Class
-
-        Log.d("ASYNC CHECK", "GOT HERE POST /// appName = " + dataManager.appName);
-
         super.onPostExecute(null);
     }
 
@@ -120,10 +113,6 @@ public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
                 @Override
                 public void onResponse(Call<ActionList> call, Response<ActionList> response) {
                     ActionList actionLists = response.body();
-//                    int temp = actionLists.getActions().get(0).getActionType();
-//                    String email = actionLists.getActions().get(0).getEmail();
-//                    Log.d("TYPE", temp + "");
-//                    Log.d("EMAIL", email);
                     RealmPersistence.createOrUpdateActionItems(actionLists);
                 }
 
@@ -136,28 +125,5 @@ public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
             Log.d("On Response", "There is an error");
             e.printStackTrace();
         }
-    }
-
-    private void logOutString() {
-        //                    String actions = "";
-//
-//                    for(int i = 0; i < actionLists.getTotal(); i++) {
-//                        int actionType = actionLists.getActionsFromNetworkAPI().get(i).getActionType();
-//                        String email = actionLists.getActionsFromNetworkAPI().get(i).getEmail();
-//                        String icon = actionLists.getActionsFromNetworkAPI().get(i).getFaIcon();
-//                        String name = actionLists.getActionsFromNetworkAPI().get(i).getName();
-//                        String subject = actionLists.getActionsFromNetworkAPI().get(i).getSubject();
-//
-//                        actions += "Action: "  + actionType + "\n" +
-//                                "Email: "   + email      + "\n" +
-//                                "FA Icon: " + icon       + "\n" +
-//                                "Name: "    + name       + "\n" +
-//                                "Subject: " + subject    + "\n\n";
-//                    }
-//
-//                    String total = actionLists.getTotal().toString();
-//                    actions += "Total Actions: " + total;
-//
-//                    Log.d("ACTION LIST", actions);
     }
 }

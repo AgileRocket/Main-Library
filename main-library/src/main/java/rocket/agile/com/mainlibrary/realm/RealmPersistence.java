@@ -53,26 +53,42 @@ public class RealmPersistence extends MasterView {
     public static void createOrUpdateActionItems(final ActionList actionList) {
         Realm realm = Realm.getDefaultInstance();
 
-        realm.executeTransaction(new Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                try {
-//                    realm.insertOrUpdate(actionList);
-
-                    switch(actionList.getActions().get(0).getActionType()) {
-                        case 0:
-
+            realm.executeTransaction(new Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    try {
+                        for (int i = 0; i < actionList.getActions().size(); i++) {
+                            switch (actionList.getActions().get(i).getActionType()) {
+                                case 0:
+                                    ActionEmail actionEmail = new ActionEmail(
+                                            actionList.getActions().get(i).getActionType(),
+                                            actionList.getActions().get(i).getFaIcon(),
+                                            actionList.getActions().get(i).getName(),
+                                            actionList.getActions().get(i).getEmail(),
+                                            actionList.getActions().get(i).getSubject()
+                                            );
+                                    realm.insertOrUpdate(actionEmail);
+                                    break;
+//                                case 2:
+//                                    ActionEmail actionEmail = new ActionEmail(
+//                                            actionList.getActions().get(i).getActionType(),
+//                                            actionList.getActions().get(i).getFaIcon(),
+//                                            actionList.getActions().get(i).getName(),
+//                                            actionList.getActions().get(i).getEmail(),
+//                                            actionList.getActions().get(i).getSubject()
+//                                    );
+//                                    realm.insertOrUpdate(actionEmail);
+//                                    break;
+                                default: break;
+                            }
+                        }
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
                     }
-
-                    Log.d("IN REALM", actionList.getActions().get(0).getEmail());
-
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
                 }
-            }
-        });
-        // Set data in data manager
-        dataManager.getActionItems(realm);
-        realm.close();
-    }
+            });
+            // Set data in data manager
+//            dataManager.getActionItems(realm);    // May not need this here?
+            realm.close();
+        }
 }

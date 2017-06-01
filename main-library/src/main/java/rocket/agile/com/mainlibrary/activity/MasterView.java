@@ -25,15 +25,14 @@ public class MasterView extends AppCompatActivity {
 
         setContentView(R.layout.master_activity_master_view);
 
-        // TODO: Check here to see if 1st time app is run
 
         boolean networkIsAvailable = isNetworkAvailable();  // Check to make sure this works
         boolean networkPullComplete = false;
 
-        // TODO: Networking and saving needs to finish before accessing Realm data
+        // TODO: Check here to see if 1st time app is run
         if(networkIsAvailable) {
             try {
-                while(!networkPullComplete) {
+                while(!networkPullComplete) {       // Check if networking thread has completed pulling all data (for initial launch of app all-time)
                     networkPullComplete = new NetworkingManager(this).execute().get();
                 }
                 // Realm Initialization

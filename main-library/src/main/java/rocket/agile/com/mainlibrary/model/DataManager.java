@@ -4,10 +4,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import io.realm.Realm;
 import io.realm.RealmResults;
-import rocket.agile.com.mainlibrary.actionItems.AboutUs_ActionItem;
-import rocket.agile.com.mainlibrary.actionItems.ActionItems_Values;
-import rocket.agile.com.mainlibrary.actionItems.Email_ActionItem;
-
 
 /**
  * Created by keithkowalski on 3/21/17.
@@ -52,8 +48,12 @@ public class DataManager extends AppCompatActivity {
 
 //----- Fragment Data --------------------
 
-//    TYPE
-    public int actionType;
+//    TODO: Look into ENUMS or Structs (if possible) for storing action item data parts
+//    Email
+    public int actionEmailType;
+    public String emailFAIcon;
+    public String emailName;
+    public String emailSubject;
 
 //    ABOUT US
     public String aboutUsBody;
@@ -114,18 +114,9 @@ public class DataManager extends AppCompatActivity {
 
     public void getActionItems(Realm realm) {
 
-        RealmResults<ActionList> actionLists = realm.where(ActionList.class).findAll();
+        RealmResults<ActionEmail> actionEmails = realm.where(ActionEmail.class).findAll();
 
-        String temp;
-
-        for(ActionList actionList: actionLists) {
-            for(int i = 0; i < actionList.getTotal(); i++) {
-                actionType = actionList.getActions().get(i).getActionType();
-                aboutUsIcon = actionList.getActions().get(i).getFaIcon();
-
-                temp = actionType + " " + aboutUsIcon + "\n\n";
-                Log.d("Actions", temp);
-            }
-        }
+        // Test Log Data from Realm
+        Log.d("Data Manager", "\n" + actionEmails.first().getActionType() + "\n" + actionEmails.first().getFAIcon() + "\n" + actionEmails.first().getName() + "\n" + actionEmails.first().getEmail() + "\n" + actionEmails.first().getSubject());
     }
 }
