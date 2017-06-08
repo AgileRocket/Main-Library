@@ -88,7 +88,7 @@ public class RealmPersistence extends MasterView {
                 }
             });
             // Set data in data manager
-//            dataManager.getActionItems(realm);    // May not need this here?
+            dataManager.getActionItems(realm);
             realm.close();
         }
 }

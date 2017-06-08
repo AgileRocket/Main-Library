@@ -4,12 +4,16 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
+
+import io.realm.Realm;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rocket.agile.com.mainlibrary.Interface.RetrofitAPI;
+import rocket.agile.com.mainlibrary.activity.MasterView;
 import rocket.agile.com.mainlibrary.realm.RealmPersistence;
 
 /**
@@ -42,14 +46,16 @@ public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
     @Override
     protected void onPreExecute() {
 
-        dialog = new ProgressDialog(context);
-        dialog.setMessage("Loading data...");
-        dialog.show();
+        Log.d("IN PRE", "TRUE");
+        Toast.makeText(context, "Loading data...", Toast.LENGTH_LONG).show();
+
         super.onPreExecute();
     }
 
     @Override
     protected Boolean doInBackground(Void... voids) {
+
+        Log.d("IN BACKGROUND", "TRUE");
 
         if(getChangeState()) {
             getValuesFromNetworkAPI();
@@ -62,8 +68,13 @@ public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
     @Override
     protected void onPostExecute(Boolean bool) {
 
+        Log.d("IN POST", "TRUE");
+
+        Realm.init(context);
+        RealmPersistence.initRealm();
+
         // Dismiss Progress Dialog
-        dialog.dismiss();
+//        dialog.dismiss();
         super.onPostExecute(null);
     }
 
