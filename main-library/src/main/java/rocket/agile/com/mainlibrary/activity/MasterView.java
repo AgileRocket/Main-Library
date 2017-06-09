@@ -8,9 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
-
 import java.util.concurrent.ExecutionException;
-
 import io.realm.Realm;
 import rocket.agile.com.mainlibrary.R;
 import rocket.agile.com.mainlibrary.model.DataManager;
@@ -21,7 +19,6 @@ public class MasterView extends AppCompatActivity {
 
     // Data Manager Singleton
     DataManager dataManager = DataManager.getInstance();
-
     // Set SharedPreferences variable to check first run for app
     SharedPreferences prefs = null;
 
@@ -29,21 +26,20 @@ public class MasterView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Realm.init(this);
+        RealmPersistence.initRealm();
+
         setContentView(R.layout.master_activity_master_view);
 
         boolean networkIsAvailable = isNetworkAvailable();  // Check to make sure this works
         boolean networkPullComplete = false;
 
         // TODO: Check here to see if 1st time app is run?
-
         if(networkIsAvailable) {
             try {
                 while(!networkPullComplete) {       // Check if networking thread has completed pulling all data (for initial launch of app all-time)
                     Log.d("Network Pull", networkPullComplete + "");
-
                     networkPullComplete = new NetworkingManager(this).execute().get();
-
-                    Log.d("Network Pull", networkPullComplete + "");
                 }
                 Log.d("Network Pull", networkPullComplete + "");
             } catch (InterruptedException e) {
@@ -53,17 +49,33 @@ public class MasterView extends AppCompatActivity {
             }
         }
         else if(!networkIsAvailable) {
-
             Toast.makeText(this, "Network Connection Error",
                     Toast.LENGTH_LONG).show();
-
-            Realm.init(this);
-            RealmPersistence.initRealm();
-//            dataManager.getDataFromRealmPersistence();
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+//        Log.d("APP TITLE---", dataManager.appName);
+
+        setLayout();
+    }
+
+    public boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(this.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    public void setLayout() {
 
         switch (dataManager.layoutValue) {
             case 0:
+                Log.d("CREATING LAYOUT", "TRUE");
                 startActivity(new Intent(this, LayoutView_SideMenu.class));
                 break;
             case 1:
@@ -77,14 +89,6 @@ public class MasterView extends AppCompatActivity {
                 break;
             default: break;
         }
-    }
-
-    public boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) getSystemService(this.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     private boolean checkFirstRun() {

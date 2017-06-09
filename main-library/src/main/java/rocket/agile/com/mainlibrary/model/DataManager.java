@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import io.realm.Realm;
 import io.realm.RealmResults;
+import rocket.agile.com.mainlibrary.activity.MasterView;
 
 /**
  * Created by keithkowalski on 3/21/17.
@@ -16,6 +17,8 @@ public class DataManager extends AppCompatActivity {
     public static DataManager getInstance() {
         return ourInstance;
     }
+
+    Realm realm;
 
 //----- Layout Selected --------------
 
@@ -85,8 +88,9 @@ public class DataManager extends AppCompatActivity {
 //----- Values and Action-Items Getter Methods --------
 
     // GET LAYOUT VALUES
-    public void getValues(Realm realm) {
+    public void getValues() {
 
+        realm = Realm.getDefaultInstance();
         RealmResults<Values> values = realm.where(Values.class).findAll();
 
         for(Values value: values) {
@@ -96,6 +100,7 @@ public class DataManager extends AppCompatActivity {
             mondayHours = value.getHours().getMonday();
             phone = value.getPhone();
         }
+        realm.close();
     }
 
     // GET ACTION ITEMS
@@ -106,6 +111,6 @@ public class DataManager extends AppCompatActivity {
         Log.d("ActionEmail Count", actionEmails.size() + "");
 
         // Test Log Data from Realm
-        Log.d("Data Manager", "\n" + actionEmails.first().getActionType() + "\n" + actionEmails.first().getFAIcon() + "\n" + actionEmails.first().getName() + "\n" + actionEmails.first().getEmail() + "\n" + actionEmails.first().getSubject());
+        Log.d("Data Manager\n", "\n" + actionEmails.first().getActionType() + "\n" + actionEmails.first().getFAIcon() + "\n" + actionEmails.first().getName() + "\n" + actionEmails.first().getEmail() + "\n" + actionEmails.first().getSubject());
     }
 }

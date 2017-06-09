@@ -1,12 +1,9 @@
 package rocket.agile.com.mainlibrary.model;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
-
-import io.realm.Realm;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -28,25 +25,20 @@ public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
         this.context = context;
     }
 
-    // Data Manager Singleton
-    DataManager dataManager = DataManager.getInstance();
-
     // Create Progress Dialog indicator
-    private ProgressDialog dialog;
+//    private ProgressDialog dialog;
 
     // Set base URL
     private String baseURL = "http://rocketdepot.com/api/";
 
     // TODO: Update to match change values from server
     public boolean getChangeState() {
-
          return true;
     }
 
     @Override
     protected void onPreExecute() {
 
-        Log.d("IN PRE", "TRUE");
         Toast.makeText(context, "Loading data...", Toast.LENGTH_LONG).show();
 
         super.onPreExecute();
@@ -55,11 +47,9 @@ public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
     @Override
     protected Boolean doInBackground(Void... voids) {
 
-        Log.d("IN BACKGROUND", "TRUE");
-
         if(getChangeState()) {
             getValuesFromNetworkAPI();
-            getActionsFromNetworkAPI();
+//            getActionsFromNetworkAPI();
         }
 
         return true;
@@ -67,11 +57,6 @@ public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
 
     @Override
     protected void onPostExecute(Boolean bool) {
-
-        Log.d("IN POST", "TRUE");
-
-        Realm.init(context);
-        RealmPersistence.initRealm();
 
         // Dismiss Progress Dialog
 //        dialog.dismiss();
@@ -87,7 +72,6 @@ public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
                     .build();
 
             RetrofitAPI service = retrofit.create(RetrofitAPI.class);
-
             Call<Values> call = service.getValues();
 
             call.enqueue(new Callback<Values>() {

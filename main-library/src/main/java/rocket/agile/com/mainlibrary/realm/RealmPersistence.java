@@ -21,7 +21,8 @@ import rocket.agile.com.mainlibrary.model.Values;
 public class RealmPersistence extends MasterView {
 
     // Data Manager Singleton
-    final static DataManager dataManager = DataManager.getInstance();
+    static DataManager dataManager = DataManager.getInstance();
+    static Realm realm;
 
     // Initialize Realm
     public static void initRealm() {
@@ -36,22 +37,26 @@ public class RealmPersistence extends MasterView {
     // Save values via JSON asynchronously
     //    Persist Values
     public static void createOrUpdateValues(final Values values) {
-        Realm realm = Realm.getDefaultInstance();
 
-        realm.executeTransaction(new Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                realm.insertOrUpdate(values);
+        try { // I could use try-with-resources here
+            realm = Realm.getDefaultInstance();
+            realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    realm.insertOrUpdate(values);
+                }
+            });
+            dataManager.getValues();
+        } finally {
+            if(realm != null) {
+                realm.close();
             }
-        });
-        // Set data in data manager
-        dataManager.getValues(realm);
-        realm.close();
+        }
     }
 
 //    Persist Action Items
     public static void createOrUpdateActionItems(final ActionList actionList) {
-        Realm realm = Realm.getDefaultInstance();
+//        Realm realm = Realm.getDefaultInstance();
 
             realm.executeTransaction(new Transaction() {
                 @Override
@@ -89,6 +94,5 @@ public class RealmPersistence extends MasterView {
             });
             // Set data in data manager
             dataManager.getActionItems(realm);
-            realm.close();
         }
 }
