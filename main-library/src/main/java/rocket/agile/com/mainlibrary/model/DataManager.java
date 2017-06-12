@@ -89,19 +89,6 @@ public class DataManager extends AppCompatActivity {
 
 //----- Values and Action-Items Getter Methods --------
 
-
-    // GET CHANGE STATE
-    public void getChangeState() {
-
-        realm = Realm.getDefaultInstance();
-        RealmResults<ChangeState> changeStates = realm.where(ChangeState.class).findAll();
-
-        for(ChangeState changeState: changeStates) {
-            changeStateValue = changeState.getChangeState();
-        }
-        realm.close();
-    }
-
     // GET LAYOUT VALUES
     public void getValues() {
 
