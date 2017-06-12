@@ -19,8 +19,10 @@ import rocket.agile.com.mainlibrary.realm.RealmPersistence;
 
 public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
 
-    private Context context;
+    // Data Manager Singleton
+    DataManager dataManager = DataManager.getInstance();
 
+    private Context context;
     public NetworkingManager(Context context) {
         this.context = context;
     }
@@ -31,27 +33,22 @@ public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
     // Set base URL
     private String baseURL = "http://rocketdepot.com/api/";
 
-    // TODO: Update to match change values from server
-    public boolean getChangeState() {
-         return true;
-    }
-
     @Override
     protected void onPreExecute() {
 
         Toast.makeText(context, "Loading data...", Toast.LENGTH_LONG).show();
 
         super.onPreExecute();
+//        getChangeStateFromNetworkAPI();   // TODO: Call this when network api is available
     }
 
     @Override
     protected Boolean doInBackground(Void... voids) {
 
-        if(getChangeState()) {
+        if(dataManager.changeStateValue) {
             getValuesFromNetworkAPI();
-//            getActionsFromNetworkAPI();
+            getActionsFromNetworkAPI();
         }
-
         return true;
     }
 
@@ -61,6 +58,36 @@ public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
         // Dismiss Progress Dialog
 //        dialog.dismiss();
         super.onPostExecute(null);
+    }
+
+    public void getChangeStateFromNetworkAPI() {
+
+        try {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(baseURL).
+                            addConverterFactory(GsonConverterFactory.create())
+                    .build();
+
+            RetrofitAPI service = retrofit.create(RetrofitAPI.class);
+
+            // TODO: Change this to match change state when available from api
+            Call<ChangeState> call = service.getChangeState();
+
+            call.enqueue(new Callback<ChangeState>() {
+                @Override
+                public void onResponse(Call<ChangeState> call, Response<ChangeState> response) {
+                    ChangeState changeState = response.body();
+                    dataManager.changeStateValue = changeState.getChangeState();
+                }
+                @Override
+                public void onFailure(Call<ChangeState> call, Throwable t) {
+                    Log.d("On Failure", t.toString());
+                }
+            });
+        } catch (Exception e) {
+            Log.d("On Response", "There is an error");
+            e.printStackTrace();
+        }
     }
 
     public void getValuesFromNetworkAPI() {
@@ -80,7 +107,6 @@ public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
                     Values valuesData = response.body();
                     RealmPersistence.createOrUpdateValues(valuesData);
                 }
-
                 @Override
                 public void onFailure(Call<Values> call, Throwable t) {
                     Log.d("On Failure", t.toString());
@@ -101,7 +127,6 @@ public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
                     .build();
 
             RetrofitAPI service = retrofit.create(RetrofitAPI.class);
-
             Call<ActionList> call = service.getActionList();
 
             call.enqueue(new Callback<ActionList>() {
@@ -110,7 +135,6 @@ public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
                     ActionList actionLists = response.body();
                     RealmPersistence.createOrUpdateActionItems(actionLists);
                 }
-
                 @Override
                 public void onFailure(Call<ActionList> call, Throwable t) {
                     Log.d("On Failure", t.toString());

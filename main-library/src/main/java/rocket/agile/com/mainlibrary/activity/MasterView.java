@@ -6,9 +6,10 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import io.realm.Realm;
 import rocket.agile.com.mainlibrary.R;
 import rocket.agile.com.mainlibrary.model.DataManager;
@@ -29,24 +30,13 @@ public class MasterView extends AppCompatActivity {
         Realm.init(this);
         RealmPersistence.initRealm();
 
-        setContentView(R.layout.master_activity_master_view);
+        boolean networkIsAvailable = isNetworkAvailable();
 
-        boolean networkIsAvailable = isNetworkAvailable();  // Check to make sure this works
-        boolean networkPullComplete = false;
+        setContentView(R.layout.master_activity_master_view);
 
         // TODO: Check here to see if 1st time app is run?
         if(networkIsAvailable) {
-            try {
-                while(!networkPullComplete) {       // Check if networking thread has completed pulling all data (for initial launch of app all-time)
-                    Log.d("Network Pull", networkPullComplete + "");
-                    networkPullComplete = new NetworkingManager(this).execute().get();
-                }
-                Log.d("Network Pull", networkPullComplete + "");
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }
+            networkCall();
         }
         else if(!networkIsAvailable) {
             Toast.makeText(this, "Network Connection Error",
@@ -54,13 +44,34 @@ public class MasterView extends AppCompatActivity {
         }
     }
 
+//    TODO: Test onResume() for network calls when entering foreground
+
     @Override
     protected void onStart() {
         super.onStart();
 
-//        Log.d("APP TITLE---", dataManager.appName);
-
+        // Call for values and actions to guarantee update to interface
+        dataManager.getValues();
         setLayout();
+    }
+
+    private void networkCall() {
+
+        boolean networkPullComplete = false;
+
+        try {
+            while(!networkPullComplete) {       // Check if networking thread has completed pulling all data
+                try {
+                    networkPullComplete = new NetworkingManager(this).execute().get(10, TimeUnit.SECONDS);
+                } catch (TimeoutException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
     }
 
     public boolean isNetworkAvailable() {
@@ -75,7 +86,6 @@ public class MasterView extends AppCompatActivity {
 
         switch (dataManager.layoutValue) {
             case 0:
-                Log.d("CREATING LAYOUT", "TRUE");
                 startActivity(new Intent(this, LayoutView_SideMenu.class));
                 break;
             case 1:

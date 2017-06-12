@@ -20,6 +20,9 @@ public class DataManager extends AppCompatActivity {
 
     Realm realm;
 
+//----- Current Change State ---------
+    public boolean changeStateValue = true;  // TODO: MAKE NETWORK CALL
+
 //----- Layout Selected --------------
 
 //    LAYOUT THEME
@@ -51,7 +54,6 @@ public class DataManager extends AppCompatActivity {
 
 //----- Fragment Data --------------------
 
-//    TODO: Look into ENUMS or Structs (if possible) for storing action item data parts
 //    Email
     public int actionEmailType;
     public String emailFAIcon;
@@ -87,6 +89,19 @@ public class DataManager extends AppCompatActivity {
 
 //----- Values and Action-Items Getter Methods --------
 
+
+    // GET CHANGE STATE
+    public void getChangeState() {
+
+        realm = Realm.getDefaultInstance();
+        RealmResults<ChangeState> changeStates = realm.where(ChangeState.class).findAll();
+
+        for(ChangeState changeState: changeStates) {
+            changeStateValue = changeState.getChangeState();
+        }
+        realm.close();
+    }
+
     // GET LAYOUT VALUES
     public void getValues() {
 
@@ -104,13 +119,16 @@ public class DataManager extends AppCompatActivity {
     }
 
     // GET ACTION ITEMS
-    public void getActionItems(Realm realm) {
+    public void getActionItems() {
 
+        realm = Realm.getDefaultInstance();
         RealmResults<ActionEmail> actionEmails = realm.where(ActionEmail.class).findAll();
 
         Log.d("ActionEmail Count", actionEmails.size() + "");
 
         // Test Log Data from Realm
         Log.d("Data Manager\n", "\n" + actionEmails.first().getActionType() + "\n" + actionEmails.first().getFAIcon() + "\n" + actionEmails.first().getName() + "\n" + actionEmails.first().getEmail() + "\n" + actionEmails.first().getSubject());
+
+        realm.close();
     }
 }

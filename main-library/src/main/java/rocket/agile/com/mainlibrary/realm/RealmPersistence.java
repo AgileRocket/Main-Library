@@ -1,16 +1,11 @@
 package rocket.agile.com.mainlibrary.realm;
 
-import android.util.Log;
-
-import java.util.Collection;
-
 import io.realm.Realm;
-import io.realm.Realm.Transaction;
 import io.realm.RealmConfiguration;
-import io.realm.internal.IOException;
 import rocket.agile.com.mainlibrary.activity.MasterView;
 import rocket.agile.com.mainlibrary.model.ActionEmail;
 import rocket.agile.com.mainlibrary.model.ActionList;
+import rocket.agile.com.mainlibrary.model.ChangeState;
 import rocket.agile.com.mainlibrary.model.DataManager;
 import rocket.agile.com.mainlibrary.model.Values;
 
@@ -38,7 +33,7 @@ public class RealmPersistence extends MasterView {
     //    Persist Values
     public static void createOrUpdateValues(final Values values) {
 
-        try { // I could use try-with-resources here
+        try {
             realm = Realm.getDefaultInstance();
             realm.executeTransaction(new Realm.Transaction() {
                 @Override
@@ -54,45 +49,48 @@ public class RealmPersistence extends MasterView {
         }
     }
 
-//    Persist Action Items
+    //    Persist Action Items
     public static void createOrUpdateActionItems(final ActionList actionList) {
-//        Realm realm = Realm.getDefaultInstance();
 
-            realm.executeTransaction(new Transaction() {
+        try {
+            realm = Realm.getDefaultInstance();
+            realm.executeTransaction(new Realm.Transaction() {
                 @Override
                 public void execute(Realm realm) {
-                    try {
-                        for (int i = 0; i < actionList.getActions().size(); i++) {
-                            switch (actionList.getActions().get(i).getActionType()) {
-                                case 0:
-                                    ActionEmail actionEmail = new ActionEmail(
-                                            actionList.getActions().get(i).getActionType(),
-                                            actionList.getActions().get(i).getFaIcon(),
-                                            actionList.getActions().get(i).getName(),
-                                            actionList.getActions().get(i).getEmail(),
-                                            actionList.getActions().get(i).getSubject()
-                                            );
-                                    realm.insertOrUpdate(actionEmail);
-                                    break;
-//                                case 2:
-//                                    ActionEmail actionEmail = new ActionEmail(
-//                                            actionList.getActions().get(i).getActionType(),
-//                                            actionList.getActions().get(i).getFaIcon(),
-//                                            actionList.getActions().get(i).getName(),
-//                                            actionList.getActions().get(i).getEmail(),
-//                                            actionList.getActions().get(i).getSubject()
-//                                    );
-//                                    realm.insertOrUpdate(actionEmail);
-//                                    break;
-                                default: break;
-                            }
+                    for (int i = 0; i < actionList.getActions().size(); i++) {
+                        switch (actionList.getActions().get(i).getActionType()) {
+                            case 0:
+                                ActionEmail actionEmail = new ActionEmail(
+                                        actionList.getActions().get(i).getActionType(),
+                                        actionList.getActions().get(i).getFaIcon(),
+                                        actionList.getActions().get(i).getName(),
+                                        actionList.getActions().get(i).getEmail(),
+                                        actionList.getActions().get(i).getSubject()
+                                );
+                                realm.insertOrUpdate(actionEmail);
+                                break;
+//                                    case 2:
+//                                        ActionEmail actionEmail = new ActionEmail(
+//                                                actionList.getActions().get(i).getActionType(),
+//                                                actionList.getActions().get(i).getFaIcon(),
+//                                                actionList.getActions().get(i).getName(),
+//                                                actionList.getActions().get(i).getEmail(),
+//                                                actionList.getActions().get(i).getSubject()
+//                                        );
+//                                        realm.insertOrUpdate(actionEmail);
+//                                        break;
+                            default:
+                                break;
                         }
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
                     }
                 }
             });
             // Set data in data manager
-            dataManager.getActionItems(realm);
+            dataManager.getActionItems();
+        } finally {
+            if (realm != null) {
+                realm.close();
+            }
         }
+    }
 }
