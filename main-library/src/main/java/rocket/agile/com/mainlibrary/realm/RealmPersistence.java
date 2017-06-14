@@ -3,9 +3,8 @@ package rocket.agile.com.mainlibrary.realm;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import rocket.agile.com.mainlibrary.activity.MasterView;
-import rocket.agile.com.mainlibrary.model.ActionEmail;
-import rocket.agile.com.mainlibrary.model.ActionList;
-import rocket.agile.com.mainlibrary.model.ChangeState;
+import rocket.agile.com.mainlibrary.actionItems.ActionEmail;
+import rocket.agile.com.mainlibrary.actionItems.ActionList;
 import rocket.agile.com.mainlibrary.model.DataManager;
 import rocket.agile.com.mainlibrary.model.Values;
 
@@ -86,7 +85,7 @@ public class RealmPersistence extends MasterView {
                 }
             });
             // Set data in data manager
-            dataManager.getActionItems();
+            dataManager.getEmailAction();
         } finally {
             if (realm != null) {
                 realm.close();

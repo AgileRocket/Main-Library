@@ -1,8 +1,10 @@
-package rocket.agile.com.mainlibrary.model;
+package rocket.agile.com.mainlibrary.actionItems;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
+import rocket.agile.com.mainlibrary.model.Action;
+
 import com.google.gson.annotations.SerializedName;
 import java.util.List;
 

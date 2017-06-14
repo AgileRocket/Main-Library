@@ -1,16 +1,14 @@
 package rocket.agile.com.mainlibrary.model;
 
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import io.realm.Realm;
 import io.realm.RealmResults;
-import rocket.agile.com.mainlibrary.activity.MasterView;
+import rocket.agile.com.mainlibrary.actionItems.ActionEmail;
 
 /**
  * Created by keithkowalski on 3/21/17.
  */
 
-public class DataManager extends AppCompatActivity {
+public class DataManager {
 
     // Create Singleton
     private static final DataManager ourInstance = new DataManager();
@@ -60,9 +58,11 @@ public class DataManager extends AppCompatActivity {
     public String emailName;
     public String emailSubject;
 
-//    ABOUT US
-    public String aboutUsBody;
-    public String aboutUsIcon;
+//    Call Us
+    public int actionCallType;
+    public String callFAIcon;
+    public String callName;
+    public String phoneNumber;
 
 //----- Available Social Media Data ------
 
@@ -98,7 +98,6 @@ public class DataManager extends AppCompatActivity {
         for(Values value: values) {
             appName = value.getAppName();
             address = value.getAddress();
-            email = value.getEmail();
             mondayHours = value.getHours().getMonday();
             phone = value.getPhone();
         }
@@ -106,15 +105,35 @@ public class DataManager extends AppCompatActivity {
     }
 
     // GET ACTION ITEMS
-    public void getActionItems() {
+    public void getEmailAction() {
 
         realm = Realm.getDefaultInstance();
         RealmResults<ActionEmail> actionEmails = realm.where(ActionEmail.class).findAll();
 
-        Log.d("ActionEmail Count", actionEmails.size() + "");
+        actionEmailType = actionEmails.first().getActionType();
+        emailFAIcon = actionEmails.first().getFAIcon();
+        emailName = actionEmails.first().getName();
+        email = actionEmails.first().getEmail();
+        emailSubject = actionEmails.first().getSubject();
 
-        // Test Log Data from Realm
-        Log.d("Data Manager\n", "\n" + actionEmails.first().getActionType() + "\n" + actionEmails.first().getFAIcon() + "\n" + actionEmails.first().getName() + "\n" + actionEmails.first().getEmail() + "\n" + actionEmails.first().getSubject());
+//        Log.d("ActionEmail Count", actionEmails.size() + "");
+//        Log.d("Data Manager\n", "\n" + actionEmails.first().getActionType() + "\n" + actionEmails.first().getFAIcon() + "\n" + actionEmails.first().getName() + "\n" + actionEmails.first().getEmail() + "\n" + actionEmails.first().getSubject());
+
+        realm.close();
+    }
+
+    public void getCallActions() {
+
+        realm = Realm.getDefaultInstance();
+//        RealmResults<ActionEmail> actionEmails = realm.where(ActionCall.class).findAll();
+
+//        actionCallType = actionEmails.first().getActionType();
+//        callFAIcon = actionEmails.first().getFAIcon();
+//        callName = actionEmails.first().getName();
+//        phoneNumber = actionEmails.first().getEmail();
+
+//        Log.d("ActionEmail Count", actionEmails.size() + "");
+//        Log.d("Data Manager\n", "\n" + actionEmails.first().getActionType() + "\n" + actionEmails.first().getFAIcon() + "\n" + actionEmails.first().getName() + "\n" + actionEmails.first().getEmail() + "\n" + actionEmails.first().getSubject());
 
         realm.close();
     }
