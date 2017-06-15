@@ -6,6 +6,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -36,7 +37,7 @@ public class MasterView extends AppCompatActivity {
 
         // TODO: Check here to see if 1st time app is run?
         if(networkIsAvailable) {
-            networkCall();
+            networkCall();  // Network call always made to at least get data pull for any changes applied via API
         }
         else if(!networkIsAvailable) {
             Toast.makeText(this, "Network Connection Error",
@@ -57,15 +58,16 @@ public class MasterView extends AppCompatActivity {
 
     private void networkCall() {
 
-        boolean networkPullComplete = false;
+     //   boolean networkPullComplete = false;
 
         try {
-            while(!networkPullComplete) {       // Check if networking thread has completed pulling all data
+           // while(!networkPullComplete) {       // Check if networking thread has completed pulling all data
                 try {
-                    networkPullComplete = new NetworkingManager(this).execute().get(10, TimeUnit.SECONDS);
+                    new NetworkingManager(this).execute().get(10, TimeUnit.SECONDS);
+//                    networkPullComplete = new NetworkingManager(this).execute().get(10, TimeUnit.SECONDS);
                 } catch (TimeoutException e) {
                     e.printStackTrace();
-                }
+            //    }
             }
         } catch (InterruptedException e) {
             e.printStackTrace();

@@ -2,6 +2,7 @@ package rocket.agile.com.mainlibrary.realm;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import rocket.agile.com.mainlibrary.actionItems.ActionPhone;
 import rocket.agile.com.mainlibrary.activity.MasterView;
 import rocket.agile.com.mainlibrary.actionItems.ActionEmail;
 import rocket.agile.com.mainlibrary.actionItems.ActionList;
@@ -58,6 +59,7 @@ public class RealmPersistence extends MasterView {
                 public void execute(Realm realm) {
                     for (int i = 0; i < actionList.getActions().size(); i++) {
                         switch (actionList.getActions().get(i).getActionType()) {
+                            // EMAIL
                             case 0:
                                 ActionEmail actionEmail = new ActionEmail(
                                         actionList.getActions().get(i).getActionType(),
@@ -68,16 +70,18 @@ public class RealmPersistence extends MasterView {
                                 );
                                 realm.insertOrUpdate(actionEmail);
                                 break;
-//                                    case 2:
-//                                        ActionEmail actionEmail = new ActionEmail(
-//                                                actionList.getActions().get(i).getActionType(),
-//                                                actionList.getActions().get(i).getFaIcon(),
-//                                                actionList.getActions().get(i).getName(),
-//                                                actionList.getActions().get(i).getEmail(),
-//                                                actionList.getActions().get(i).getSubject()
-//                                        );
-//                                        realm.insertOrUpdate(actionEmail);
-//                                        break;
+
+                            // PHONE
+                            case 2:
+                                ActionPhone actionPhone = new ActionPhone(
+                                        actionList.getActions().get(i).getActionType(),
+                                        actionList.getActions().get(i).getFaIcon(),
+                                        actionList.getActions().get(i).getName(),
+                                        actionList.getActions().get(i).getNumber()
+                                );
+                                realm.insertOrUpdate(actionPhone);
+                                break;
+
                             default:
                                 break;
                         }
@@ -85,7 +89,7 @@ public class RealmPersistence extends MasterView {
                 }
             });
             // Set data in data manager
-            dataManager.getEmailAction();
+//            dataManager.getEmailAction();   // Set in fragment?
         } finally {
             if (realm != null) {
                 realm.close();

@@ -1,4 +1,4 @@
-package rocket.agile.com.mainlibrary.model;
+package rocket.agile.com.mainlibrary.actionItems;
 
 import com.google.gson.annotations.SerializedName;
 import io.realm.RealmObject;

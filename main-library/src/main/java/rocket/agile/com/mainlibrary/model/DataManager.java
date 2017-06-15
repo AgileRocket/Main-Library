@@ -1,8 +1,14 @@
 package rocket.agile.com.mainlibrary.model;
 
+import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import io.realm.Realm;
 import io.realm.RealmResults;
 import rocket.agile.com.mainlibrary.actionItems.ActionEmail;
+import rocket.agile.com.mainlibrary.actionItems.ActionPhone;
 
 /**
  * Created by keithkowalski on 3/21/17.
@@ -122,19 +128,22 @@ public class DataManager {
         realm.close();
     }
 
-    public void getCallActions() {
+    public void getCallAction() {
 
         realm = Realm.getDefaultInstance();
-//        RealmResults<ActionEmail> actionEmails = realm.where(ActionCall.class).findAll();
+        RealmResults<ActionPhone> actionPhones = realm.where(ActionPhone.class).findAll();
 
-//        actionCallType = actionEmails.first().getActionType();
-//        callFAIcon = actionEmails.first().getFAIcon();
-//        callName = actionEmails.first().getName();
-//        phoneNumber = actionEmails.first().getEmail();
+        actionCallType = actionPhones.first().getActionType();
+        callFAIcon = actionPhones.first().getFAIcon();
+        callName = actionPhones.first().getName();
+        phoneNumber = actionPhones.first().getNumber();
 
-//        Log.d("ActionEmail Count", actionEmails.size() + "");
-//        Log.d("Data Manager\n", "\n" + actionEmails.first().getActionType() + "\n" + actionEmails.first().getFAIcon() + "\n" + actionEmails.first().getName() + "\n" + actionEmails.first().getEmail() + "\n" + actionEmails.first().getSubject());
+//        logData(actionPhones + "", callFAIcon);
 
         realm.close();
+    }
+
+    public void logData(String actionName, String faIcon) {
+        Log.d(actionName, faIcon);
     }
 }
