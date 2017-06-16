@@ -1,19 +1,16 @@
 package rocket.agile.com.mainlibrary.activity;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import io.realm.Realm;
 import rocket.agile.com.mainlibrary.R;
-import rocket.agile.com.mainlibrary.model.DataManager;
 import rocket.agile.com.mainlibrary.model.NetworkingManager;
 import rocket.agile.com.mainlibrary.realm.RealmPersistence;
 
@@ -42,8 +39,6 @@ public class MasterView extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
         }
     }
-
-//    TODO: Test onResume() for network calls when entering foreground
 
     private void networkCall() {
 
