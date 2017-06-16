@@ -2,9 +2,6 @@ package rocket.agile.com.mainlibrary.model;
 
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import io.realm.Realm;
 import io.realm.RealmResults;
 import rocket.agile.com.mainlibrary.actionItems.ActionEmail;
@@ -68,7 +65,7 @@ public class DataManager {
     public int actionCallType;
     public String callFAIcon;
     public String callName;
-    public String phoneNumber;
+    public String callNumber;
 
 //----- Available Social Media Data ------
 
@@ -111,6 +108,8 @@ public class DataManager {
     }
 
     // GET ACTION ITEMS
+
+    // EMAIL
     public void getEmailAction() {
 
         realm = Realm.getDefaultInstance();
@@ -128,6 +127,7 @@ public class DataManager {
         realm.close();
     }
 
+    // CALL
     public void getCallAction() {
 
         realm = Realm.getDefaultInstance();
@@ -136,7 +136,7 @@ public class DataManager {
         actionCallType = actionPhones.first().getActionType();
         callFAIcon = actionPhones.first().getFAIcon();
         callName = actionPhones.first().getName();
-        phoneNumber = actionPhones.first().getNumber();
+        callNumber = actionPhones.first().getNumber();
 
 //        logData(actionPhones + "", callFAIcon);
 

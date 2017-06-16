@@ -1,6 +1,7 @@
 package rocket.agile.com.mainlibrary.model;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
@@ -11,6 +12,10 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rocket.agile.com.mainlibrary.Interface.RetrofitAPI;
 import rocket.agile.com.mainlibrary.actionItems.ActionList;
+import rocket.agile.com.mainlibrary.activity.LayoutView_Buttons_Grid;
+import rocket.agile.com.mainlibrary.activity.LayoutView_Buttons_Long;
+import rocket.agile.com.mainlibrary.activity.LayoutView_SideMenu;
+import rocket.agile.com.mainlibrary.activity.LayoutView_TabBar;
 import rocket.agile.com.mainlibrary.realm.RealmPersistence;
 
 /**
@@ -35,11 +40,11 @@ public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
 
     @Override
     protected void onPreExecute() {
-
-        Toast.makeText(context, "Loading data...", Toast.LENGTH_LONG).show();
-
         super.onPreExecute();
-//        getChangeStateFromNetworkAPI();   // TODO: Call this when network api is available
+//        getChangeStateFromNetworkAPI();   // TODO: Call this when network api is available, may need a delay to complete call first
+        if(dataManager.changeStateValue) {
+            Toast.makeText(context, "Loading data...", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -49,15 +54,19 @@ public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
             getValuesFromNetworkAPI();
             getActionsFromNetworkAPI();
         }
+
         return true;
     }
 
     @Override
     protected void onPostExecute(Boolean bool) {
+        super.onPostExecute(null);
+
+        dataManager.getValues();
+        setLayout();
 
         // Dismiss Progress Dialog
 //        dialog.dismiss();
-        super.onPostExecute(null);
     }
 
     public void getChangeStateFromNetworkAPI() {
@@ -105,6 +114,7 @@ public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
                 @Override
                 public void onResponse(Call<Values> call, Response<Values> response) {
                     Values valuesData = response.body();
+                    Log.d("--NETWORKING--", "COMPLETE");    // Test for when this completes...
                     RealmPersistence.createOrUpdateValues(valuesData);
                 }
                 @Override
@@ -143,6 +153,25 @@ public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
         } catch (Exception e) {
             Log.d("On Response", "There is an error");
             e.printStackTrace();
+        }
+    }
+
+    public void setLayout() {
+
+        switch (dataManager.layoutValue) {
+            case 0:
+                context.startActivity(new Intent(context, LayoutView_SideMenu.class));
+                break;
+            case 1:
+                context.startActivity(new Intent(context, LayoutView_TabBar.class));
+                break;
+            case 2:
+                context.startActivity(new Intent(context, LayoutView_Buttons_Grid.class));
+                break;
+            case 3:
+                context.startActivity(new Intent(context, LayoutView_Buttons_Long.class));
+                break;
+            default: break;
         }
     }
 }

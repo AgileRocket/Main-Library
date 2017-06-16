@@ -28,13 +28,11 @@ public class AboutUsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        Log.d("---ON CREATE---", "RAN");
-
         // Test action item data
         dataManager.getEmailAction();
         dataManager.getCallAction();
         Log.d("--Action Items 1--", "\n"+dataManager.actionEmailType+"\n"+dataManager.emailFAIcon+"\n"+dataManager.emailName+"\n"+dataManager.email+"\n"+dataManager.emailSubject+"\n");
-        Log.d("--Action Items 2--", "\n"+dataManager.actionCallType+"\n"+dataManager.callFAIcon+"\n"+dataManager.callName+"\n"+dataManager.phoneNumber+"\n");
+        Log.d("--Action Items 2--", "\n"+dataManager.actionCallType+"\n"+dataManager.callFAIcon+"\n"+dataManager.callName+"\n"+dataManager.callNumber +"\n");
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_about_us, container, false);
@@ -44,9 +42,10 @@ public class AboutUsFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
+        // Check network for updates while here
         Log.d("---ON RESUME---", "RAN");
     }
-    
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

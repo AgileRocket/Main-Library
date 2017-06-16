@@ -19,10 +19,8 @@ import rocket.agile.com.mainlibrary.realm.RealmPersistence;
 
 public class MasterView extends AppCompatActivity {
 
-    // Data Manager Singleton
-    DataManager dataManager = DataManager.getInstance();
     // Set SharedPreferences variable to check first run for app
-    SharedPreferences prefs = null;
+    SharedPreferences sharedPreferences = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,32 +45,19 @@ public class MasterView extends AppCompatActivity {
 
 //    TODO: Test onResume() for network calls when entering foreground
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        // Call for values and actions to guarantee update to interface
-        dataManager.getValues();
-        setLayout();
-    }
-
     private void networkCall() {
 
-     //   boolean networkPullComplete = false;
-
         try {
-           // while(!networkPullComplete) {       // Check if networking thread has completed pulling all data
-                try {
-                    new NetworkingManager(this).execute().get(10, TimeUnit.SECONDS);
-//                    networkPullComplete = new NetworkingManager(this).execute().get(10, TimeUnit.SECONDS);
-                } catch (TimeoutException e) {
-                    e.printStackTrace();
-            //    }
-            }
+            new NetworkingManager(this).execute().get(1000, TimeUnit.MILLISECONDS);
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Network Timeout", Toast.LENGTH_LONG).show();
         } catch (InterruptedException e) {
             e.printStackTrace();
+            Toast.makeText(this, "Network Interruption", Toast.LENGTH_LONG).show();
         } catch (ExecutionException e) {
             e.printStackTrace();
+            Toast.makeText(this, "Network Execution Error", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -84,33 +69,14 @@ public class MasterView extends AppCompatActivity {
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
-    public void setLayout() {
-
-        switch (dataManager.layoutValue) {
-            case 0:
-                startActivity(new Intent(this, LayoutView_SideMenu.class));
-                break;
-            case 1:
-                startActivity(new Intent(this, LayoutView_TabBar.class));
-                break;
-            case 2:
-                startActivity(new Intent(this, LayoutView_Buttons_Grid.class));
-                break;
-            case 3:
-                startActivity(new Intent(this, LayoutView_Buttons_Long.class));
-                break;
-            default: break;
-        }
-    }
-
     private boolean checkFirstRun() {
 
         final String PREFS_NAME = "MyPrefsFile";
-        prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         boolean firstRun = true;
 
-        if(prefs.getBoolean("firstrun", true)) {
-            prefs.edit().putBoolean("firstrun", false).commit();
+        if(sharedPreferences.getBoolean("firstrun", true)) {
+            sharedPreferences.edit().putBoolean("firstrun", false).commit();
         } else {
             firstRun = false;
             return firstRun;

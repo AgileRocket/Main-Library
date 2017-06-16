@@ -88,8 +88,6 @@ public class RealmPersistence extends MasterView {
                     }
                 }
             });
-            // Set data in data manager
-//            dataManager.getEmailAction();   // Set in fragment?
         } finally {
             if (realm != null) {
                 realm.close();
