@@ -8,6 +8,9 @@ import java.util.List;
 
 /**
  * Created by keithkowalski on 5/20/17.
+ *
+ * The purpose of this class is to create the list of 'actions' passed via JSON.
+ *
  */
 
 public class ActionList extends RealmObject {

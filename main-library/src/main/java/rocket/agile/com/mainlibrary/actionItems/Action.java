@@ -5,6 +5,13 @@ import io.realm.RealmObject;
 
 /**
  * Created by keithkowalski on 5/20/17.
+ *
+ * The purpose of this class is to gather a list of ALL possible actions acquired during the network call.
+ * This is necessary, since 'ActionList' is based on a JSON data value of 'actions'.
+ * In order to place these 'actions' in their appropriate Realm Objects, we must first have access to them all, hence the need for this class.
+ *
+ * This process likely can be improved.
+ *
  */
 
 public class Action extends RealmObject {
