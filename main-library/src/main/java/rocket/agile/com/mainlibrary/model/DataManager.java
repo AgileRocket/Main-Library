@@ -18,13 +18,12 @@ public class DataManager {
     public static DataManager getInstance() {
         return ourInstance;
     }
-
     Realm realm;
 
 //----- Current Change State ---------
     public boolean changeStateValue = true;  // TODO: MAKE NETWORK CALL
 
-//----- Layout Selected --------------
+//----- LayoutManager Selected --------------
 
 //    LAYOUT THEME
     public int layoutValue = 0;     // TODO: MAKE NETWORK CALL

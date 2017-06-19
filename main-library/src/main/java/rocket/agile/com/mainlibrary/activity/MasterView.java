@@ -1,6 +1,7 @@
 package rocket.agile.com.mainlibrary.activity;
 
-import android.content.SharedPreferences;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
@@ -11,13 +12,12 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import io.realm.Realm;
 import rocket.agile.com.mainlibrary.R;
+import rocket.agile.com.mainlibrary.model.DataManager;
+import rocket.agile.com.mainlibrary.model.LayoutManager;
 import rocket.agile.com.mainlibrary.model.NetworkingManager;
 import rocket.agile.com.mainlibrary.realm.RealmPersistence;
 
 public class MasterView extends AppCompatActivity {
-
-    // Set SharedPreferences variable to check first run for app
-    SharedPreferences sharedPreferences = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,20 +25,38 @@ public class MasterView extends AppCompatActivity {
 
         Realm.init(this);
         RealmPersistence.initRealm();
-
+        AlertDialog alertDialog;
         boolean networkIsAvailable = isNetworkAvailable();
 
         setContentView(R.layout.master_activity_master_view);
 
-        // TODO: Check here to see if 1st time app is run?
         if(networkIsAvailable) {
             networkCall();  // Network call always made to at least get data pull for any changes applied via API
-        }
-        else if(!networkIsAvailable) {
-            Toast.makeText(this, "Network Connection Error",
-                    Toast.LENGTH_LONG).show();
+        } else if(!networkIsAvailable) {
+            Realm realm = Realm.getDefaultInstance();
+            if(!realm.isEmpty()) {  // No network, but Realm data is available
+                // TODO: Gather values from Realm if there is no network, but Realm has data available
+                DataManager dataManager = DataManager.getInstance();
+                dataManager.getValues();
+                new LayoutManager(this).setLayout(dataManager);
+                realm.close();
+            } else {    // No network and no Realm data
+                alertDialog = new AlertDialog.Builder(this).create();
+                alertDialog.setTitle("Network Error");
+                alertDialog.setMessage("Network connection required.");
+                alertDialog.setCanceledOnTouchOutside(false);
+                alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int i) {
+                        finishAndRemoveTask();
+                    }
+                });
+                realm.close();
+                alertDialog.show();
+            }
         }
     }
+
+//    TODO: Implement OnResume here and in all activities
 
     private void networkCall() {
 
@@ -62,20 +80,5 @@ public class MasterView extends AppCompatActivity {
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
 
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
-
-    private boolean checkFirstRun() {
-
-        final String PREFS_NAME = "MyPrefsFile";
-        sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-        boolean firstRun = true;
-
-        if(sharedPreferences.getBoolean("firstrun", true)) {
-            sharedPreferences.edit().putBoolean("firstrun", false).commit();
-        } else {
-            firstRun = false;
-            return firstRun;
-        }
-        return firstRun;
     }
 }
