@@ -11,7 +11,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import io.realm.Realm;
-import rocket.agile.com.mainlibrary.R;
 import rocket.agile.com.mainlibrary.model.DataManager;
 import rocket.agile.com.mainlibrary.model.LayoutManager;
 import rocket.agile.com.mainlibrary.model.NetworkingManager;
@@ -28,14 +27,11 @@ public class MasterView extends AppCompatActivity {
         AlertDialog alertDialog;
         boolean networkIsAvailable = isNetworkAvailable();
 
-        setContentView(R.layout.master_activity_master_view);
-
         if(networkIsAvailable) {
             networkCall();  // Network call always made to at least get data pull for any changes applied via API
         } else if(!networkIsAvailable) {
             Realm realm = Realm.getDefaultInstance();
             if(!realm.isEmpty()) {  // No network, but Realm data is available
-                // TODO: Gather values from Realm if there is no network, but Realm has data available
                 DataManager dataManager = DataManager.getInstance();
                 dataManager.getValues();
                 new LayoutManager(this).setLayout(dataManager);
