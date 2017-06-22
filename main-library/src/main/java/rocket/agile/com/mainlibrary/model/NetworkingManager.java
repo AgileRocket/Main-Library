@@ -2,7 +2,9 @@ package rocket.agile.com.mainlibrary.model;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.text.Layout;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -10,6 +12,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rocket.agile.com.mainlibrary.Interface.RetrofitAPI;
+import rocket.agile.com.mainlibrary.R;
 import rocket.agile.com.mainlibrary.actionItems.ActionList;
 import rocket.agile.com.mainlibrary.realm.RealmPersistence;
 
@@ -36,10 +39,8 @@ public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+        Toast.makeText(context, "Loading data...", Toast.LENGTH_SHORT).show();
 //        getChangeStateFromNetworkAPI();   // TODO: Call this when network api is available, may need a delay to complete call first
-        if(dataManager.changeStateValue) {
-            Toast.makeText(context, "Loading data...", Toast.LENGTH_SHORT).show();
-        }
     }
 
     @Override
