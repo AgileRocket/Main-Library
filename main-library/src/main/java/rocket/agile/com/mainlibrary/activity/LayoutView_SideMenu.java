@@ -64,21 +64,23 @@ public class LayoutView_SideMenu extends AppCompatActivity
         // Check network for updates while here
         Log.d("-ON RESUME LAYOUT-SIDE-", "RAN");
 
-        // Check change state
-            // if true  (i.e. Can only be true if data changed while app was on pause, because we set it false after initial startup completes)
-                // Fetch new data
+//        TODO: Check change state here, fetch new data if true
+
+//        if(dataManager.changeStateValue) {  // Can only be true if data changed while app was on pause, because we set it false after initial startup completes
+//            NetworkCalls networkCalls = new NetworkCalls(this);
+//            boolean networkAvailable = networkCalls.isNetworkAvailable();
+//
+//            if(networkAvailable) {
+//                networkCalls.getChangeStateFromNetworkAPI();      // Call when change state becomes network call
+//            }
+//        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
 
-        NetworkCalls networkCalls = new NetworkCalls(this);
-        boolean networkAvailable = networkCalls.isNetworkAvailable();
 
-        if(networkAvailable) {
-//            networkCalls.getChangeStateFromNetworkAPI();      // Call when change state becomes network call
-        }
     }
 
         // Back Button pressed override is to check for user intent on tapping back button
