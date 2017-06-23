@@ -76,13 +76,6 @@ public class LayoutView_SideMenu extends AppCompatActivity
 //        }
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-
-    }
-
         // Back Button pressed override is to check for user intent on tapping back button
     private Boolean exit = false;
     @Override
