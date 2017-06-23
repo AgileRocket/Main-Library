@@ -21,7 +21,7 @@ public class DataManager {
     Realm realm;
 
 //----- Current Change State ---------
-    public boolean changeStateValue = true;  // TODO: MAKE NETWORK CALL
+    public boolean changeStateValue = true;  // TODO: Initialize to false, only network call can set to true
 
 //----- LayoutManager Selected --------------
 

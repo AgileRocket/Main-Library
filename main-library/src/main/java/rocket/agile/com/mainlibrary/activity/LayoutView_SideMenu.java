@@ -20,12 +20,14 @@ import rocket.agile.com.mainlibrary.R;
 import rocket.agile.com.mainlibrary.fragments.AboutUsFragment;
 import rocket.agile.com.mainlibrary.fragments.WebsiteFragment;
 import rocket.agile.com.mainlibrary.model.DataManager;
+import rocket.agile.com.mainlibrary.model.NetworkCalls;
 
 public class LayoutView_SideMenu extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     // Call singleton class for data manager
     DataManager dataManager = DataManager.getInstance();
+//    NetworkCalls networkCalls = NetworkCalls.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,29 @@ public class LayoutView_SideMenu extends AppCompatActivity
         this.setTitle(dataManager.appName);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // Check network for updates while here
+        Log.d("-ON RESUME LAYOUT-SIDE-", "RAN");
+
+        // Check change state
+            // if true  (i.e. Can only be true if data changed while app was on pause, because we set it false after initial startup completes)
+                // Fetch new data
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        NetworkCalls networkCalls = new NetworkCalls(this);
+        boolean networkAvailable = networkCalls.isNetworkAvailable();
+
+        if(networkAvailable) {
+//            networkCalls.getChangeStateFromNetworkAPI();      // Call when change state becomes network call
+        }
+    }
 
         // Back Button pressed override is to check for user intent on tapping back button
     private Boolean exit = false;

@@ -39,8 +39,11 @@ public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        Toast.makeText(context, "Loading data...", Toast.LENGTH_SHORT).show();
-//        getChangeStateFromNetworkAPI();   // TODO: Call this when network api is available, may need a delay to complete call first
+
+        if(!dataManager.changeStateValue) { // initialize change state to false in data manager
+            Toast.makeText(context, "Loading data...", Toast.LENGTH_SHORT).show();
+            getChangeStateFromNetworkAPI(); // TODO: Call this when network api is available, may need a delay to complete call first
+        }
     }
 
     @Override
@@ -58,6 +61,7 @@ public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
     protected void onPostExecute(Boolean bool) {
         super.onPostExecute(null);
         new LayoutManager(context).setLayout(dataManager);  // Set layout
+//        dataManager.changeStateValue = false;             // TODO: Uncomment this once network data is available
     }
 
     public void getChangeStateFromNetworkAPI() {

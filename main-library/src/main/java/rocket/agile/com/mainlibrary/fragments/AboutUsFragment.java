@@ -39,14 +39,6 @@ public class AboutUsFragment extends Fragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-
-        // Check network for updates while here
-        Log.d("---ON RESUME---", "RAN");
-    }
-
-    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
