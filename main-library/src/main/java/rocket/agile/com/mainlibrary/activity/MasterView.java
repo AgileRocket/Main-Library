@@ -7,16 +7,9 @@ import android.util.Log;
 import io.realm.Realm;
 import rocket.agile.com.mainlibrary.model.ApplicationLifeCycleTracker;
 import rocket.agile.com.mainlibrary.model.DataManager;
-import rocket.agile.com.mainlibrary.model.LayoutManager;
 import rocket.agile.com.mainlibrary.networking.NetworkCalls;
 
 public class MasterView extends AppCompatActivity {
-
-    // Create Singleton
-    private static final MasterView ourInstance = new MasterView();
-    public static MasterView getInstance() {
-        return ourInstance;
-    }
 
     protected void onStart() {
         super.onStart();

@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import rocket.agile.com.mainlibrary.Interface.RetrofitAPI;
 import rocket.agile.com.mainlibrary.model.actionItems.ActionList;
 import rocket.agile.com.mainlibrary.model.DataManager;
-import rocket.agile.com.mainlibrary.model.LayoutManager;
+import rocket.agile.com.mainlibrary.activity.LayoutManager;
 import rocket.agile.com.mainlibrary.model.actionItems.Values;
 import rocket.agile.com.mainlibrary.realm.RealmPersistence;
 

@@ -9,7 +9,7 @@ import android.view.View;
 
 import rocket.agile.com.mainlibrary.R;
 
-public class LayoutView_Buttons_Grid extends AppCompatActivity {
+public class LayoutView_Buttons_Grid extends LayoutManager {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

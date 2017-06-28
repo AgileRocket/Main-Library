@@ -9,7 +9,7 @@ import android.view.View;
 
 import rocket.agile.com.mainlibrary.R;
 
-public class LayoutView_Buttons_Long extends AppCompatActivity {
+public class LayoutView_Buttons_Long extends LayoutManager {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

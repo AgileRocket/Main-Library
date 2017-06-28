@@ -1,8 +1,5 @@
 package rocket.agile.com.mainlibrary.activity;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,24 +8,18 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
-
-import io.realm.Realm;
 import rocket.agile.com.mainlibrary.R;
 import rocket.agile.com.mainlibrary.fragments.AboutUsFragment;
 import rocket.agile.com.mainlibrary.fragments.WebsiteFragment;
-import rocket.agile.com.mainlibrary.model.ApplicationLifeCycleTracker;
 import rocket.agile.com.mainlibrary.model.DataManager;
-import rocket.agile.com.mainlibrary.model.LayoutManager;
-import rocket.agile.com.mainlibrary.networking.NetworkCalls;
 
-public class LayoutView_SideMenu extends AppCompatActivity
+public class LayoutView_SideMenu extends LayoutManager
         implements NavigationView.OnNavigationItemSelectedListener {
 
     // Call singleton class for data manager
@@ -60,29 +51,6 @@ public class LayoutView_SideMenu extends AppCompatActivity
         // PRIMARY HEADER COLOR AND TITLE
         primaryHeader.setBackgroundColor(Color.parseColor(dataManager.primaryHeaderColor));
         this.setTitle(dataManager.appName);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        // TODO: Check for network connection first
-
-        if(!ApplicationLifeCycleTracker.initialStart) {
-            Log.d("LAYOUT SIDEMENU", "RESUME");
-//            startNetworkCall();   //TODO:  Make network call to determine changeState value (create separate call just for changeState)
-
-            NetworkCalls networkCalls = new NetworkCalls(this);
-            networkCalls.getChangeStateFromNetworkAPI();
-
-            if(dataManager.changeStateValue) {
-                ApplicationLifeCycleTracker.initialStart = true;
-                Intent intent = new Intent(this, MasterView.class);
-                this.startActivity(intent);
-                this.finish();
-            }
-
-        }
     }
 
         // Back Button pressed override is to check for user intent on tapping back button
