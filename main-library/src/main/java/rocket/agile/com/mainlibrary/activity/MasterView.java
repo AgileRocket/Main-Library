@@ -1,7 +1,6 @@
 package rocket.agile.com.mainlibrary.activity;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -9,7 +8,7 @@ import io.realm.Realm;
 import rocket.agile.com.mainlibrary.model.ApplicationLifeCycleTracker;
 import rocket.agile.com.mainlibrary.model.DataManager;
 import rocket.agile.com.mainlibrary.model.LayoutManager;
-import rocket.agile.com.mainlibrary.model.NetworkCalls;
+import rocket.agile.com.mainlibrary.networking.NetworkCalls;
 
 public class MasterView extends AppCompatActivity {
 

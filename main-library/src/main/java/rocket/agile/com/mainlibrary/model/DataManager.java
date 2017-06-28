@@ -4,8 +4,9 @@ import android.util.Log;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
-import rocket.agile.com.mainlibrary.actionItems.ActionEmail;
-import rocket.agile.com.mainlibrary.actionItems.ActionPhone;
+import rocket.agile.com.mainlibrary.model.actionItems.ActionEmail;
+import rocket.agile.com.mainlibrary.model.actionItems.ActionPhone;
+import rocket.agile.com.mainlibrary.model.actionItems.Values;
 
 /**
  * Created by keithkowalski on 3/21/17.

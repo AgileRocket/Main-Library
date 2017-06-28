@@ -1,15 +1,14 @@
-package rocket.agile.com.mainlibrary.actionItems;
+package rocket.agile.com.mainlibrary.model.actionItems;
 
 import com.google.gson.annotations.SerializedName;
-
 import io.realm.RealmObject;
 import rocket.agile.com.mainlibrary.Interface.ActionModel;
 
 /**
- * Created by keithkowalski on 6/14/17.
+ * Created by KeithK on 5/29/17.
  */
 
-public class ActionPhone extends RealmObject implements ActionModel {
+public class ActionEmail extends RealmObject implements ActionModel {
 
     @SerializedName("actionType")
     private int actionType;
@@ -17,8 +16,10 @@ public class ActionPhone extends RealmObject implements ActionModel {
     private String faIcon;
     @SerializedName("name")
     private String name;
-    @SerializedName("number")
-    private String number;
+    @SerializedName("email")
+    private String email;
+    @SerializedName("subject")
+    private String subject;
 
     public int getActionType() { return this.actionType; }
     public void setActionType(int actionType) { this.actionType = actionType; }
@@ -29,17 +30,21 @@ public class ActionPhone extends RealmObject implements ActionModel {
     public String getName() { return this.name; }
     public void setName(String name) { this.name = name; }
 
-    public String getNumber() { return number; }
-    public void setNumber(String number) { this.number = number; }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+
+    public String getSubject() { return subject; }
+    public void setSubject(String subject) { this.subject = subject; }
 
     // Required default constructor
-    public ActionPhone() {}
+    public ActionEmail() {}
 
     // Custom constructor
-    public ActionPhone(int actionType, String faIcon, String name, String number) {
+    public ActionEmail(int actionType, String faIcon, String name, String email, String subject) {
         this.setActionType(actionType);
         this.setFaIcon(faIcon);
         this.setName(name);
-        this.setNumber(number);
+        this.setEmail(email);
+        this.setSubject(subject);
     }
 }

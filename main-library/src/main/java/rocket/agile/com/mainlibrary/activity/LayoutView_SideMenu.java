@@ -1,7 +1,6 @@
 package rocket.agile.com.mainlibrary.activity;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -27,7 +26,7 @@ import rocket.agile.com.mainlibrary.fragments.WebsiteFragment;
 import rocket.agile.com.mainlibrary.model.ApplicationLifeCycleTracker;
 import rocket.agile.com.mainlibrary.model.DataManager;
 import rocket.agile.com.mainlibrary.model.LayoutManager;
-import rocket.agile.com.mainlibrary.model.NetworkCalls;
+import rocket.agile.com.mainlibrary.networking.NetworkCalls;
 
 public class LayoutView_SideMenu extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {

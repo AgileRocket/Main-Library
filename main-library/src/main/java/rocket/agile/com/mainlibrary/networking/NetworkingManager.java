@@ -1,10 +1,8 @@
-package rocket.agile.com.mainlibrary.model;
+package rocket.agile.com.mainlibrary.networking;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.text.Layout;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -12,8 +10,10 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rocket.agile.com.mainlibrary.Interface.RetrofitAPI;
-import rocket.agile.com.mainlibrary.R;
-import rocket.agile.com.mainlibrary.actionItems.ActionList;
+import rocket.agile.com.mainlibrary.model.actionItems.ActionList;
+import rocket.agile.com.mainlibrary.model.DataManager;
+import rocket.agile.com.mainlibrary.model.LayoutManager;
+import rocket.agile.com.mainlibrary.model.actionItems.Values;
 import rocket.agile.com.mainlibrary.realm.RealmPersistence;
 
 /**

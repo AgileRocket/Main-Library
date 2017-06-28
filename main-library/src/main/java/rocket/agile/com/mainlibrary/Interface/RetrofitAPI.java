@@ -2,9 +2,9 @@ package rocket.agile.com.mainlibrary.Interface;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
-import rocket.agile.com.mainlibrary.actionItems.ActionList;
+import rocket.agile.com.mainlibrary.model.actionItems.ActionList;
 import rocket.agile.com.mainlibrary.model.ChangeState;
-import rocket.agile.com.mainlibrary.model.Values;
+import rocket.agile.com.mainlibrary.model.actionItems.Values;
 
 /**
  * Created by keithkowalski on 5/18/17.

@@ -1,9 +1,8 @@
-package rocket.agile.com.mainlibrary.model;
+package rocket.agile.com.mainlibrary.model.actionItems;
 
 import com.google.gson.annotations.SerializedName;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
-import rocket.agile.com.mainlibrary.actionItems.Hours;
 
 /**
  * Created by keithkowalski on 5/18/17.

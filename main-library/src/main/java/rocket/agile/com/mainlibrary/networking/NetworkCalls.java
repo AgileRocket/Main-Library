@@ -1,10 +1,8 @@
-package rocket.agile.com.mainlibrary.model;
+package rocket.agile.com.mainlibrary.networking;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;

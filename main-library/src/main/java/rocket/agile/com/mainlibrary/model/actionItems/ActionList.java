@@ -1,4 +1,4 @@
-package rocket.agile.com.mainlibrary.actionItems;
+package rocket.agile.com.mainlibrary.model.actionItems;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
