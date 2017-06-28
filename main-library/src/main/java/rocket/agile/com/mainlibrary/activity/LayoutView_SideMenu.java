@@ -1,7 +1,9 @@
 package rocket.agile.com.mainlibrary.activity;
 
-import android.app.Activity;
-import android.app.Application;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,10 +20,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import io.realm.Realm;
 import rocket.agile.com.mainlibrary.R;
 import rocket.agile.com.mainlibrary.fragments.AboutUsFragment;
 import rocket.agile.com.mainlibrary.fragments.WebsiteFragment;
+import rocket.agile.com.mainlibrary.model.ApplicationLifeCycleTracker;
 import rocket.agile.com.mainlibrary.model.DataManager;
+import rocket.agile.com.mainlibrary.model.LayoutManager;
 import rocket.agile.com.mainlibrary.model.NetworkCalls;
 
 public class LayoutView_SideMenu extends AppCompatActivity
@@ -58,33 +63,26 @@ public class LayoutView_SideMenu extends AppCompatActivity
         this.setTitle(dataManager.appName);
     }
 
-//    @Override
-//    public void onPause() {
-//        super.onPause();
-//
-//        dataManager.changeStateValue = true;
-//    }
-//
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//
-//        // Check network for updates while here
-//        Log.d("-ON RESUME LAYOUT-SIDE-", "RAN");
-//
-//        NetworkCalls networkCalls = new NetworkCalls(this);
-//        boolean networkAvailable = networkCalls.isNetworkAvailable();
-//
-//        if(networkAvailable) {
-////            networkCalls.getChangeStateFromNetworkAPI();      // Call when change state becomes network call
-//
-//            //        TODO: Check change state here, fetch new data if true
-//            if(dataManager.changeStateValue) {  // Can only be true if data changed while app was on pause, because we set it false after initial startup completes
-//                Log.d("-ON RESUME LAYOUT-SIDE-", "TRUE");
-//                networkCalls.networkCall();
-//            }
-//        }
-//    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if(!ApplicationLifeCycleTracker.initialStart) {
+            Log.d("LAYOUT SIDEMENU", "RESUME");
+//            startNetworkCall();   //TODO:  Make network call to determine changeState value (create separate call just for changeState)
+
+            NetworkCalls networkCalls = new NetworkCalls(this);
+            networkCalls.getChangeStateFromNetworkAPI();
+
+            if(dataManager.changeStateValue) {
+                ApplicationLifeCycleTracker.initialStart = true;
+                Intent intent = new Intent(this, MasterView.class);
+                this.startActivity(intent);
+                this.finish();
+            }
+
+        }
+    }
 
         // Back Button pressed override is to check for user intent on tapping back button
     private Boolean exit = false;
@@ -161,5 +159,38 @@ public class LayoutView_SideMenu extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void startNetworkCall() {
+
+        // TODO:  This network call should strictly check if any changes to 'changeState' have occurred; if so, relaunch app.
+
+        NetworkCalls networkCalls = new NetworkCalls(this);
+        AlertDialog alertDialog;
+        boolean networkIsAvailable = networkCalls.isNetworkAvailable();
+
+        if(networkIsAvailable) {
+            networkCalls.networkCall();  // Network call always made to at least get data pull for any changes applied via API
+        } else if(!networkIsAvailable) {
+            Realm realm = Realm.getDefaultInstance();
+            if(!realm.isEmpty()) {  // No network, but Realm data is available
+                DataManager dataManager = DataManager.getInstance();
+                dataManager.getValues();
+                new LayoutManager(this).setLayout(dataManager);
+                realm.close();
+            } else {    // No network and no Realm data
+                alertDialog = new AlertDialog.Builder(this).create();
+                alertDialog.setTitle("Network Error");
+                alertDialog.setMessage("Network connection required.");
+                alertDialog.setCanceledOnTouchOutside(false);
+                alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int i) {
+                        finishAndRemoveTask();
+                    }
+                });
+                realm.close();
+                alertDialog.show();
+            }
+        }
     }
 }

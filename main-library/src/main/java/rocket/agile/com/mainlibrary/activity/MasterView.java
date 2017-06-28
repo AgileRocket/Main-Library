@@ -1,28 +1,35 @@
 package rocket.agile.com.mainlibrary.activity;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.util.Log;
 import io.realm.Realm;
+import rocket.agile.com.mainlibrary.model.ApplicationLifeCycleTracker;
 import rocket.agile.com.mainlibrary.model.DataManager;
 import rocket.agile.com.mainlibrary.model.LayoutManager;
 import rocket.agile.com.mainlibrary.model.NetworkCalls;
-import rocket.agile.com.mainlibrary.realm.RealmPersistence;
 
 public class MasterView extends AppCompatActivity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        Realm.init(this);
-        RealmPersistence.initRealm();
+    // Create Singleton
+    private static final MasterView ourInstance = new MasterView();
+    public static MasterView getInstance() {
+        return ourInstance;
     }
 
-    @Override
     protected void onStart() {
         super.onStart();
+
+        Log.d("MASTER VIEW", "START");
+        Log.d("INITIAL START", ApplicationLifeCycleTracker.initialStart + "");
+        if(ApplicationLifeCycleTracker.initialStart) {
+            startNetworkCall();
+        }
+    }
+
+    public void startNetworkCall() {
 
         NetworkCalls networkCalls = new NetworkCalls(this);
         AlertDialog alertDialog;

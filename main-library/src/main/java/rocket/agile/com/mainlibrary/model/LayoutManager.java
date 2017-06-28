@@ -1,11 +1,18 @@
 package rocket.agile.com.mainlibrary.model;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+
+import io.realm.Realm;
 import rocket.agile.com.mainlibrary.activity.LayoutView_Buttons_Grid;
 import rocket.agile.com.mainlibrary.activity.LayoutView_Buttons_Long;
 import rocket.agile.com.mainlibrary.activity.LayoutView_SideMenu;
 import rocket.agile.com.mainlibrary.activity.LayoutView_TabBar;
+import rocket.agile.com.mainlibrary.activity.MasterView;
 
 /**
  * Created by keithkowalski on 6/19/17.

@@ -62,7 +62,6 @@ public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
     @Override
     protected void onPostExecute(Boolean bool) {
         super.onPostExecute(null);
-        dataManager.changeStateValue = false;             // TODO: Uncomment this once network data is available
         new LayoutManager(context).setLayout(dataManager);  // Set layout
     }
 
@@ -76,20 +75,24 @@ public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
 
             RetrofitAPI service = retrofit.create(RetrofitAPI.class);
 
-            // TODO: Change this to match change state when available from api
-            Call<ChangeState> call = service.getChangeState();
+            // TODO: Remove temp code for actual server call that is currently commented
+            Log.d("CHECK CHANGE STATE", "TRUE");
+            dataManager.changeStateValue = true;
 
-            call.enqueue(new Callback<ChangeState>() {
-                @Override
-                public void onResponse(Call<ChangeState> call, Response<ChangeState> response) {
-                    ChangeState changeState = response.body();
-                    dataManager.changeStateValue = changeState.getChangeState();
-                }
-                @Override
-                public void onFailure(Call<ChangeState> call, Throwable t) {
-                    Log.d("On Failure", t.toString());
-                }
-            });
+//            // TODO: Change this to match change state when available from api
+//            Call<ChangeState> call = service.getChangeState();
+//
+//            call.enqueue(new Callback<ChangeState>() {
+//                @Override
+//                public void onResponse(Call<ChangeState> call, Response<ChangeState> response) {
+//                    ChangeState changeState = response.body();
+//                    dataManager.changeStateValue = changeState.getChangeState();
+//                }
+//                @Override
+//                public void onFailure(Call<ChangeState> call, Throwable t) {
+//                    Log.d("On Failure", t.toString());
+//                }
+//            });
         } catch (Exception e) {
             Log.d("On Response", "There is an error");
             e.printStackTrace();
