@@ -66,6 +66,8 @@ public class LayoutView_SideMenu extends AppCompatActivity
     protected void onResume() {
         super.onResume();
 
+        // TODO: Check for network connection first
+
         if(!ApplicationLifeCycleTracker.initialStart) {
             Log.d("LAYOUT SIDEMENU", "RESUME");
 //            startNetworkCall();   //TODO:  Make network call to determine changeState value (create separate call just for changeState)
@@ -158,38 +160,5 @@ public class LayoutView_SideMenu extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    public void startNetworkCall() {
-
-        // TODO:  This network call should strictly check if any changes to 'changeState' have occurred; if so, relaunch app.
-
-        NetworkCalls networkCalls = new NetworkCalls(this);
-        AlertDialog alertDialog;
-        boolean networkIsAvailable = networkCalls.isNetworkAvailable();
-
-        if(networkIsAvailable) {
-            networkCalls.networkCall();  // Network call always made to at least get data pull for any changes applied via API
-        } else if(!networkIsAvailable) {
-            Realm realm = Realm.getDefaultInstance();
-            if(!realm.isEmpty()) {  // No network, but Realm data is available
-                DataManager dataManager = DataManager.getInstance();
-                dataManager.getValues();
-                new LayoutManager(this).setLayout(dataManager);
-                realm.close();
-            } else {    // No network and no Realm data
-                alertDialog = new AlertDialog.Builder(this).create();
-                alertDialog.setTitle("Network Error");
-                alertDialog.setMessage("Network connection required.");
-                alertDialog.setCanceledOnTouchOutside(false);
-                alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int i) {
-                        finishAndRemoveTask();
-                    }
-                });
-                realm.close();
-                alertDialog.show();
-            }
-        }
     }
 }
