@@ -33,25 +33,21 @@ public class LayoutManager extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        // TODO: Check for network connection first
+        NetworkCalls networkCalls = new NetworkCalls(this);
 
-        if(!ApplicationLifeCycleTracker.initialStart) {
-            Log.d("LAYOUT SIDEMENU", "RESUME");
-//            startNetworkCall();   //TODO:  Make network call to determine changeState value (create separate call just for changeState)
-
-            // TODO: NETWORK CALL NEEDS TO FINISH BEFORE DISMISSING ALERT DIALOG
-
-            NetworkCalls networkCalls = new NetworkCalls(this);
-            networkCalls.getChangeStateFromNetworkAPI();
-
-            if(dataManager.changeStateValue) {
-                ApplicationLifeCycleTracker.initialStart = true;
-                Intent intent = new Intent(this, MasterView.class);
-                this.startActivity(intent);
-                this.finish();
+        if(networkCalls.isNetworkAvailable()) {
+            if(!ApplicationLifeCycleTracker.initialStart) {
+                Log.d("LAYOUT ACTIVITY", "RESUME");
+               networkCalls.getChangeStateFromNetworkAPI();
             }
-
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        this.finish();
     }
 
     public static void setLayout(DataManager dataManager) {

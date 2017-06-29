@@ -10,6 +10,10 @@ import rocket.agile.com.mainlibrary.model.actionItems.Values;
 
 /**
  * Created by keithkowalski on 3/21/17.
+ *
+ * Responsible for storing all data as a Singleton class
+ * Makes calls to Realm for accessing values and action items
+ *
  */
 
 public class DataManager {
@@ -20,6 +24,9 @@ public class DataManager {
         return ourInstance;
     }
     Realm realm;
+
+//----- Set base URL -----------------
+    public String baseURL = "http://rocketdepot.com/api/";
 
 //----- Current Change State ---------
     public boolean changeStateValue = true;  // TODO: Initialize to false, only network call can set to true

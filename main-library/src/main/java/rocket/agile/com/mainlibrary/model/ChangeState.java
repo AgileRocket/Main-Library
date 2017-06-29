@@ -5,6 +5,9 @@ import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by KeithK on 6/11/17.
+ *
+ * Responsible for accessing ChangeState value via network call
+ *
  */
 
 public class ChangeState {

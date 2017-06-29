@@ -29,12 +29,7 @@ public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
     public NetworkingManager(Context context) {
         this.context = context;
     }
-
-    // Create Progress Dialog indicator
-//    private ProgressDialog dialog;
-
-    // Set base URL
-    private String baseURL = "http://rocketdepot.com/api/";
+    NetworkCalls networkCalls = new NetworkCalls(context);
 
     @Override
     protected void onPreExecute() {
@@ -42,7 +37,8 @@ public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
 
         if(!dataManager.changeStateValue) { // initialize change state to false in data manager
             Toast.makeText(context, "Checking for updates...", Toast.LENGTH_SHORT).show();
-            getChangeStateFromNetworkAPI(); // TODO: Call this when network api is available, may need a delay to complete call first
+            // Set dataManager changeState value
+            networkCalls.getChangeStateFromNetworkAPI();
         } else {
             Toast.makeText(context, "Loading data...", Toast.LENGTH_SHORT).show();
         }
@@ -65,45 +61,11 @@ public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
         new LayoutManager(context).setLayout(dataManager);  // Set layout
     }
 
-    public void getChangeStateFromNetworkAPI() {
-
-        try {
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(baseURL).
-                            addConverterFactory(GsonConverterFactory.create())
-                    .build();
-
-            RetrofitAPI service = retrofit.create(RetrofitAPI.class);
-
-            // TODO: Remove temp code for actual server call that is currently commented
-            Log.d("CHECK CHANGE STATE", "TRUE");
-            dataManager.changeStateValue = true;
-
-//            // TODO: Change this to match change state when available from api
-//            Call<ChangeState> call = service.getChangeState();
-//
-//            call.enqueue(new Callback<ChangeState>() {
-//                @Override
-//                public void onResponse(Call<ChangeState> call, Response<ChangeState> response) {
-//                    ChangeState changeState = response.body();
-//                    dataManager.changeStateValue = changeState.getChangeState();
-//                }
-//                @Override
-//                public void onFailure(Call<ChangeState> call, Throwable t) {
-//                    Log.d("On Failure", t.toString());
-//                }
-//            });
-        } catch (Exception e) {
-            Log.d("On Response", "There is an error");
-            e.printStackTrace();
-        }
-    }
-
     public void getValuesFromNetworkAPI() {
 
         try {
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(baseURL).
+                    .baseUrl(dataManager.baseURL).
                             addConverterFactory(GsonConverterFactory.create())
                     .build();
 
@@ -132,7 +94,7 @@ public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
 
         try {
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(baseURL).
+                    .baseUrl(dataManager.baseURL).
                             addConverterFactory(GsonConverterFactory.create())
                     .build();
 

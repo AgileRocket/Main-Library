@@ -1,21 +1,15 @@
 package rocket.agile.com.mainlibrary.model;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Application;
-import android.app.Service;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.os.IBinder;
-import android.support.annotation.Nullable;
-import android.util.Log;;import io.realm.Realm;
-import rocket.agile.com.mainlibrary.activity.MasterView;
+import android.util.Log;
 
 /**
  * Created by keithkowalski on 6/26/17.
+ *
+ * Responsible for tracking Application entering background and foreground
+ *
  */
 
 public class ApplicationLifeCycleTracker implements Application.ActivityLifecycleCallbacks {
