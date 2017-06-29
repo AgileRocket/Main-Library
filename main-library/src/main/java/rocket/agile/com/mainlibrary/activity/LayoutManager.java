@@ -25,9 +25,6 @@ public class LayoutManager extends AppCompatActivity {
     public LayoutManager() {}
     public LayoutManager(Context context) { this.context = context; }
 
-    // Call singleton class for data manager
-    DataManager dataManager = DataManager.getInstance();
-
     // Affects all classes that extend LayoutManager
     @Override
     protected void onResume() {
@@ -36,7 +33,7 @@ public class LayoutManager extends AppCompatActivity {
         NetworkCalls networkCalls = new NetworkCalls(this);
 
         if(networkCalls.isNetworkAvailable()) {
-            if(!ApplicationLifeCycleTracker.initialStart) {
+            if(!ApplicationLifeCycleTracker.initialStart) {     // Check that this is NOT the initial start of the app
                 Log.d("LAYOUT ACTIVITY", "RESUME");
                networkCalls.getChangeStateFromNetworkAPI();
             }
