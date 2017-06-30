@@ -9,6 +9,15 @@ import rocket.agile.com.mainlibrary.model.ApplicationLifeCycleTracker;
 import rocket.agile.com.mainlibrary.model.DataManager;
 import rocket.agile.com.mainlibrary.networking.NetworkCalls;
 
+/**
+ * Created by keithkowalski on 6/19/17.
+ *
+ * Purpose:  Initial activity launched (not seen) when app opens
+ * Function: A) Initiates networking class based on life cycle state of application
+ *           B) Checks for initial network availability and Realm data persistence
+ *
+ */
+
 public class MasterView extends AppCompatActivity {
 
     protected void onStart() {

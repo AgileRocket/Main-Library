@@ -8,6 +8,11 @@ import rocket.agile.com.mainlibrary.model.actionItems.Values;
 
 /**
  * Created by keithkowalski on 5/18/17.
+ *
+ * Purpose: Provide call names for Retrofit to use
+ * Function:  Retrofit makes calls to get methods based on naming conventions provided here.
+ *            Interface forces every class implementing RetrofitAPI to inherit these methods
+ *
  */
 
 public interface RetrofitAPI {

@@ -20,4 +20,6 @@ public class ApplicationBase extends android.app.Application {
         Realm.init(this);
         RealmPersistence.initRealm();
     }
+
+
 }

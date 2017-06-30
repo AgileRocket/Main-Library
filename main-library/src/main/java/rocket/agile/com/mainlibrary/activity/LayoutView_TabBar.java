@@ -3,11 +3,18 @@ package rocket.agile.com.mainlibrary.activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
-
 import rocket.agile.com.mainlibrary.R;
+
+/**
+ * Created by keithkowalski on 6/19/17.
+ *
+ * Purpose:  Present lower tab bar layout view to users
+ * Function: A) List of tab buttons is created, based on action items set by admin
+ *           B) Main screen displays graphics and social media
+ *
+ */
 
 public class LayoutView_TabBar extends LayoutManager {
 

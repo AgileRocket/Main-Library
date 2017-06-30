@@ -3,8 +3,12 @@ package rocket.agile.com.mainlibrary.Interface;
 /**
  * Created by KeithK on 5/29/17.
  *
- * Responsible for forcing required values for every Action Type created
- * Not needed for Values
+ * /**
+ * Created by keithkowalski on 6/19/17.
+ *
+ * Purpose:  Provide same 3 methods to all classes that implement ActionModel
+ * Function: A) Responsible for forcing required values for every Action Type created
+ *           B) Not needed for Values
  *
  */
 
