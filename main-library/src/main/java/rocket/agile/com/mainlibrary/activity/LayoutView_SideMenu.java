@@ -1,6 +1,5 @@
 package rocket.agile.com.mainlibrary.activity;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,19 +8,25 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
-
 import rocket.agile.com.mainlibrary.R;
 import rocket.agile.com.mainlibrary.fragments.AboutUsFragment;
 import rocket.agile.com.mainlibrary.fragments.WebsiteFragment;
 import rocket.agile.com.mainlibrary.model.DataManager;
 
-public class LayoutView_SideMenu extends AppCompatActivity
+/**
+ * Created by keithkowalski on 6/19/17.
+ *
+ * Purpose:  Present side menu layout view to users
+ * Function: A) List of action items presented in side menu; graphics and social media presented on home page
+ *
+ */
+
+public class LayoutView_SideMenu extends LayoutManager
         implements NavigationView.OnNavigationItemSelectedListener {
 
     // Call singleton class for data manager
@@ -50,36 +55,35 @@ public class LayoutView_SideMenu extends AppCompatActivity
         View primaryBackground = findViewById(R.id.id_main);
         primaryBackground.setBackgroundColor(Color.parseColor(dataManager.primaryBackgroundColor));
 
-//        // PRIMARY HEADER COLOR AND TITLE
+        // PRIMARY HEADER COLOR AND TITLE
         primaryHeader.setBackgroundColor(Color.parseColor(dataManager.primaryHeaderColor));
         this.setTitle(dataManager.appName);
     }
 
-
-//    Back Button pressed override is to check for user intent on tapping back button
-    private Boolean exit = false;
-    @Override
-    public void onBackPressed() {
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            if(exit) {
-                moveTaskToBack(true); // finish activity
-            } else {
-                Toast.makeText(this, "Press Back again to Exit.",
-                        Toast.LENGTH_SHORT).show();
-                exit = true;
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        exit = false;
-                    }
-                }, 3 * 1000);
-            }
-        }
-    }
+//        // Back Button pressed override is to check for user intent on tapping back button
+//    private Boolean exit = false;
+//    @Override
+//    public void onBackPressed() {
+//
+//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        if (drawer.isDrawerOpen(GravityCompat.START)) {
+//            drawer.closeDrawer(GravityCompat.START);
+//        } else {
+//            if(exit) {
+//                moveTaskToBack(true); // finish activity
+//            } else {
+//                Toast.makeText(this, "Press Back again to Exit.",
+//                        Toast.LENGTH_SHORT).show();
+//                exit = true;
+//                new Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        exit = false;
+//                    }
+//                }, 3 * 1000);
+//            }
+//        }
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -112,7 +116,7 @@ public class LayoutView_SideMenu extends AppCompatActivity
         WebsiteFragment websiteFragment = new WebsiteFragment();
         AboutUsFragment aboutUsFragment = new AboutUsFragment();
 
-        // TO-DO:  Change from if-else to Switch statement
+        // TODO:  Change from if-else to Switch statement
 
         if (id == R.id.nav_website) {
             manager.beginTransaction().replace(

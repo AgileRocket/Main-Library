@@ -1,67 +1,63 @@
 package rocket.agile.com.mainlibrary.activity;
 
-import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.util.Log;
 import io.realm.Realm;
-import rocket.agile.com.mainlibrary.R;
+import rocket.agile.com.mainlibrary.model.ApplicationLifeCycleTracker;
 import rocket.agile.com.mainlibrary.model.DataManager;
-import rocket.agile.com.mainlibrary.model.NetworkingManager;
-import rocket.agile.com.mainlibrary.realm.RealmPersistence;
+import rocket.agile.com.mainlibrary.networking.NetworkCalls;
+
+/**
+ * Created by keithkowalski on 6/19/17.
+ *
+ * Purpose:  Initial activity launched (not seen) when app opens
+ * Function: A) Initiates networking class based on life cycle state of application
+ *           B) Checks for initial network availability and Realm data persistence
+ *
+ */
 
 public class MasterView extends AppCompatActivity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onStart() {
+        super.onStart();
 
-        // Set content view for apps using library
-        setContentView(R.layout.master_activity_master_view);
-
-        // Realm Initialization
-        Realm.init(this);
-        RealmPersistence.initRealm();
-
-        // TODO: Check here to see if JSON reports any updates or 1st time app is run
-        // Networking Singleton
-        NetworkingManager networkingManager = NetworkingManager.getInstance();
-
-        boolean networkIsAvailable = isNetworkAvailable();
-
-        if(networkIsAvailable && networkingManager.getChangeState()) {
-            networkingManager.getValues();
-            networkingManager.getActions();
-        }
-
-        // Data Manager Singleton
-        DataManager dataManager = DataManager.getInstance();
-        // Load data from Realm Storage
-        dataManager.getDataFromRealmPersistence();
-
-        switch (dataManager.layoutValue) {
-            case 0:
-                startActivity(new Intent(this, LayoutView_SideMenu.class));
-                break;
-            case 1:
-                startActivity(new Intent(this, LayoutView_TabBar.class));
-                break;
-            case 2:
-                startActivity(new Intent(this, LayoutView_Buttons_Grid.class));
-                break;
-            case 3:
-                startActivity(new Intent(this, LayoutView_Buttons_Long.class));
-                break;
-            default: break;
+        Log.d("MASTER VIEW", "START");
+        Log.d("INITIAL START", ApplicationLifeCycleTracker.initialStart + "");
+        if(ApplicationLifeCycleTracker.initialStart) {
+            startNetworkCall();
         }
     }
 
-    public boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) getSystemService(this.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+    public void startNetworkCall() {
 
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+        NetworkCalls networkCalls = new NetworkCalls(this);
+        AlertDialog alertDialog;
+        boolean networkIsAvailable = networkCalls.isNetworkAvailable();
+
+        if(networkIsAvailable) {
+            networkCalls.networkCall();  // Network call always made to at least get data pull for any changes applied via API
+        } else if(!networkIsAvailable) {
+            Realm realm = Realm.getDefaultInstance();
+            if(!realm.isEmpty()) {  // No network, but Realm data is available
+                DataManager dataManager = DataManager.getInstance();
+                dataManager.getValues();
+                new LayoutManager(this).setLayout(dataManager);
+                realm.close();
+            } else {    // No network and no Realm data
+                alertDialog = new AlertDialog.Builder(this).create();
+                alertDialog.setTitle("Network Error");
+                alertDialog.setMessage("Network connection required.");
+                alertDialog.setCanceledOnTouchOutside(false);
+                alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int i) {
+                        finishAndRemoveTask();
+                    }
+                });
+                realm.close();
+                alertDialog.show();
+            }
+        }
     }
 }

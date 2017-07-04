@@ -1,38 +1,45 @@
 package rocket.agile.com.mainlibrary.model;
 
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+
 import io.realm.Realm;
 import io.realm.RealmResults;
-import rocket.agile.com.mainlibrary.actionItems.AboutUs_ActionItem;
-import rocket.agile.com.mainlibrary.actionItems.ActionItems_Values;
-import rocket.agile.com.mainlibrary.actionItems.Email_ActionItem;
-
+import rocket.agile.com.mainlibrary.model.actionItems.ActionEmail;
+import rocket.agile.com.mainlibrary.model.actionItems.ActionPhone;
+import rocket.agile.com.mainlibrary.model.actionItems.Values;
 
 /**
  * Created by keithkowalski on 3/21/17.
+ *
+ * Responsible for storing all data as a Singleton class
+ * Makes calls to Realm for accessing values and action items
+ *
  */
 
-public class DataManager extends AppCompatActivity {
+public class DataManager {
 
     // Create Singleton
     private static final DataManager ourInstance = new DataManager();
     public static DataManager getInstance() {
         return ourInstance;
     }
+    Realm realm;
 
-    // Create Realm instance
-    Realm realm = Realm.getDefaultInstance();
+//----- Set base URL -----------------
+    public String baseURL = "http://rocketdepot.com/api/";
 
-//----- Layout Selected --------------
+//----- Current Change State ---------
+    public boolean changeStateValue = true;  // TODO: Initialize to false, only network call can set to true
+
+//----- LayoutManager Selected --------------
 
 //    LAYOUT THEME
     public int layoutValue = 0;     // TODO: MAKE NETWORK CALL
 
 //----- Primary Values ---------------
 
-//    HEADER TITLE
-    public String headerTitle = "WORKS! :)";      // TODO: MAKE NETWORK CALLS
+    //    APP NAME
+    public String appName;
 
 //    PRIMARY HEADER COLOR
     public String primaryHeaderColor = "#d35400";
@@ -42,9 +49,6 @@ public class DataManager extends AppCompatActivity {
 
 //    ADDRESS
     public String address;
-
-//    APP NAME
-    public String appName;
 
 //    EMAIL
     public String email;
@@ -58,12 +62,17 @@ public class DataManager extends AppCompatActivity {
 
 //----- Fragment Data --------------------
 
-//    TYPE
-    public int actionType;
+//    Email
+    public int actionEmailType;
+    public String emailFAIcon;
+    public String emailName;
+    public String emailSubject;
 
-//    ABOUT US
-    public String aboutUsBody;
-    public String aboutUsIcon;
+//    Call Us
+    public int actionCallType;
+    public String callFAIcon;
+    public String callName;
+    public String callNumber;
 
 //----- Available Social Media Data ------
 
@@ -90,45 +99,58 @@ public class DataManager extends AppCompatActivity {
 
 //----- Values and Action-Items Getter Methods --------
 
-    // Get all values from Realm Persistence
-    public void getDataFromRealmPersistence() {
-
-        // Layout Value
-        getValues();
-        getActionItems();
-
-        // Close Realm
-        realm.close();
-    }
-
-    // GET LAYOUT VALUE
+    // GET LAYOUT VALUES
     public void getValues() {
 
+        realm = Realm.getDefaultInstance();
         RealmResults<Values> values = realm.where(Values.class).findAll();
 
         for(Values value: values) {
-            address = value.getAddress();
             appName = value.getAppName();
-            email = value.getEmail();
+            address = value.getAddress();
             mondayHours = value.getHours().getMonday();
             phone = value.getPhone();
         }
+        realm.close();
     }
 
-    public void getActionItems() {
+    // GET ACTION ITEMS
 
-        RealmResults<ActionList> actionLists = realm.where(ActionList.class).findAll();
+    // EMAIL
+    public void getEmailAction() {
 
-        String temp;
+        realm = Realm.getDefaultInstance();
+        RealmResults<ActionEmail> actionEmails = realm.where(ActionEmail.class).findAll();
 
-        for(ActionList actionList: actionLists) {
-            for(int i = 0; i < actionList.getTotal(); i++) {
-                actionType = actionList.getActions().get(i).getActionType();
-                aboutUsIcon = actionList.getActions().get(i).getFaIcon();
+        actionEmailType = actionEmails.first().getActionType();
+        emailFAIcon = actionEmails.first().getFAIcon();
+        emailName = actionEmails.first().getName();
+        email = actionEmails.first().getEmail();
+        emailSubject = actionEmails.first().getSubject();
 
-                temp = actionType + " " + aboutUsIcon + "\n\n";
-                Log.d("Actions", temp);
-            }
-        }
+//        Log.d("ActionEmail Count", actionEmails.size() + "");
+//        Log.d("Data Manager\n", "\n" + actionEmails.first().getActionType() + "\n" + actionEmails.first().getFAIcon() + "\n" + actionEmails.first().getName() + "\n" + actionEmails.first().getEmail() + "\n" + actionEmails.first().getSubject());
+
+        realm.close();
+    }
+
+    // CALL
+    public void getCallAction() {
+
+        realm = Realm.getDefaultInstance();
+        RealmResults<ActionPhone> actionPhones = realm.where(ActionPhone.class).findAll();
+
+        actionCallType = actionPhones.first().getActionType();
+        callFAIcon = actionPhones.first().getFAIcon();
+        callName = actionPhones.first().getName();
+        callNumber = actionPhones.first().getNumber();
+
+//        logData(actionPhones + "", callFAIcon);
+
+        realm.close();
+    }
+
+    public void logData(String actionName, String faIcon) {
+        Log.d(actionName, faIcon);
     }
 }
