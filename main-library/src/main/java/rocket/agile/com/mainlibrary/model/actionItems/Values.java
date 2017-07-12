@@ -6,6 +6,10 @@ import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by keithkowalski on 5/18/17.
+ *
+ * Purpose:  Create the list of basic values (i.e. app name, colors, hours, contact email address, etc)
+ * Function: A) Responsible for storing values to Realm
+ *
  */
 
 public class Values extends RealmObject {
