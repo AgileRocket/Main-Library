@@ -18,6 +18,10 @@ import rocket.agile.com.mainlibrary.realm.RealmPersistence;
 
 /**
  * Created by keithkowalski on 3/29/17.
+ *
+ * Purpose:  Networking process for data value calls and action item calls; uses AsyncTask to
+ *           prevent app progression until network call is completed
+ *
  */
 
 public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {

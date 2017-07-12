@@ -7,6 +7,10 @@ import rocket.agile.com.mainlibrary.Interface.ActionModel;
 
 /**
  * Created by keithkowalski on 6/14/17.
+ *
+ * Purpose:  Create phone actions intended for Realm
+ * Function: A) Responsible for storing all provided phone actions
+ *
  */
 
 public class ActionPhone extends RealmObject implements ActionModel {

@@ -5,6 +5,12 @@ import io.realm.RealmObject;
 
 /**
  * Created by keithkowalski on 5/18/17.
+ *
+ * Purpose:  Create the hours for the Values class
+ * Function: A) Responsible for storing the provided hours via the Values class
+ *
+ * This class is required since hours are considered to be elements within their own list
+ *
  */
 
 public class Hours extends RealmObject {

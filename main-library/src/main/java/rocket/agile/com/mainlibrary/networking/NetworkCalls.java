@@ -10,6 +10,10 @@ import java.util.concurrent.TimeoutException;
 
 /**
  * Created by keithkowalski on 6/22/17.
+ *
+ * Purpose:  Serves as the repeatedly used calls for networking purposes
+ * Function: A) Responsible for providing a centralized class where foundational network calls can be made from
+ *
  */
 
 public class NetworkCalls {

@@ -6,6 +6,11 @@ import rocket.agile.com.mainlibrary.Interface.ActionModel;
 
 /**
  * Created by KeithK on 5/29/17.
+ *
+ * Purpose:  Class stores values for email service
+ * Function: A) Responsible for providing values to be stored in Realm for email
+ *
+ *
  */
 
 public class ActionEmail extends RealmObject implements ActionModel {

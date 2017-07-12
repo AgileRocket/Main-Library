@@ -9,7 +9,8 @@ import java.util.List;
 /**
  * Created by keithkowalski on 5/20/17.
  *
- * The purpose of this class is to create the list of 'actions' passed via JSON.
+ * Purpose:  Create the list of 'actions' passed via JSON
+ * Function: A) Responsible for storing all provided actions and total count of actions
  *
  */
 

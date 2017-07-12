@@ -5,6 +5,11 @@ import rocket.agile.com.mainlibrary.realm.RealmPersistence;
 
 /**
  * Created by keithkowalski on 6/26/17.
+ *
+ * Purpose:  This class is the absolute beginning of the entire app; this will always run first on launch
+ * Function: A) Responsible for establishing the life cycle tracker, which assists in telling us when the app is either in the background or foreground
+ *           B) Responsible for initiating Realm
+ *
  */
 
 public class ApplicationBase extends android.app.Application {
@@ -20,6 +25,4 @@ public class ApplicationBase extends android.app.Application {
         Realm.init(this);
         RealmPersistence.initRealm();
     }
-
-
 }

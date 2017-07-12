@@ -11,8 +11,8 @@ import rocket.agile.com.mainlibrary.model.actionItems.Values;
 /**
  * Created by keithkowalski on 3/21/17.
  *
- * Responsible for storing all data as a Singleton class
- * Makes calls to Realm for accessing values and action items
+ * Purpose:  Responsible for storing all data as a Singleton class
+ * Function: A) Makes calls to Realm for accessing values and action items
  *
  */
 
@@ -128,9 +128,6 @@ public class DataManager {
         email = actionEmails.first().getEmail();
         emailSubject = actionEmails.first().getSubject();
 
-//        Log.d("ActionEmail Count", actionEmails.size() + "");
-//        Log.d("Data Manager\n", "\n" + actionEmails.first().getActionType() + "\n" + actionEmails.first().getFAIcon() + "\n" + actionEmails.first().getName() + "\n" + actionEmails.first().getEmail() + "\n" + actionEmails.first().getSubject());
-
         realm.close();
     }
 
@@ -150,6 +147,7 @@ public class DataManager {
         realm.close();
     }
 
+    // Log data pulled from Realm persistence
     public void logData(String actionName, String faIcon) {
         Log.d(actionName, faIcon);
     }

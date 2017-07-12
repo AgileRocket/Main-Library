@@ -11,6 +11,11 @@ import rocket.agile.com.mainlibrary.model.actionItems.Values;
 
 /**
  * Created by keithkowalski on 4/21/17.
+ *
+ * Purpose:  Primary class where realm data storage calls are provided
+ * Function: A) Responsible for storing data from network values and network action items
+ *           B) Provides initial Realm call for application use
+ *
  */
 
 public class RealmPersistence extends MasterView {
@@ -29,7 +34,6 @@ public class RealmPersistence extends MasterView {
         Realm.setDefaultConfiguration(config);
     }
 
-    // Save values via JSON asynchronously
     //    Persist Values
     public static void createOrUpdateValues(final Values values) {
 
