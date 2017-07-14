@@ -30,6 +30,7 @@ public class DataManager {
 
 //----- Current Change State ---------
     public boolean changeStateValue = true;  // TODO: Initialize to false, only network call can set to true
+    public String changeStateIDs[];
 
 //----- LayoutManager Selected --------------
 

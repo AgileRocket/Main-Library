@@ -80,6 +80,7 @@ public class NetworkGetChangeState extends AsyncTask<Void, Object, Boolean> {
             // TODO: Remove temp code for actual server call that is currently commented
             Log.d("CHECK CHANGE STATE", "TRUE");
             dataManager.changeStateValue = true;
+            dataManager.changeStateIDs = new String[] {"ID_1,", "ID_2", "ID_3"};
 
 //            // TODO: Change this to match change state when available from api
 //            Call<ChangeState> call = service.getChangeState();

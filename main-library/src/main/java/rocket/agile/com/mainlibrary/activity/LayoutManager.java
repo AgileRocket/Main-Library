@@ -43,6 +43,10 @@ public class LayoutManager extends AppCompatActivity {
             if(!ApplicationLifeCycleTracker.initialStart) {     // Check that this is NOT the initial start of the app
                 Log.d("LAYOUT ACTIVITY", "RESUME");
                networkCalls.getChangeStateFromNetworkAPI();
+
+                // Test changeStateIDs exist
+                String changeStateIDs = dataManager.changeStateIDs[0] + dataManager.changeStateIDs[1] + dataManager.changeStateIDs[2];
+                Log.d("Change State IDs", changeStateIDs);
             }
         }
     }
