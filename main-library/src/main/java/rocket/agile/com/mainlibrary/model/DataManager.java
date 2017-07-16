@@ -4,8 +4,9 @@ import android.util.Log;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
+import rocket.agile.com.mainlibrary.model.actionItems.ActionCall;
 import rocket.agile.com.mainlibrary.model.actionItems.ActionEmail;
-import rocket.agile.com.mainlibrary.model.actionItems.ActionPhone;
+import rocket.agile.com.mainlibrary.model.actionItems.ActionList;
 import rocket.agile.com.mainlibrary.model.actionItems.Values;
 
 /**
@@ -51,9 +52,6 @@ public class DataManager {
 //    ADDRESS
     public String address;
 
-//    EMAIL
-    public String email;
-
 //    HOURS
     public String mondayHours;
 
@@ -68,6 +66,7 @@ public class DataManager {
     public String emailFAIcon;
     public String emailName;
     public String emailSubject;
+    public String emailAddress;
 
 //    Call Us
     public int actionCallType;
@@ -116,34 +115,24 @@ public class DataManager {
     }
 
     // GET ACTION ITEMS
-
-    // EMAIL
-    public void getEmailAction() {
-
+    public void getActionItems() {
         realm = Realm.getDefaultInstance();
-        RealmResults<ActionEmail> actionEmails = realm.where(ActionEmail.class).findAll();
+        RealmResults<ActionList> actionLists = realm.where(ActionList.class).findAll();
 
-        actionEmailType = actionEmails.first().getActionType();
-        emailFAIcon = actionEmails.first().getFAIcon();
-        emailName = actionEmails.first().getName();
-        email = actionEmails.first().getEmail();
-        emailSubject = actionEmails.first().getSubject();
+        for(ActionList actionList: actionLists) {
+            // ACTION CALLS
+            actionCallType = actionList.getActionCalls().first().getActionType();
+            callFAIcon = actionList.getActionCalls().first().getFAIcon();
+            callName = actionList.getActionCalls().first().getName();
+            callNumber = actionList.getActionCalls().first().getNumber();
 
-        realm.close();
-    }
-
-    // CALL
-    public void getCallAction() {
-
-        realm = Realm.getDefaultInstance();
-        RealmResults<ActionPhone> actionPhones = realm.where(ActionPhone.class).findAll();
-
-        actionCallType = actionPhones.first().getActionType();
-        callFAIcon = actionPhones.first().getFAIcon();
-        callName = actionPhones.first().getName();
-        callNumber = actionPhones.first().getNumber();
-
-//        logData(actionPhones + "", callFAIcon);
+            // ACTION EMAILS
+            actionEmailType = actionList.getActionEmails().first().getActionType();
+            emailFAIcon = actionList.getActionEmails().first().getFAIcon();
+            emailName = actionList.getActionEmails().first().getName();
+            emailAddress = actionList.getActionEmails().first().getEmailAddress();
+            emailSubject = actionList.getActionEmails().first().getSubject();
+        }
 
         realm.close();
     }

@@ -80,7 +80,6 @@ public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
                 @Override
                 public void onResponse(Call<Values> call, Response<Values> response) {
                     Values valuesData = response.body();
-                    Log.d("--NETWORKING--", "COMPLETE");    // Test for when this completes...
                     RealmPersistence.createOrUpdateValues(valuesData);
                 }
                 @Override
@@ -109,6 +108,7 @@ public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
                 @Override
                 public void onResponse(Call<ActionList> call, Response<ActionList> response) {
                     ActionList actionLists = response.body();
+                    Log.d("--NETWORKING--", "COMPLETE");    // Test for when this completes...
                     RealmPersistence.createOrUpdateActionItems(actionLists);
                 }
                 @Override

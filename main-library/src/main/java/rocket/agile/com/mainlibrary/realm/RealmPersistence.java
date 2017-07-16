@@ -1,10 +1,10 @@
 package rocket.agile.com.mainlibrary.realm;
 
+import android.util.Log;
+
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
-import rocket.agile.com.mainlibrary.model.actionItems.ActionPhone;
 import rocket.agile.com.mainlibrary.activity.MasterView;
-import rocket.agile.com.mainlibrary.model.actionItems.ActionEmail;
 import rocket.agile.com.mainlibrary.model.actionItems.ActionList;
 import rocket.agile.com.mainlibrary.model.DataManager;
 import rocket.agile.com.mainlibrary.model.actionItems.Values;
@@ -61,37 +61,10 @@ public class RealmPersistence extends MasterView {
             realm.executeTransaction(new Realm.Transaction() {
                 @Override
                 public void execute(Realm realm) {
-                    for (int i = 0; i < actionList.getActions().size(); i++) {
-                        switch (actionList.getActions().get(i).getActionType()) {
-                            // EMAIL
-                            case 0:
-                                ActionEmail actionEmail = new ActionEmail(
-                                        actionList.getActions().get(i).getActionType(),
-                                        actionList.getActions().get(i).getFaIcon(),
-                                        actionList.getActions().get(i).getName(),
-                                        actionList.getActions().get(i).getEmail(),
-                                        actionList.getActions().get(i).getSubject()
-                                );
-                                realm.insertOrUpdate(actionEmail);
-                                break;
-
-                            // PHONE
-                            case 2:
-                                ActionPhone actionPhone = new ActionPhone(
-                                        actionList.getActions().get(i).getActionType(),
-                                        actionList.getActions().get(i).getFaIcon(),
-                                        actionList.getActions().get(i).getName(),
-                                        actionList.getActions().get(i).getNumber()
-                                );
-                                realm.insertOrUpdate(actionPhone);
-                                break;
-
-                            default:
-                                break;
-                        }
-                    }
+                    realm.insertOrUpdate(actionList);
                 }
             });
+            dataManager.getActionItems();
         } finally {
             if (realm != null) {
                 realm.close();

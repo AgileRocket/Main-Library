@@ -28,9 +28,7 @@ public class AboutUsFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         // Test action item data
-        dataManager.getEmailAction();
-        dataManager.getCallAction();
-        Log.d("--Action Items 1--", "\n"+dataManager.actionEmailType+"\n"+dataManager.emailFAIcon+"\n"+dataManager.emailName+"\n"+dataManager.email+"\n"+dataManager.emailSubject+"\n");
+        Log.d("--Action Items 1--", "\n"+dataManager.actionEmailType+"\n"+dataManager.emailFAIcon+"\n"+dataManager.emailName+"\n"+dataManager.emailAddress+"\n"+dataManager.emailSubject+"\n");
         Log.d("--Action Items 2--", "\n"+dataManager.actionCallType+"\n"+dataManager.callFAIcon+"\n"+dataManager.callName+"\n"+dataManager.callNumber +"\n");
 
         // Inflate the layout for this fragment
@@ -43,7 +41,7 @@ public class AboutUsFragment extends Fragment {
 
         // Set Title Text
         TextView textView_title = (TextView) view.findViewById(R.id.aboutus_text_title);
-        textView_title.setText(dataManager.email);
+        textView_title.setText(dataManager.emailAddress);
 
         // Set Details Text
         TextView textView_details = (TextView) view.findViewById(R.id.aboutus_text_details);

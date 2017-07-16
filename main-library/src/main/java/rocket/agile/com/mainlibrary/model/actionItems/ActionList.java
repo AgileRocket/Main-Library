@@ -4,6 +4,8 @@ import io.realm.RealmList;
 import io.realm.RealmObject;
 
 import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,22 +18,25 @@ import java.util.List;
 
 public class ActionList extends RealmObject {
 
-    @SerializedName("actions")
-    private RealmList<Action> actions;
+    @SerializedName("callActions")
+    private RealmList<ActionCall> actionCalls;
 
-    @SerializedName("total")
-    private Integer total;
+    @SerializedName("emailActions")
+    private RealmList<ActionEmail> actionEmails;
 
-// GETTERS and SETTERS
-    public List<Action> getActions() { return actions; }
-    public void setActions(RealmList<Action> actions) {
-        this.actions = actions;
+
+    // GETTERS and SETTERS
+    public RealmList<ActionCall> getActionCalls() {
+        return actionCalls;
+    }
+    public void setActionCalls(RealmList<ActionCall> actionCalls) {
+        this.actionCalls = actionCalls;
     }
 
-    public Integer getTotal() {
-        return total;
+    public RealmList<ActionEmail> getActionEmails() {
+        return actionEmails;
     }
-    public void setTotal(Integer total) {
-        this.total = total;
+    public void setActionEmails(RealmList<ActionEmail> actionEmails) {
+        this.actionEmails = actionEmails;
     }
 }

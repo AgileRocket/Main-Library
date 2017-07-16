@@ -13,7 +13,7 @@ import rocket.agile.com.mainlibrary.Interface.ActionModel;
  *
  */
 
-public class ActionPhone extends RealmObject implements ActionModel {
+public class ActionCall extends RealmObject implements ActionModel {
 
     @SerializedName("actionType")
     private int actionType;
@@ -37,13 +37,5 @@ public class ActionPhone extends RealmObject implements ActionModel {
     public void setNumber(String number) { this.number = number; }
 
     // Required default constructor
-    public ActionPhone() {}
-
-    // Custom constructor
-    public ActionPhone(int actionType, String faIcon, String name, String number) {
-        this.setActionType(actionType);
-        this.setFaIcon(faIcon);
-        this.setName(name);
-        this.setNumber(number);
-    }
+    public ActionCall() {}
 }
