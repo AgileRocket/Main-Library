@@ -4,6 +4,7 @@ import android.util.Log;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
+import rocket.agile.com.mainlibrary.model.actionItems.ActionEmail;
 import rocket.agile.com.mainlibrary.model.appInfo.AppInfo;
 
 /**
@@ -113,25 +114,25 @@ public class DataManager {
 
     // GET ACTION ITEMS
     public void getActionItems() {
-//        realm = Realm.getDefaultInstance();
-//        RealmResults<ActionList> actionLists = realm.where(ActionList.class).findAll();
-//
-//        for(ActionList actionList: actionLists) {
-//            // ACTION CALLS
+        realm = Realm.getDefaultInstance();
+        RealmResults<ActionEmail> actionLists = realm.where(ActionEmail.class).findAll();
+
+        for(ActionEmail actionEmail: actionLists) {
+            // ACTION CALLS
 //            actionCallType = actionList.getActionCalls().first().getActionType();
 //            callFAIcon = actionList.getActionCalls().first().getFAIcon();
 //            callName = actionList.getActionCalls().first().getName();
 //            callNumber = actionList.getActionCalls().first().getNumber();
-//
-//            // ACTION EMAILS
-//            actionEmailType = actionList.getActionEmails().first().getActionType();
-//            emailFAIcon = actionList.getActionEmails().first().getFAIcon();
-//            emailName = actionList.getActionEmails().first().getName();
-//            emailAddress = actionList.getActionEmails().first().getEmailAddress();
-//            emailSubject = actionList.getActionEmails().first().getSubject();
-//        }
 
-//        realm.close();
+            // ACTION EMAILS
+            actionEmailType = actionEmail.getActionType();
+            emailFAIcon = actionEmail.getFAIcon();
+            emailName = actionEmail.getName();
+            emailAddress = actionEmail.getEmailAddress();
+            emailSubject = actionEmail.getSubject();
+        }
+
+        realm.close();
     }
 
     // Log data pulled from Realm persistence

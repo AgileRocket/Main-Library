@@ -1,11 +1,22 @@
 package rocket.agile.com.mainlibrary.realm;
 
+import android.util.Log;
+
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import io.realm.RealmObject;
 import rocket.agile.com.mainlibrary.activity.MasterView;
 import rocket.agile.com.mainlibrary.model.DataManager;
+import rocket.agile.com.mainlibrary.model.actionItems.ActionCall;
+import rocket.agile.com.mainlibrary.model.actionItems.ActionEmail;
 import rocket.agile.com.mainlibrary.model.appInfo.AppInfo;
 
 /**
@@ -53,27 +64,52 @@ public class RealmPersistence extends MasterView {
     }
 
     //    Persist Action Items
-    public static void createOrUpdateActionItems(final List actionList) {
+    public static void createOrUpdateActionItems(final JSONArray jsonArray) {
 
+        try {
+
+            for ( int i=0; i<jsonArray.length(); i++) {
+
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                int type = jsonObject.getInt("actionType");
+                switch (type) {
+                    case 0:
+                        ActionEmail actionEmail = new Gson().fromJson(jsonObject.toString(), ActionEmail.class);
+                        Log.d("json", actionEmail.getEmailAddress());
+                        RealmPersistence.createRealmObject(actionEmail);
+                        break;
+                    case 1:
+                        Log.d("case", "1");
+                        break;
+                    case 2:
+                        ActionCall actionCall = new Gson().fromJson(jsonObject.toString(), ActionCall.class);
+                        break;
+                    case 3:
+                        Log.d("case", "3");
+                        break;
+                    default:
+                        Log.d("case", "default");
+                        break;
+                }
+
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void createRealmObject(final RealmObject realmObject) {
         try {
             realm = Realm.getDefaultInstance();
             realm.executeTransaction(new Realm.Transaction() {
                 @Override
                 public void execute(Realm realm) {
-
-//                    Log.d("ACTIONS", actionList.getActionCalls().get(0).getActionType() + "");
-
-//                    for(JSONObject action: actionList) {
-//                        if (action.getActionType() == 2) {
-//                            Log.d("ACTION", action.getName());
-////                            realm.insertOrUpdate(action);
-//                        }
-//                    }
-
-
+                    realm.insertOrUpdate(realmObject);
                 }
             });
-//            dataManager.getActionItems();
+            dataManager.getActionItems();
         } finally {
             if (realm != null) {
                 realm.close();

@@ -5,8 +5,13 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -17,6 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import rocket.agile.com.mainlibrary.Interface.RetrofitAPI;
 import rocket.agile.com.mainlibrary.model.DataManager;
 import rocket.agile.com.mainlibrary.activity.LayoutManager;
+import rocket.agile.com.mainlibrary.model.actionItems.ActionEmail;
 import rocket.agile.com.mainlibrary.model.appInfo.AppInfo;
 import rocket.agile.com.mainlibrary.realm.RealmPersistence;
 
@@ -114,10 +120,17 @@ public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
 
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
                     try {
-                        JSONArray jsonArray= new JSONArray().get(re);
-                    } catch(JSONException e) {
+                        String jsonResult = response.body().string();
+
+                        JSONArray jsonArray = new JSONArray(jsonResult);
+
+                        RealmPersistence.createOrUpdateActionItems(jsonArray);
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
                 }
 
