@@ -25,9 +25,9 @@ public class MasterView extends AppCompatActivity {
 
         Log.d("MASTER VIEW", "START");
         Log.d("INITIAL START", ApplicationLifeCycleTracker.initialStart + "");
-        if(ApplicationLifeCycleTracker.initialStart) {
+//        if(ApplicationLifeCycleTracker.initialStart) {
             startNetworkCall();
-        }
+//        }
     }
 
     public void startNetworkCall() {
