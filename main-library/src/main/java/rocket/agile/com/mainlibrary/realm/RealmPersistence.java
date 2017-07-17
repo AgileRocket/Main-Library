@@ -1,13 +1,12 @@
 package rocket.agile.com.mainlibrary.realm;
 
-import android.util.Log;
+import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import rocket.agile.com.mainlibrary.activity.MasterView;
-import rocket.agile.com.mainlibrary.model.actionItems.ActionList;
 import rocket.agile.com.mainlibrary.model.DataManager;
-import rocket.agile.com.mainlibrary.model.actionItems.Values;
+import rocket.agile.com.mainlibrary.model.appInfo.AppInfo;
 
 /**
  * Created by keithkowalski on 4/21/17.
@@ -34,15 +33,15 @@ public class RealmPersistence extends MasterView {
         Realm.setDefaultConfiguration(config);
     }
 
-    //    Persist Values
-    public static void createOrUpdateValues(final Values values) {
+    //    Persist AppInfo
+    public static void createOrUpdateAppInfo(final AppInfo appInfo) {
 
         try {
             realm = Realm.getDefaultInstance();
             realm.executeTransaction(new Realm.Transaction() {
                 @Override
                 public void execute(Realm realm) {
-                    realm.insertOrUpdate(values);
+                    realm.insertOrUpdate(appInfo);
                 }
             });
             dataManager.getValues();
@@ -54,17 +53,27 @@ public class RealmPersistence extends MasterView {
     }
 
     //    Persist Action Items
-    public static void createOrUpdateActionItems(final ActionList actionList) {
+    public static void createOrUpdateActionItems(final List actionList) {
 
         try {
             realm = Realm.getDefaultInstance();
             realm.executeTransaction(new Realm.Transaction() {
                 @Override
                 public void execute(Realm realm) {
-                    realm.insertOrUpdate(actionList);
+
+//                    Log.d("ACTIONS", actionList.getActionCalls().get(0).getActionType() + "");
+
+//                    for(JSONObject action: actionList) {
+//                        if (action.getActionType() == 2) {
+//                            Log.d("ACTION", action.getName());
+////                            realm.insertOrUpdate(action);
+//                        }
+//                    }
+
+
                 }
             });
-            dataManager.getActionItems();
+//            dataManager.getActionItems();
         } finally {
             if (realm != null) {
                 realm.close();

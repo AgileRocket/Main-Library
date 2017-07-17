@@ -4,16 +4,20 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rocket.agile.com.mainlibrary.Interface.RetrofitAPI;
-import rocket.agile.com.mainlibrary.model.actionItems.ActionList;
 import rocket.agile.com.mainlibrary.model.DataManager;
 import rocket.agile.com.mainlibrary.activity.LayoutManager;
-import rocket.agile.com.mainlibrary.model.actionItems.Values;
+import rocket.agile.com.mainlibrary.model.appInfo.AppInfo;
 import rocket.agile.com.mainlibrary.realm.RealmPersistence;
 
 /**
@@ -52,10 +56,13 @@ public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
     protected Boolean doInBackground(Void... voids) {
 
         if(dataManager.changeStateValue) {
-            getValuesFromNetworkAPI();
+            getAppInfoFromNetworkAPI();
             getActionsFromNetworkAPI();
         }
         dataManager.getValues();
+
+        Log.d("BACKGROUND", "HERE");
+
         return true;
     }
 
@@ -65,7 +72,7 @@ public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
         new LayoutManager(context).setLayout(dataManager);  // Set layout
     }
 
-    public void getValuesFromNetworkAPI() {
+    public void getAppInfoFromNetworkAPI() {
 
         try {
             Retrofit retrofit = new Retrofit.Builder()
@@ -74,16 +81,16 @@ public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
                     .build();
 
             RetrofitAPI service = retrofit.create(RetrofitAPI.class);
-            Call<Values> call = service.getValues();
+            Call<AppInfo> call = service.getValues();
 
-            call.enqueue(new Callback<Values>() {
+            call.enqueue(new Callback<AppInfo>() {
                 @Override
-                public void onResponse(Call<Values> call, Response<Values> response) {
-                    Values valuesData = response.body();
-                    RealmPersistence.createOrUpdateValues(valuesData);
+                public void onResponse(Call<AppInfo> call, Response<AppInfo> response) {
+                    AppInfo appInfoData = response.body();
+                    RealmPersistence.createOrUpdateAppInfo(appInfoData);
                 }
                 @Override
-                public void onFailure(Call<Values> call, Throwable t) {
+                public void onFailure(Call<AppInfo> call, Throwable t) {
                     Log.d("On Failure", t.toString());
                 }
             });
@@ -94,7 +101,6 @@ public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
     }
 
     public void getActionsFromNetworkAPI() {
-
         try {
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(dataManager.baseURL).
@@ -102,18 +108,22 @@ public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
                     .build();
 
             RetrofitAPI service = retrofit.create(RetrofitAPI.class);
-            Call<ActionList> call = service.getActionList();
+            Call<ResponseBody> call = service.getResponse();
 
-            call.enqueue(new Callback<ActionList>() {
+            call.enqueue(new Callback<ResponseBody>() {
+
                 @Override
-                public void onResponse(Call<ActionList> call, Response<ActionList> response) {
-                    ActionList actionLists = response.body();
-                    Log.d("--NETWORKING--", "COMPLETE");    // Test for when this completes...
-                    RealmPersistence.createOrUpdateActionItems(actionLists);
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                    try {
+                        JSONArray jsonArray= new JSONArray().get(re);
+                    } catch(JSONException e) {
+                    }
                 }
+
                 @Override
-                public void onFailure(Call<ActionList> call, Throwable t) {
-                    Log.d("On Failure", t.toString());
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
                 }
             });
         } catch (Exception e) {

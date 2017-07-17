@@ -1,4 +1,4 @@
-package rocket.agile.com.mainlibrary.model.actionItems;
+package rocket.agile.com.mainlibrary.model.appInfo;
 
 import com.google.gson.annotations.SerializedName;
 import io.realm.RealmObject;
@@ -12,7 +12,7 @@ import io.realm.annotations.PrimaryKey;
  *
  */
 
-public class Values extends RealmObject {
+public class AppInfo extends RealmObject {
 
     @PrimaryKey @SerializedName("id")
     private int id;

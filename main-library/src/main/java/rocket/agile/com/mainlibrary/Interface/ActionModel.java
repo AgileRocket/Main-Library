@@ -8,7 +8,7 @@ package rocket.agile.com.mainlibrary.Interface;
  *
  * Purpose:  Provide same 3 methods to all classes that implement ActionModel
  * Function: A) Responsible for forcing required values for every Action Type created
- *           B) Not needed for Values
+ *           B) Not needed for AppInfo
  *
  */
 

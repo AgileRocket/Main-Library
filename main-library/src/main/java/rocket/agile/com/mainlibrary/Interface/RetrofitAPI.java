@@ -1,10 +1,12 @@
 package rocket.agile.com.mainlibrary.Interface;
 
+import org.json.JSONArray;
+
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
-import rocket.agile.com.mainlibrary.model.actionItems.ActionList;
 import rocket.agile.com.mainlibrary.model.ChangeState;
-import rocket.agile.com.mainlibrary.model.actionItems.Values;
+import rocket.agile.com.mainlibrary.model.appInfo.AppInfo;
 
 /**
  * Created by keithkowalski on 5/18/17.
@@ -21,8 +23,8 @@ public interface RetrofitAPI {
     Call<ChangeState> getChangeState();
 
     @GET("info")
-    Call<Values> getValues();
+    Call<AppInfo> getValues();
 
     @GET("actions")
-    Call<ActionList> getActionList();
+    Call<ResponseBody> getResponse();
 }

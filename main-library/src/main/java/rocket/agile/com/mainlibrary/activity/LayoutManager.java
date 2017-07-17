@@ -60,6 +60,8 @@ public class LayoutManager extends AppCompatActivity {
 
     public static void setLayout(DataManager dataManager) {
 
+        Log.d("SET LAYOUT", "HERE");
+
         switch (dataManager.layoutValue) {
             case 0:
                 context.startActivity(new Intent(context, LayoutView_SideMenu.class));

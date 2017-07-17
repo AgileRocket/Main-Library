@@ -58,6 +58,10 @@ public class LayoutView_SideMenu extends LayoutManager
         // PRIMARY HEADER COLOR AND TITLE
         primaryHeader.setBackgroundColor(Color.parseColor(dataManager.primaryHeaderColor));
         this.setTitle(dataManager.appName);
+        if(this.getTitle() == null) {
+            finish();
+            startActivity(getIntent());
+        }
     }
 
 //        // Back Button pressed override is to check for user intent on tapping back button

@@ -4,10 +4,7 @@ import android.util.Log;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
-import rocket.agile.com.mainlibrary.model.actionItems.ActionCall;
-import rocket.agile.com.mainlibrary.model.actionItems.ActionEmail;
-import rocket.agile.com.mainlibrary.model.actionItems.ActionList;
-import rocket.agile.com.mainlibrary.model.actionItems.Values;
+import rocket.agile.com.mainlibrary.model.appInfo.AppInfo;
 
 /**
  * Created by keithkowalski on 3/21/17.
@@ -38,7 +35,7 @@ public class DataManager {
 //    LAYOUT THEME
     public int layoutValue = 0;     // TODO: MAKE NETWORK CALL
 
-//----- Primary Values ---------------
+//----- Primary AppInfo ---------------
 
     //    APP NAME
     public String appName;
@@ -97,15 +94,15 @@ public class DataManager {
 //    GOOGLE+
     public String google;
 
-//----- Values and Action-Items Getter Methods --------
+//----- AppInfo and Action-Items Getter Methods --------
 
     // GET LAYOUT VALUES
     public void getValues() {
 
         realm = Realm.getDefaultInstance();
-        RealmResults<Values> values = realm.where(Values.class).findAll();
+        RealmResults<AppInfo> values = realm.where(AppInfo.class).findAll();
 
-        for(Values value: values) {
+        for(AppInfo value: values) {
             appName = value.getAppName();
             address = value.getAddress();
             mondayHours = value.getHours().getMonday();
@@ -116,25 +113,25 @@ public class DataManager {
 
     // GET ACTION ITEMS
     public void getActionItems() {
-        realm = Realm.getDefaultInstance();
-        RealmResults<ActionList> actionLists = realm.where(ActionList.class).findAll();
+//        realm = Realm.getDefaultInstance();
+//        RealmResults<ActionList> actionLists = realm.where(ActionList.class).findAll();
+//
+//        for(ActionList actionList: actionLists) {
+//            // ACTION CALLS
+//            actionCallType = actionList.getActionCalls().first().getActionType();
+//            callFAIcon = actionList.getActionCalls().first().getFAIcon();
+//            callName = actionList.getActionCalls().first().getName();
+//            callNumber = actionList.getActionCalls().first().getNumber();
+//
+//            // ACTION EMAILS
+//            actionEmailType = actionList.getActionEmails().first().getActionType();
+//            emailFAIcon = actionList.getActionEmails().first().getFAIcon();
+//            emailName = actionList.getActionEmails().first().getName();
+//            emailAddress = actionList.getActionEmails().first().getEmailAddress();
+//            emailSubject = actionList.getActionEmails().first().getSubject();
+//        }
 
-        for(ActionList actionList: actionLists) {
-            // ACTION CALLS
-            actionCallType = actionList.getActionCalls().first().getActionType();
-            callFAIcon = actionList.getActionCalls().first().getFAIcon();
-            callName = actionList.getActionCalls().first().getName();
-            callNumber = actionList.getActionCalls().first().getNumber();
-
-            // ACTION EMAILS
-            actionEmailType = actionList.getActionEmails().first().getActionType();
-            emailFAIcon = actionList.getActionEmails().first().getFAIcon();
-            emailName = actionList.getActionEmails().first().getName();
-            emailAddress = actionList.getActionEmails().first().getEmailAddress();
-            emailSubject = actionList.getActionEmails().first().getSubject();
-        }
-
-        realm.close();
+//        realm.close();
     }
 
     // Log data pulled from Realm persistence
