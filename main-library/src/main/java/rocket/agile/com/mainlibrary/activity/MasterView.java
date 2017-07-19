@@ -7,6 +7,7 @@ import android.util.Log;
 import io.realm.Realm;
 import rocket.agile.com.mainlibrary.model.ApplicationLifeCycleTracker;
 import rocket.agile.com.mainlibrary.model.DataManager;
+import rocket.agile.com.mainlibrary.model.DataManagerHelperMethods;
 import rocket.agile.com.mainlibrary.networking.NetworkCalls;
 
 /**
@@ -43,9 +44,8 @@ public class MasterView extends AppCompatActivity {
 
         Realm realm = Realm.getDefaultInstance();
         if(!realm.isEmpty()) {  // No network, but Realm data is available
-            DataManager dataManager = DataManager.getInstance();
-            dataManager.getValues();
-            new LayoutManager(this).setLayout(dataManager);
+            DataManagerHelperMethods.getAppInfo();
+            new LayoutManager(this).setLayout();
             realm.close();
         } else {    // No network and no Realm data
             alertDialog = new AlertDialog.Builder(this).create();

@@ -58,7 +58,7 @@ public class LayoutManager extends AppCompatActivity {
         this.finish();
     }
 
-    public static void setLayout(DataManager dataManager) {
+    public void setLayout() {
 
         Log.d("SET LAYOUT", "HERE");
 

@@ -1,11 +1,8 @@
 package rocket.agile.com.mainlibrary.model;
 
-import android.util.Log;
+import java.util.List;
 
 import io.realm.Realm;
-import io.realm.RealmResults;
-import rocket.agile.com.mainlibrary.model.actionItems.ActionEmail;
-import rocket.agile.com.mainlibrary.model.appInfo.AppInfo;
 
 /**
  * Created by keithkowalski on 3/21/17.
@@ -22,121 +19,79 @@ public class DataManager {
     public static DataManager getInstance() {
         return ourInstance;
     }
-    Realm realm;
+    static Realm realm;
 
 //----- Set base URL -----------------
-    public String baseURL = "http://rocketdepot.com/api/";
+    public static String baseURL = "http://rocketdepot.com/api/";
 
 //----- Current Change State ---------
-    public boolean changeStateValue = true;  // TODO: Initialize to false, only network call can set to true
-    public String changeStateIDs[];
+    public static boolean changeStateValue = true;  // TODO: Initialize to false, only network call can set to true
+    public static String changeStateIDs[];
 
 //----- LayoutManager Selected --------------
 
 //    LAYOUT THEME
-    public int layoutValue = 0;     // TODO: MAKE NETWORK CALL
+    public static int layoutValue = 0;     // TODO: MAKE NETWORK CALL
 
 //----- Primary AppInfo ---------------
 
     //    APP NAME
-    public String appName;
+    public static String appName;
 
 //    PRIMARY HEADER COLOR
-    public String primaryHeaderColor = "#d35400";
+    public static String primaryHeaderColor = "#d35400";
 
 //    PRIMARY BACKGROUND COLOR
-    public String primaryBackgroundColor = "#34495e";
+    public static String primaryBackgroundColor = "#34495e";
 
 //    ADDRESS
-    public String address;
+    public static String address;
 
 //    HOURS
-    public String mondayHours;
-
-//    PHONE
-    public String phone;
+    public static String mondayHours;
+    public static String tuesdayHours;
+    public static String wednesdayHours;
+    public static String thursdayHours;
+    public static String fridayHours;
+    public static String saturdayHours;
+    public static String sundayHours;
 
 
 //----- Fragment Data --------------------
 
 //    Email
-    public int actionEmailType;
-    public String emailFAIcon;
-    public String emailName;
-    public String emailSubject;
-    public String emailAddress;
+    public static int actionEmailType;
+    public static List<String> emailFAIcon;
+    public static List<String> emailName;
+    public static List<String> emailSubject;
+    public static List<String> emailAddress;
 
 //    Call Us
-    public int actionCallType;
-    public String callFAIcon;
-    public String callName;
-    public String callNumber;
+    public static int actionCallType;
+    public static String callFAIcon;
+    public static String callName;
+    public static String callNumber;
 
 //----- Available Social Media Data ------
 
 //    BUSINESS WEBSITE
-    public String website;
+    public static String website;
 
 //    FACEBOOK
-    public String facebook;
+    public static String facebook;
 
 //    TWITTER
-    public String twitter;
+    public static String twitter;
 
 //    YOUTUBE
-    public String youtube;
+    public static String youtube;
 
 //    PINTEREST
-    public String pinterest;
+    public static String pinterest;
 
 //    YELP
-    public String yelp;
+    public static String yelp;
 
 //    GOOGLE+
-    public String google;
-
-//----- AppInfo and Action-Items Getter Methods --------
-
-    // GET LAYOUT VALUES
-    public void getValues() {
-
-        realm = Realm.getDefaultInstance();
-        RealmResults<AppInfo> values = realm.where(AppInfo.class).findAll();
-
-        for(AppInfo value: values) {
-            appName = value.getAppName();
-            address = value.getAddress();
-            mondayHours = value.getHours().getMonday();
-            phone = value.getPhone();
-        }
-        realm.close();
-    }
-
-    // GET ACTION ITEMS
-    public void getActionItems() {
-        realm = Realm.getDefaultInstance();
-        RealmResults<ActionEmail> actionLists = realm.where(ActionEmail.class).findAll();
-
-        for(ActionEmail actionEmail: actionLists) {
-            // ACTION CALLS
-//            actionCallType = actionList.getActionCalls().first().getActionType();
-//            callFAIcon = actionList.getActionCalls().first().getFAIcon();
-//            callName = actionList.getActionCalls().first().getName();
-//            callNumber = actionList.getActionCalls().first().getNumber();
-
-            // ACTION EMAILS
-            actionEmailType = actionEmail.getActionType();
-            emailFAIcon = actionEmail.getFAIcon();
-            emailName = actionEmail.getName();
-            emailAddress = actionEmail.getEmailAddress();
-            emailSubject = actionEmail.getSubject();
-        }
-
-        realm.close();
-    }
-
-    // Log data pulled from Realm persistence
-    public void logData(String actionName, String faIcon) {
-        Log.d(actionName, faIcon);
-    }
+    public static String google;
 }

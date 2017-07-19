@@ -4,15 +4,9 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
-
-import com.google.gson.Gson;
-
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
-
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -22,7 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import rocket.agile.com.mainlibrary.Interface.RetrofitAPI;
 import rocket.agile.com.mainlibrary.model.DataManager;
 import rocket.agile.com.mainlibrary.activity.LayoutManager;
-import rocket.agile.com.mainlibrary.model.actionItems.ActionEmail;
+import rocket.agile.com.mainlibrary.model.DataManagerHelperMethods;
 import rocket.agile.com.mainlibrary.model.appInfo.AppInfo;
 import rocket.agile.com.mainlibrary.realm.RealmPersistence;
 
@@ -65,7 +59,6 @@ public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
             getAppInfoFromNetworkAPI();
             getActionsFromNetworkAPI();
         }
-        dataManager.getValues();
 
         Log.d("BACKGROUND", "HERE");
 
@@ -75,7 +68,7 @@ public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
     @Override
     protected void onPostExecute(Boolean bool) {
         super.onPostExecute(null);
-        new LayoutManager(context).setLayout(dataManager);  // Set layout
+        new LayoutManager(context).setLayout();  // Set layout
     }
 
     public void getAppInfoFromNetworkAPI() {
@@ -94,14 +87,15 @@ public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
                 public void onResponse(Call<AppInfo> call, Response<AppInfo> response) {
                     AppInfo appInfoData = response.body();
                     RealmPersistence.createOrUpdateAppInfo(appInfoData);
+                    DataManagerHelperMethods.getAppInfo();
                 }
                 @Override
                 public void onFailure(Call<AppInfo> call, Throwable t) {
-                    Log.d("On Failure", t.toString());
+                    Log.d("On Failure <getAppInfo_Networking>", t.toString());
                 }
             });
         } catch (Exception e) {
-            Log.d("On Response", "There is an error");
+            Log.d("Response <getAppInfo_Networking>", "Error");
             e.printStackTrace();
         }
     }
@@ -122,26 +116,28 @@ public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     try {
                         String jsonResult = response.body().string();
-
                         JSONArray jsonArray = new JSONArray(jsonResult);
-
-                        RealmPersistence.createOrUpdateActionItems(jsonArray);
-
+                        RealmPersistence.createOrUpdateActionItems(jsonArray);  // Store JSON array to Realm
+                        setDataManagerActionItems();    // Set DataManager action item data here
                     } catch (IOException e) {
                         e.printStackTrace();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
-
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                    Log.d("On Failure <getActionItems_Networking>", t.toString());
                 }
             });
         } catch (Exception e) {
-            Log.d("On Response", "There is an error");
+            Log.d("On Response <getActionItems_Networking>", "Error");
             e.printStackTrace();
         }
+    }
+
+    public void setDataManagerActionItems() {
+//        DataManagerHelperMethods.getActionEmails();
+        DataManagerHelperMethods.getActionCall();
     }
 }
