@@ -35,6 +35,8 @@ public class DataManagerHelperMethods extends DataManager {
         realm.close();
     }
 
+
+    // TODO: Class needs to have ability to pull data from list of ActionEmails and then store data to List in DataManager singleton
     // GET ACTION ITEMS
     public static void getActionEmails() {
         realm = Realm.getDefaultInstance();
