@@ -59,7 +59,6 @@ public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
             getAppInfoFromNetworkAPI();
             getActionsFromNetworkAPI();
         }
-
         Log.d("BACKGROUND", "HERE");
 
         return true;
@@ -137,7 +136,7 @@ public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
     }
 
     public void setDataManagerActionItems() {
-//        DataManagerHelperMethods.getActionEmails();
-        DataManagerHelperMethods.getActionCall();
+        DataManagerHelperMethods.getActionEmails();
+//        DataManagerHelperMethods.getActionCall();
     }
 }

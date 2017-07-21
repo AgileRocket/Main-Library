@@ -66,22 +66,14 @@ public class RealmPersistence extends MasterView {
     //    Persist Action Items
     public static void createOrUpdateActionItems(final JSONArray jsonArray) {
 
-        ArrayList<ActionEmail> list = new ArrayList<ActionEmail>();
-
         try {
             for ( int i=0; i<jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 int type = jsonObject.getInt("actionType");
                 switch (type) {
                     case 0:
-//                        ActionEmail actionEmail = new Gson().fromJson(jsonObject.toString(), ActionEmail.class);
-//                        RealmPersistence.createRealmObject(actionEmail);
-
-                        // TODO: Add ability to add multiple data to same class (i.e. email multiple addresses) via ArrayList
-                        list.add(new Gson().fromJson(jsonObject.toString(), ActionEmail.class));
-
-                        // TODO: Insert JSON ArrayList into realm
-//                        realm.createAllFromJson(ActionEmail.class, list);
+                        ActionEmail actionEmail = new Gson().fromJson(jsonObject.toString(), ActionEmail.class);
+                        RealmPersistence.createRealmObject(actionEmail);
                         break;
 
                     case 1:
@@ -102,11 +94,6 @@ public class RealmPersistence extends MasterView {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-        // TEST TO SHOW JSON LIST HAS BEEN CREATED FOR EMAILS
-        for(int i = 0; i < list.size(); i++) {
-            Log.d("json", list.get(i).getEmailAddress());
-        }
     }
 
     private static void createRealmObject(final RealmObject realmObject) {
@@ -115,7 +102,7 @@ public class RealmPersistence extends MasterView {
             realm.executeTransaction(new Realm.Transaction() {
                 @Override
                 public void execute(Realm realm) {
-                    realm.insertOrUpdate(realmObject);
+                    realm.insert(realmObject);
                 }
             });
         } finally {

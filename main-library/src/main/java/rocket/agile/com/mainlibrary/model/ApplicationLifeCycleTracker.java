@@ -14,6 +14,8 @@ import android.util.Log;
 
 public class ApplicationLifeCycleTracker implements Application.ActivityLifecycleCallbacks {
 
+    DataManager dataManager = DataManager.getInstance();
+
     private int numStarted = 0;
     public static boolean initialStart = true;
 
@@ -56,5 +58,6 @@ public class ApplicationLifeCycleTracker implements Application.ActivityLifecycl
 
     @Override
     public void onActivityDestroyed(Activity activity) {
+        dataManager.realm.close();
     }
 }

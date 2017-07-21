@@ -1,5 +1,7 @@
 package rocket.agile.com.mainlibrary.model;
 
+import android.util.Log;
+
 import io.realm.Realm;
 import io.realm.RealmResults;
 import rocket.agile.com.mainlibrary.model.actionItems.ActionCall;
@@ -35,35 +37,24 @@ public class DataManagerHelperMethods extends DataManager {
         realm.close();
     }
 
-
-    // TODO: Class needs to have ability to pull data from list of ActionEmails and then store data to List in DataManager singleton
     // GET ACTION ITEMS
     public static void getActionEmails() {
+
         realm = Realm.getDefaultInstance();
         RealmResults<ActionEmail> actionLists = realm.where(ActionEmail.class).findAll();
-
-        for(ActionEmail actionEmail: actionLists) {
-            actionEmailType = actionEmail.getActionType();
-            for(int i = 0; i < actionLists.size(); i++) {
-                emailFAIcon.add(i, actionEmail.getFAIcon());
-                emailName.add(i, actionEmail.getName());
-                emailAddress.add(i, actionEmail.getEmailAddress());
-                emailSubject.add(i, actionEmail.getSubject());
-            }
-        }
-        realm.close();
+        actionEmail = actionLists;
     }
 
-    public static void getActionCall() {
-        realm = Realm.getDefaultInstance();
-        RealmResults<ActionCall> actionLists = realm.where(ActionCall.class).findAll();
-
-        for(ActionCall actionCall: actionLists) {
-            actionCallType = actionCall.getActionType();
-            callFAIcon = actionCall.getFAIcon();
-            callName = actionCall.getName();
-            callNumber = actionCall.getNumber();
-        }
-        realm.close();
-    }
+//    public static void getActionCall() {
+//        realm = Realm.getDefaultInstance();
+//        RealmResults<ActionCall> actionLists = realm.where(ActionCall.class).findAll();
+//
+//        for(ActionCall actionCall: actionLists) {
+//            actionCallType = actionCall.getActionType();
+//            callFAIcon = actionCall.getFAIcon();
+//            callName = actionCall.getName();
+//            callNumber = actionCall.getNumber();
+//        }
+//        realm.close();
+//    }
 }

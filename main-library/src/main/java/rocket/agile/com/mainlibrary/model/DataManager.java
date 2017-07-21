@@ -1,8 +1,8 @@
 package rocket.agile.com.mainlibrary.model;
 
-import java.util.List;
-
 import io.realm.Realm;
+import io.realm.RealmResults;
+import rocket.agile.com.mainlibrary.model.actionItems.ActionEmail;
 
 /**
  * Created by keithkowalski on 3/21/17.
@@ -16,21 +16,23 @@ public class DataManager {
 
     // Create Singleton
     private static final DataManager ourInstance = new DataManager();
+
     public static DataManager getInstance() {
         return ourInstance;
     }
+
     static Realm realm;
 
-//----- Set base URL -----------------
-    public static String baseURL = "http://rocketdepot.com/api/";
+    //----- Set base URL -----------------
+    public String baseURL = "http://rocketdepot.com/api/";
 
-//----- Current Change State ---------
+    //----- Current Change State ---------
     public static boolean changeStateValue = true;  // TODO: Initialize to false, only network call can set to true
     public static String changeStateIDs[];
 
 //----- LayoutManager Selected --------------
 
-//    LAYOUT THEME
+    //    LAYOUT THEME
     public static int layoutValue = 0;     // TODO: MAKE NETWORK CALL
 
 //----- Primary AppInfo ---------------
@@ -38,16 +40,16 @@ public class DataManager {
     //    APP NAME
     public static String appName;
 
-//    PRIMARY HEADER COLOR
+    //    PRIMARY HEADER COLOR
     public static String primaryHeaderColor = "#d35400";
 
-//    PRIMARY BACKGROUND COLOR
+    //    PRIMARY BACKGROUND COLOR
     public static String primaryBackgroundColor = "#34495e";
 
-//    ADDRESS
+    //    ADDRESS
     public static String address;
 
-//    HOURS
+    //    HOURS
     public static String mondayHours;
     public static String tuesdayHours;
     public static String wednesdayHours;
@@ -59,39 +61,41 @@ public class DataManager {
 
 //----- Fragment Data --------------------
 
-//    Email
-    public static int actionEmailType;
-    public static List<String> emailFAIcon;
-    public static List<String> emailName;
-    public static List<String> emailSubject;
-    public static List<String> emailAddress;
+    //    Email
+    public static RealmResults<ActionEmail> actionEmail;
 
-//    Call Us
-    public static int actionCallType;
-    public static String callFAIcon;
-    public static String callName;
-    public static String callNumber;
+//    public static int actionEmailType;
+//    public static String emailFAIcon;
+//    public static String emailName;
+//    public static String emailSubject;
+//    public static String emailAddress;
+
+    //    Call Us
+//    public static int actionCallType;
+//    public static String callFAIcon;
+//    public static String callName;
+//    public static String callNumber;
 
 //----- Available Social Media Data ------
 
-//    BUSINESS WEBSITE
+    //    BUSINESS WEBSITE
     public static String website;
 
-//    FACEBOOK
+    //    FACEBOOK
     public static String facebook;
 
-//    TWITTER
+    //    TWITTER
     public static String twitter;
 
-//    YOUTUBE
+    //    YOUTUBE
     public static String youtube;
 
-//    PINTEREST
+    //    PINTEREST
     public static String pinterest;
 
-//    YELP
+    //    YELP
     public static String yelp;
 
-//    GOOGLE+
+    //    GOOGLE+
     public static String google;
 }
