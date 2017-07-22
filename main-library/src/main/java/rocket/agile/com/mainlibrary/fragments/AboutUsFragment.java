@@ -7,11 +7,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import rocket.agile.com.mainlibrary.R;
 import rocket.agile.com.mainlibrary.model.DataManager;
-import rocket.agile.com.mainlibrary.model.DataManagerHelperMethods;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,7 +29,7 @@ public class AboutUsFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         // Test action item data
-//        Log.d("--Action Items 1--", "\n"+dataManager.actionEmailType+"\n"+dataManager.emailFAIcon.get(0)+"\n"+dataManager.emailName.get(0)+"\n"+dataManager.emailAddress.get(0)+"\n"+dataManager.emailSubject.get(0)+"\n");
+        Log.d("Action Email Size", dataManager.actionEmail.size() + "");
 //        Log.d("--Action Items 1--", "\n"+dataManager.actionEmailType+"\n"+dataManager.emailFAIcon.get(1)+"\n"+dataManager.emailName.get(1)+"\n"+dataManager.emailAddress.get(1)+"\n"+dataManager.emailSubject.get(1)+"\n");
 //        Log.d("--Action Items 2--", "\n"+dataManager.actionCallType+"\n"+dataManager.callFAIcon+"\n"+dataManager.callName+"\n"+dataManager.callNumber +"\n");
 
@@ -43,7 +43,7 @@ public class AboutUsFragment extends Fragment {
 
         // Set Title Text
         TextView textView_title = (TextView) view.findViewById(R.id.aboutus_text_title);
-        textView_title.setText(dataManager.actionEmail.get(1).getEmailAddress());
+        textView_title.setText("Email addresses:");
 
         // Set Details Text
         TextView textView_details = (TextView) view.findViewById(R.id.aboutus_text_details);
@@ -52,5 +52,17 @@ public class AboutUsFragment extends Fragment {
         // Set Body Text
         TextView textView_body = (TextView) view.findViewById(R.id.aboutus_text_body);
         textView_body.setText(dataManager.mondayHours);
+
+        // Set Action Items List
+        ListView listView = (ListView) view.findViewById(R.id.action_item_listview);
+
+        String[] emailAddresses = new String[dataManager.actionEmail.size()];
+
+        for(int i = 0; i < dataManager.actionEmail.size(); i++) {
+            emailAddresses[i] = dataManager.actionEmail.get(i).getEmailAddress();
+        }
+
+        ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, emailAddresses);
+        listView.setAdapter(adapter);
     }
 }

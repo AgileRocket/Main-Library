@@ -41,20 +41,14 @@ public class DataManagerHelperMethods extends DataManager {
     public static void getActionEmails() {
 
         realm = Realm.getDefaultInstance();
-        RealmResults<ActionEmail> actionLists = realm.where(ActionEmail.class).findAll();
-        actionEmail = actionLists;
+        RealmResults<ActionEmail> actionEmails = realm.where(ActionEmail.class).findAll();
+        actionEmail = actionEmails;
     }
 
-//    public static void getActionCall() {
-//        realm = Realm.getDefaultInstance();
-//        RealmResults<ActionCall> actionLists = realm.where(ActionCall.class).findAll();
-//
-//        for(ActionCall actionCall: actionLists) {
-//            actionCallType = actionCall.getActionType();
-//            callFAIcon = actionCall.getFAIcon();
-//            callName = actionCall.getName();
-//            callNumber = actionCall.getNumber();
-//        }
-//        realm.close();
-//    }
+    public static void getActionCall() {
+
+        realm = Realm.getDefaultInstance();
+        RealmResults<ActionCall> actionCalls = realm.where(ActionCall.class).findAll();
+        actionCall = actionCalls;
+    }
 }

@@ -2,6 +2,7 @@ package rocket.agile.com.mainlibrary.model;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
+import rocket.agile.com.mainlibrary.model.actionItems.ActionCall;
 import rocket.agile.com.mainlibrary.model.actionItems.ActionEmail;
 
 /**
@@ -16,7 +17,6 @@ public class DataManager {
 
     // Create Singleton
     private static final DataManager ourInstance = new DataManager();
-
     public static DataManager getInstance() {
         return ourInstance;
     }
@@ -59,23 +59,6 @@ public class DataManager {
     public static String sundayHours;
 
 
-//----- Fragment Data --------------------
-
-    //    Email
-    public static RealmResults<ActionEmail> actionEmail;
-
-//    public static int actionEmailType;
-//    public static String emailFAIcon;
-//    public static String emailName;
-//    public static String emailSubject;
-//    public static String emailAddress;
-
-    //    Call Us
-//    public static int actionCallType;
-//    public static String callFAIcon;
-//    public static String callName;
-//    public static String callNumber;
-
 //----- Available Social Media Data ------
 
     //    BUSINESS WEBSITE
@@ -98,4 +81,14 @@ public class DataManager {
 
     //    GOOGLE+
     public static String google;
+
+//----- Fragment Data --------------------
+
+    //    Email
+    public static RealmResults<ActionEmail> actionEmail;
+
+    //    Call Us
+    public static RealmResults<ActionCall> actionCall;
+
+
 }

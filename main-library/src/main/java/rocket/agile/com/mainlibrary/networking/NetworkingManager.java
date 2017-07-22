@@ -137,6 +137,6 @@ public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
 
     public void setDataManagerActionItems() {
         DataManagerHelperMethods.getActionEmails();
-//        DataManagerHelperMethods.getActionCall();
+        DataManagerHelperMethods.getActionCall();
     }
 }
