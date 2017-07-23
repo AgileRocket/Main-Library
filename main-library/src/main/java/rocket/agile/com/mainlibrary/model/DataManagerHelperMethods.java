@@ -20,7 +20,7 @@ public class DataManagerHelperMethods extends DataManager {
     // GET APP INFO
     public static void getAppInfo() {
 
-        realm = Realm.getDefaultInstance();
+        Realm realm = Realm.getDefaultInstance();
         RealmResults<AppInfo> values = realm.where(AppInfo.class).findAll();
 
         for(AppInfo value: values) {
@@ -34,20 +34,19 @@ public class DataManagerHelperMethods extends DataManager {
             saturdayHours = value.getHours().getSaturday();
             sundayHours = value.getHours().getSunday();
         }
-        realm.close();
     }
 
     // GET ACTION ITEMS
     public static void getActionEmails() {
 
-        realm = Realm.getDefaultInstance();
+        Realm realm = Realm.getDefaultInstance();
         RealmResults<ActionEmail> actionEmails = realm.where(ActionEmail.class).findAll();
         actionEmail = actionEmails;
     }
 
     public static void getActionCall() {
 
-        realm = Realm.getDefaultInstance();
+        Realm realm = Realm.getDefaultInstance();
         RealmResults<ActionCall> actionCalls = realm.where(ActionCall.class).findAll();
         actionCall = actionCalls;
     }

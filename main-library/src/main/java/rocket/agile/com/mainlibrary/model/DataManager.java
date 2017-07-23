@@ -1,6 +1,7 @@
 package rocket.agile.com.mainlibrary.model;
 
-import io.realm.Realm;
+import android.app.ProgressDialog;
+
 import io.realm.RealmResults;
 import rocket.agile.com.mainlibrary.model.actionItems.ActionCall;
 import rocket.agile.com.mainlibrary.model.actionItems.ActionEmail;
@@ -21,10 +22,12 @@ public class DataManager {
         return ourInstance;
     }
 
-    static Realm realm;
-
     //----- Set base URL -----------------
     public String baseURL = "http://rocketdepot.com/api/";
+
+    //----- Progress Dialog --------------
+    public ProgressDialog progressDialog;
+
 
     //----- Current Change State ---------
     public static boolean changeStateValue = true;  // TODO: Initialize to false, only network call can set to true
@@ -89,6 +92,5 @@ public class DataManager {
 
     //    Call Us
     public static RealmResults<ActionCall> actionCall;
-
 
 }

@@ -11,7 +11,6 @@ import android.widget.Toast;
 import rocket.agile.com.mainlibrary.R;
 import rocket.agile.com.mainlibrary.model.ApplicationLifeCycleTracker;
 import rocket.agile.com.mainlibrary.model.DataManager;
-import rocket.agile.com.mainlibrary.networking.NetworkCalls;
 
 /**
  * Created by keithkowalski on 6/19/17.
@@ -37,24 +36,23 @@ public class LayoutManager extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        NetworkCalls networkCalls = new NetworkCalls(this);
+//        NetworkCalls networkCalls = new NetworkCalls(this);
 
-        if(networkCalls.isNetworkAvailable()) {
-            if(!ApplicationLifeCycleTracker.initialStart) {     // Check that this is NOT the initial start of the app
+//        if(networkCalls.isNetworkAvailable()) {
+//            if(!ApplicationLifeCycleTracker.initialStart) {     // Check that this is NOT the initial start of the app
                 Log.d("LAYOUT ACTIVITY", "RESUME");
-               networkCalls.getChangeStateFromNetworkAPI();
+//               networkCalls.getChangeStateFromNetworkAPI();
 
                 // Test changeStateIDs exist
-                String changeStateIDs = dataManager.changeStateIDs[0] + dataManager.changeStateIDs[1] + dataManager.changeStateIDs[2];
-                Log.d("Change State IDs", changeStateIDs);
-            }
-        }
+//                String changeStateIDs = dataManager.changeStateIDs[0] + dataManager.changeStateIDs[1] + dataManager.changeStateIDs[2];
+//                Log.d("Change State IDs", changeStateIDs);
+//            }
+//        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
         this.finish();
     }
 

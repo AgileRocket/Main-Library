@@ -5,6 +5,8 @@ import android.app.Application;
 import android.os.Bundle;
 import android.util.Log;
 
+import io.realm.Realm;
+
 /**
  * Created by keithkowalski on 6/26/17.
  *
@@ -58,6 +60,9 @@ public class ApplicationLifeCycleTracker implements Application.ActivityLifecycl
 
     @Override
     public void onActivityDestroyed(Activity activity) {
-        dataManager.realm.close();
+//        Realm realm = Realm.getDefaultInstance();
+//        if(realm != null) {
+//            realm.close();
+//        }
     }
 }

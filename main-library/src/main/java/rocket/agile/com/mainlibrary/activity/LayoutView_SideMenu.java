@@ -9,6 +9,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +18,7 @@ import rocket.agile.com.mainlibrary.R;
 import rocket.agile.com.mainlibrary.fragments.AboutUsFragment;
 import rocket.agile.com.mainlibrary.fragments.WebsiteFragment;
 import rocket.agile.com.mainlibrary.model.DataManager;
+import rocket.agile.com.mainlibrary.model.DataManagerHelperMethods;
 
 /**
  * Created by keithkowalski on 6/19/17.
@@ -63,31 +65,6 @@ public class LayoutView_SideMenu extends LayoutManager
             startActivity(getIntent());
         }
     }
-
-//        // Back Button pressed override is to check for user intent on tapping back button
-//    private Boolean exit = false;
-//    @Override
-//    public void onBackPressed() {
-//
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        if (drawer.isDrawerOpen(GravityCompat.START)) {
-//            drawer.closeDrawer(GravityCompat.START);
-//        } else {
-//            if(exit) {
-//                moveTaskToBack(true); // finish activity
-//            } else {
-//                Toast.makeText(this, "Press Back again to Exit.",
-//                        Toast.LENGTH_SHORT).show();
-//                exit = true;
-//                new Handler().postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        exit = false;
-//                    }
-//                }, 3 * 1000);
-//            }
-//        }
-//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

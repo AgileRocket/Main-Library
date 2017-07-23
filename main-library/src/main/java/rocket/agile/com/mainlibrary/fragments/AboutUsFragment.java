@@ -28,11 +28,6 @@ public class AboutUsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // Test action item data
-        Log.d("Action Email Size", dataManager.actionEmail.size() + "");
-//        Log.d("--Action Items 1--", "\n"+dataManager.actionEmailType+"\n"+dataManager.emailFAIcon.get(1)+"\n"+dataManager.emailName.get(1)+"\n"+dataManager.emailAddress.get(1)+"\n"+dataManager.emailSubject.get(1)+"\n");
-//        Log.d("--Action Items 2--", "\n"+dataManager.actionCallType+"\n"+dataManager.callFAIcon+"\n"+dataManager.callName+"\n"+dataManager.callNumber +"\n");
-
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_about_us, container, false);
     }
@@ -43,7 +38,7 @@ public class AboutUsFragment extends Fragment {
 
         // Set Title Text
         TextView textView_title = (TextView) view.findViewById(R.id.aboutus_text_title);
-        textView_title.setText("Email addresses:");
+        textView_title.setText("Phone number: " + dataManager.actionCall.get(0).getNumber());
 
         // Set Details Text
         TextView textView_details = (TextView) view.findViewById(R.id.aboutus_text_details);
@@ -55,13 +50,10 @@ public class AboutUsFragment extends Fragment {
 
         // Set Action Items List
         ListView listView = (ListView) view.findViewById(R.id.action_item_listview);
-
         String[] emailAddresses = new String[dataManager.actionEmail.size()];
-
         for(int i = 0; i < dataManager.actionEmail.size(); i++) {
             emailAddresses[i] = dataManager.actionEmail.get(i).getEmailAddress();
         }
-
         ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, emailAddresses);
         listView.setAdapter(adapter);
     }

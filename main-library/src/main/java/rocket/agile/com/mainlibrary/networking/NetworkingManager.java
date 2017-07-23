@@ -3,13 +3,12 @@ package rocket.agile.com.mainlibrary.networking;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import java.io.IOException;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -28,7 +27,7 @@ import rocket.agile.com.mainlibrary.realm.RealmPersistence;
  *
  */
 
-public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
+public class NetworkingManager extends AsyncTask<Void, Void, JSONArray> {
 
     // Data Manager Singleton
     DataManager dataManager = DataManager.getInstance();
@@ -37,102 +36,84 @@ public class NetworkingManager extends AsyncTask<Void, Object, Boolean> {
     public NetworkingManager(Context context) {
         this.context = context;
     }
-    NetworkCalls networkCalls = new NetworkCalls(context);
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
 
-        if(!dataManager.changeStateValue) { // initialize change state to false in data manager
-            Toast.makeText(context, "Checking for updates...", Toast.LENGTH_SHORT).show();
-            // Set dataManager changeState value
-            networkCalls.getChangeStateFromNetworkAPI();
-        } else {
-            Toast.makeText(context, "Loading data...", Toast.LENGTH_SHORT).show();
-        }
+        Log.d("IN", "PRELOADING");
+
+//        if(!dataManager.changeStateValue) { // initialize change state to false in data manager
+//            Toast.makeText(context, "Checking for updates...", Toast.LENGTH_SHORT).show();
+//            // Set dataManager changeState value
+//            networkCalls.getChangeStateFromNetworkAPI();
+//        } else {
+//            Toast.makeText(context, "Loading data...", Toast.LENGTH_SHORT).show();
+//        }
     }
 
     @Override
-    protected Boolean doInBackground(Void... voids) {
+    protected JSONArray doInBackground(Void... voids) {
 
-        if(dataManager.changeStateValue) {
-            getAppInfoFromNetworkAPI();
-            getActionsFromNetworkAPI();
-        }
         Log.d("BACKGROUND", "HERE");
 
-        return true;
+        JSONArray jsonArray;
+        getAppInfoFromNetworkAPI();
+        jsonArray = getActionsFromNetworkAPI();
+        return jsonArray;
     }
 
     @Override
-    protected void onPostExecute(Boolean bool) {
-        super.onPostExecute(null);
+    protected void onPostExecute(JSONArray result) {
+        super.onPostExecute(result);
+        RealmPersistence.createOrUpdateActionItems(result);
+        setDataManagerActionItems();
         new LayoutManager(context).setLayout();  // Set layout
+        dataManager.progressDialog.dismiss();
     }
 
     public void getAppInfoFromNetworkAPI() {
 
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(dataManager.baseURL).
+                        addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        RetrofitAPI service = retrofit.create(RetrofitAPI.class);
+        Call<AppInfo> call = service.getValues();
+
         try {
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(dataManager.baseURL).
-                            addConverterFactory(GsonConverterFactory.create())
-                    .build();
-
-            RetrofitAPI service = retrofit.create(RetrofitAPI.class);
-            Call<AppInfo> call = service.getValues();
-
-            call.enqueue(new Callback<AppInfo>() {
-                @Override
-                public void onResponse(Call<AppInfo> call, Response<AppInfo> response) {
-                    AppInfo appInfoData = response.body();
-                    RealmPersistence.createOrUpdateAppInfo(appInfoData);
-                    DataManagerHelperMethods.getAppInfo();
-                }
-                @Override
-                public void onFailure(Call<AppInfo> call, Throwable t) {
-                    Log.d("On Failure <getAppInfo_Networking>", t.toString());
-                }
-            });
-        } catch (Exception e) {
-            Log.d("Response <getAppInfo_Networking>", "Error");
-            e.printStackTrace();
+            Response<AppInfo> response = call.execute();
+            AppInfo appInfo = response.body();
+            RealmPersistence.createOrUpdateAppInfo(appInfo);
+            DataManagerHelperMethods.getAppInfo();
+        } catch (IOException e) {
+            Log.d("Retrofit", "Failure");
         }
     }
 
-    public void getActionsFromNetworkAPI() {
+    public JSONArray getActionsFromNetworkAPI() {
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(dataManager.baseURL).
+                        addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        RetrofitAPI service = retrofit.create(RetrofitAPI.class);
+        Call<ResponseBody> call = service.getResponse();
+
         try {
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(dataManager.baseURL).
-                            addConverterFactory(GsonConverterFactory.create())
-                    .build();
-
-            RetrofitAPI service = retrofit.create(RetrofitAPI.class);
-            Call<ResponseBody> call = service.getResponse();
-
-            call.enqueue(new Callback<ResponseBody>() {
-
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    try {
-                        String jsonResult = response.body().string();
-                        JSONArray jsonArray = new JSONArray(jsonResult);
-                        RealmPersistence.createOrUpdateActionItems(jsonArray);  // Store JSON array to Realm
-                        setDataManagerActionItems();    // Set DataManager action item data here
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    Log.d("On Failure <getActionItems_Networking>", t.toString());
-                }
-            });
-        } catch (Exception e) {
-            Log.d("On Response <getActionItems_Networking>", "Error");
+            Response<ResponseBody> response = call.execute();
+            String jsonResult = response.body().string();
+            JSONArray jsonArray = new JSONArray(jsonResult);
+            return jsonArray;
+        } catch (IOException e) {
+            Log.d("Retrofit Actions", "Failure");
+        } catch (JSONException e) {
             e.printStackTrace();
+            Log.d("Retrofit Actions", "Failure");
         }
+        return null;
     }
 
     public void setDataManagerActionItems() {

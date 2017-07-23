@@ -1,14 +1,16 @@
 package rocket.agile.com.mainlibrary.activity;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import io.realm.Realm;
 import rocket.agile.com.mainlibrary.model.ApplicationLifeCycleTracker;
 import rocket.agile.com.mainlibrary.model.DataManager;
-import rocket.agile.com.mainlibrary.model.DataManagerHelperMethods;
-import rocket.agile.com.mainlibrary.networking.NetworkCalls;
+import rocket.agile.com.mainlibrary.networking.NetworkingManager;
 
 /**
  * Created by keithkowalski on 6/19/17.
@@ -21,11 +23,15 @@ import rocket.agile.com.mainlibrary.networking.NetworkCalls;
 
 public class MasterView extends AppCompatActivity {
 
-    protected void onStart() {
-        super.onStart();
+    DataManager dataManager = DataManager.getInstance();
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
         Log.d("MASTER VIEW", "START");
         Log.d("INITIAL START", ApplicationLifeCycleTracker.initialStart + "");
+
         if(ApplicationLifeCycleTracker.initialStart) {
             startNetworkCall();
         }
@@ -33,21 +39,26 @@ public class MasterView extends AppCompatActivity {
 
     public void startNetworkCall() {
 
-        NetworkCalls networkCalls = new NetworkCalls(this);
         AlertDialog alertDialog;
-        boolean networkIsAvailable = networkCalls.isNetworkAvailable();
-
-        if(networkIsAvailable) {
-            networkCalls.networkCall();  // Network call always made to at least get data pull for any changes applied via API
+        if(isNetworkAvailable()) {
+            dataManager.progressDialog = new ProgressDialog(this);
+            dataManager.progressDialog.setMessage("Loading data...");
+            dataManager.progressDialog.show();
+            try {
+                new NetworkingManager(this).execute();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             return;
         }
 
-        Realm realm = Realm.getDefaultInstance();
-        if(!realm.isEmpty()) {  // No network, but Realm data is available
-            DataManagerHelperMethods.getAppInfo();
-            new LayoutManager(this).setLayout();
-            realm.close();
-        } else {    // No network and no Realm data
+//        Realm realm = Realm.getDefaultInstance();
+//        if(!realm.isEmpty()) {  // No network, but Realm data is available
+//            DataManagerHelperMethods.getAppInfo();
+//            new LayoutManager(this).setLayout();
+//            realm.close();
+//        }
+        else {    // No network and no Realm data
             alertDialog = new AlertDialog.Builder(this).create();
             alertDialog.setTitle("Network Error");
             alertDialog.setMessage("Network connection required.");
@@ -57,8 +68,17 @@ public class MasterView extends AppCompatActivity {
                     finishAndRemoveTask();
                 }
             });
-            realm.close();
+//            realm.close();
             alertDialog.show();
         }
+    }
+
+    // Check for network availability
+    public boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) this.getSystemService(this.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+        return networkInfo != null && networkInfo.isConnected();
     }
 }

@@ -16,58 +16,49 @@ import java.util.concurrent.TimeoutException;
  *
  */
 
-public class NetworkCalls {
+//public class NetworkCalls {
 
     // Context passed via constructor from calling class
-    private static Context context;
-    public NetworkCalls(Context context) { this.context = context; }
-    private NetworkingManager networkingManager;
-    private NetworkGetChangeState networkGetChangeState;
+//    private static Context context;
+//    public NetworkCalls(Context context) { this.context = context; }
+//
+//    private NetworkGetChangeState networkGetChangeState;
 
     // Update to all values and/or action items
-    public void networkCall() {
-
-        networkingManager = new NetworkingManager(context);
-
-        try {
-            networkingManager.execute().get(5000, TimeUnit.MILLISECONDS);
-        } catch (TimeoutException e) {
-            e.printStackTrace();
-            Toast.makeText(context, "Network Timeout", Toast.LENGTH_LONG).show();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            Toast.makeText(context, "Network Interruption", Toast.LENGTH_LONG).show();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-            Toast.makeText(context, "Network Execution Error", Toast.LENGTH_LONG).show();
-        }
-    }
+//    public void networkCall() {
+//
+//        try {
+//            new NetworkingManager(context).execute();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     // Check for any changes made from backend
-    public void getChangeStateFromNetworkAPI() {
+//    public void getChangeStateFromNetworkAPI() {
+//
+//        networkGetChangeState = new NetworkGetChangeState(context);
+//
+//        try {
+//           networkGetChangeState.execute().get(5000, TimeUnit.MILLISECONDS);
+//        } catch (TimeoutException e) {
+//            e.printStackTrace();
+//            Toast.makeText(context, "Network Timeout", Toast.LENGTH_LONG).show();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//            Toast.makeText(context, "Network Interruption", Toast.LENGTH_LONG).show();
+//        } catch (ExecutionException e) {
+//            e.printStackTrace();
+//            Toast.makeText(context, "Network Execution Error", Toast.LENGTH_LONG).show();
+//        }
+//    }
 
-        networkGetChangeState = new NetworkGetChangeState(context);
-
-        try {
-           networkGetChangeState.execute().get(3000, TimeUnit.MILLISECONDS);
-        } catch (TimeoutException e) {
-            e.printStackTrace();
-            Toast.makeText(context, "Network Timeout", Toast.LENGTH_LONG).show();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            Toast.makeText(context, "Network Interruption", Toast.LENGTH_LONG).show();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-            Toast.makeText(context, "Network Execution Error", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    // Check for network availability
-    public boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) context.getSystemService(context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
-}
+//    // Check for network availability
+//    public boolean isNetworkAvailable() {
+//        ConnectivityManager connectivityManager
+//                = (ConnectivityManager) context.getSystemService(context.CONNECTIVITY_SERVICE);
+//        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+//
+//        return networkInfo != null && networkInfo.isConnected();
+//    }
+//}

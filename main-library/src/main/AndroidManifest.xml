@@ -24,8 +24,7 @@
         <activity
             android:name=".activity.LayoutView_SideMenu"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".activity.LayoutView_TabBar" />
+        <activity android:name=".activity.LayoutView_TabBar" />
         <activity
             android:name=".activity.LayoutView_Buttons_Grid"
             android:theme="@style/AppTheme.NoActionBar" />
