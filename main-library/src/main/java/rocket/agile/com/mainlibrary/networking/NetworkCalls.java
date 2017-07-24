@@ -28,7 +28,7 @@ import java.util.concurrent.TimeoutException;
 //    public void networkCall() {
 //
 //        try {
-//            new NetworkingManager(context).execute();
+//            new NetworkingManagerGetAllData(context).execute();
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }

@@ -1,5 +1,7 @@
 package rocket.agile.com.mainlibrary.model;
 
+import android.util.Log;
+
 import io.realm.Realm;
 import rocket.agile.com.mainlibrary.realm.RealmPersistence;
 

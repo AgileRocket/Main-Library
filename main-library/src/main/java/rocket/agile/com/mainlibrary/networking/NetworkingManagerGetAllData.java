@@ -3,7 +3,6 @@ package rocket.agile.com.mainlibrary.networking;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import java.io.IOException;
@@ -22,52 +21,49 @@ import rocket.agile.com.mainlibrary.realm.RealmPersistence;
 /**
  * Created by keithkowalski on 3/29/17.
  *
- * Purpose:  Networking process for data value calls and action item calls; uses AsyncTask to
- *           prevent app progression until network call is completed
+ * Purpose:  Networking process for data value calls and action item calls; uses Retrofit2
+ *           synchronized data within AsyncTask to prevent app progression until network call is completed
  *
  */
 
-public class NetworkingManager extends AsyncTask<Void, Void, JSONArray> {
+public class NetworkingManagerGetAllData extends AsyncTask<Void, Void, JSONArray> {
 
     // Data Manager Singleton
-    DataManager dataManager = DataManager.getInstance();
+    private DataManager dataManager = DataManager.getInstance();
 
+    // JSON array for action items
+    private JSONArray jsonArray;
+
+    // Context passed in via constructor
     private Context context;
-    public NetworkingManager(Context context) {
+    public NetworkingManagerGetAllData(Context context) {   // public constructor
         this.context = context;
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-
-        Log.d("IN", "PRELOADING");
-
-//        if(!dataManager.changeStateValue) { // initialize change state to false in data manager
-//            Toast.makeText(context, "Checking for updates...", Toast.LENGTH_SHORT).show();
-//            // Set dataManager changeState value
-//            networkCalls.getChangeStateFromNetworkAPI();
-//        } else {
-//            Toast.makeText(context, "Loading data...", Toast.LENGTH_SHORT).show();
-//        }
+        Log.d("Networking", "PreExecute");
     }
 
     @Override
     protected JSONArray doInBackground(Void... voids) {
 
-        Log.d("BACKGROUND", "HERE");
+        Log.d("Networking", "Background");
 
-        JSONArray jsonArray;
         getAppInfoFromNetworkAPI();
-        jsonArray = getActionsFromNetworkAPI();
+        jsonArray = getAllActionsFromNetworkAPI();
         return jsonArray;
     }
 
     @Override
     protected void onPostExecute(JSONArray result) {
+
+        Log.d("Networking", "PostExecute");
+
         super.onPostExecute(result);
         RealmPersistence.createOrUpdateActionItems(result);
-        setDataManagerActionItems();
+        DataManagerHelperMethods.getAllActionItemsFromRealm();
         new LayoutManager(context).setLayout();  // Set layout
         dataManager.progressDialog.dismiss();
     }
@@ -92,7 +88,7 @@ public class NetworkingManager extends AsyncTask<Void, Void, JSONArray> {
         }
     }
 
-    public JSONArray getActionsFromNetworkAPI() {
+    public JSONArray getAllActionsFromNetworkAPI() {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(dataManager.baseURL).
@@ -102,7 +98,7 @@ public class NetworkingManager extends AsyncTask<Void, Void, JSONArray> {
         RetrofitAPI service = retrofit.create(RetrofitAPI.class);
         Call<ResponseBody> call = service.getResponse();
 
-        try {
+        try {   // Synchronous networking call
             Response<ResponseBody> response = call.execute();
             String jsonResult = response.body().string();
             JSONArray jsonArray = new JSONArray(jsonResult);
@@ -114,10 +110,5 @@ public class NetworkingManager extends AsyncTask<Void, Void, JSONArray> {
             Log.d("Retrofit Actions", "Failure");
         }
         return null;
-    }
-
-    public void setDataManagerActionItems() {
-        DataManagerHelperMethods.getActionEmails();
-        DataManagerHelperMethods.getActionCall();
     }
 }

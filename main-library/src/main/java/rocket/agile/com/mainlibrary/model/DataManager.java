@@ -1,7 +1,6 @@
 package rocket.agile.com.mainlibrary.model;
 
 import android.app.ProgressDialog;
-
 import io.realm.RealmResults;
 import rocket.agile.com.mainlibrary.model.actionItems.ActionCall;
 import rocket.agile.com.mainlibrary.model.actionItems.ActionEmail;
@@ -28,9 +27,8 @@ public class DataManager {
     //----- Progress Dialog --------------
     public ProgressDialog progressDialog;
 
-
     //----- Current Change State ---------
-    public static boolean changeStateValue = true;  // TODO: Initialize to false, only network call can set to true
+    public static boolean changeStateValue;
     public static String changeStateIDs[];
 
 //----- LayoutManager Selected --------------

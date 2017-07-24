@@ -25,7 +25,7 @@ import rocket.agile.com.mainlibrary.model.appInfo.AppInfo;
 
 public class RealmPersistence extends MasterView {
 
-    static Realm realm;
+    private static Realm realm;
 
     // Initialize Realm
     public static void initRealm() {

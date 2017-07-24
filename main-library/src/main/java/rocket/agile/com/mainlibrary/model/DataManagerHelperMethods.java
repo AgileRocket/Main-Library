@@ -1,7 +1,5 @@
 package rocket.agile.com.mainlibrary.model;
 
-import android.util.Log;
-
 import io.realm.Realm;
 import io.realm.RealmResults;
 import rocket.agile.com.mainlibrary.model.actionItems.ActionCall;
@@ -34,6 +32,7 @@ public class DataManagerHelperMethods extends DataManager {
             saturdayHours = value.getHours().getSaturday();
             sundayHours = value.getHours().getSunday();
         }
+        realm.close();
     }
 
     // GET ACTION ITEMS
@@ -49,5 +48,12 @@ public class DataManagerHelperMethods extends DataManager {
         Realm realm = Realm.getDefaultInstance();
         RealmResults<ActionCall> actionCalls = realm.where(ActionCall.class).findAll();
         actionCall = actionCalls;
+    }
+
+    // Calls all action items at one time, which are stored in Realm
+    public static void getAllActionItemsFromRealm() {
+
+        getActionEmails();
+        getActionCall();
     }
 }
