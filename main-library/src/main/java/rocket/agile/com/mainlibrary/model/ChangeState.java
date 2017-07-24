@@ -1,6 +1,9 @@
 package rocket.agile.com.mainlibrary.model;
 
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
 import io.realm.annotations.PrimaryKey;
 
 /**
@@ -13,15 +16,24 @@ import io.realm.annotations.PrimaryKey;
 
 public class ChangeState {
 
-    @PrimaryKey
     @SerializedName("changeState")
     private boolean changeState;
-    private String changeID[];
+    @SerializedName("changeStateIDs")
+    private List<String> changeIDs;
 
     //    GETTERS and SETTERS
-    public boolean getChangeState() { return changeState; }
-    public void setChangeState(boolean changeState) { this.changeState = changeState; }
+    public boolean getChangeState() {
+        return changeState;
+    }
+    public void setChangeState(boolean changeState) {
+        this.changeState = changeState;
+    }
 
-    public String[] getChangeID() { return changeID; }
-    public void setChangeID(String[] changeID) { this.changeID = changeID; }
+
+    public List<String> getChangeIDs() {
+        return changeIDs;
+    }
+    public void setChangeIDs(List<String> changeIDs) {
+        this.changeIDs = changeIDs;
+    }
 }

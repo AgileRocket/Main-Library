@@ -20,7 +20,7 @@ import rocket.agile.com.mainlibrary.model.appInfo.AppInfo;
 public interface RetrofitAPI {
 
     @GET("changeState")
-    Call<ChangeState> getChangeState();
+    Call<ChangeState> getChanges();
 
     @GET("info")
     Call<AppInfo> getValues();

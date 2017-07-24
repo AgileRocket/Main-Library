@@ -11,6 +11,7 @@ import android.util.Log;
 import io.realm.Realm;
 import rocket.agile.com.mainlibrary.model.DataManager;
 import rocket.agile.com.mainlibrary.model.DataManagerHelperMethods;
+import rocket.agile.com.mainlibrary.networking.NetworkGetChangeState;
 import rocket.agile.com.mainlibrary.networking.NetworkingManagerGetAllData;
 
 /**
@@ -39,6 +40,9 @@ public class MasterView extends AppCompatActivity {
         } else {
             Log.d("Realm", "Has data");
             getDataFromRealmOnly();
+
+//            checkChangeStateNetworkCall();
+            // TODO: If changeState is true, update data provided by ChangeStateIDs list
         }
         realm.close();
     }
@@ -48,6 +52,7 @@ public class MasterView extends AppCompatActivity {
         if(isNetworkAvailable()) {
             dataManager.progressDialog = new ProgressDialog(this);
             dataManager.progressDialog.setMessage("Loading data...");
+            dataManager.progressDialog.setTitle("Please wait");
             dataManager.progressDialog.show();
             try {
                 new NetworkingManagerGetAllData(this).execute();
@@ -78,6 +83,20 @@ public class MasterView extends AppCompatActivity {
         new LayoutManager(this).setLayout();
 
         realm.close();
+    }
+
+    private void checkChangeStateNetworkCall() {
+
+        dataManager.progressDialog = new ProgressDialog(this);
+        dataManager.progressDialog.setMessage("Checking for updates...");
+        dataManager.progressDialog.setTitle("Please wait");
+        dataManager.progressDialog.show();
+        try {
+            new NetworkGetChangeState(this).execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.d("Error", "Networking Manager Get Change State");
+        }
     }
 
     // Check for network availability

@@ -42,14 +42,15 @@ public class NetworkingManagerGetAllData extends AsyncTask<Void, Void, JSONArray
 
     @Override
     protected void onPreExecute() {
+
+        Log.d("Networking<Main>", "PreExecute");
         super.onPreExecute();
-        Log.d("Networking", "PreExecute");
     }
 
     @Override
     protected JSONArray doInBackground(Void... voids) {
 
-        Log.d("Networking", "Background");
+        Log.d("Networking<Main>", "Background");
 
         getAppInfoFromNetworkAPI();
         jsonArray = getAllActionsFromNetworkAPI();
@@ -59,8 +60,7 @@ public class NetworkingManagerGetAllData extends AsyncTask<Void, Void, JSONArray
     @Override
     protected void onPostExecute(JSONArray result) {
 
-        Log.d("Networking", "PostExecute");
-
+        Log.d("Networking<Main>", "PostExecute");
         super.onPostExecute(result);
         RealmPersistence.createOrUpdateActionItems(result);
         DataManagerHelperMethods.getAllActionItemsFromRealm();

@@ -6,6 +6,8 @@ import rocket.agile.com.mainlibrary.model.actionItems.ActionCall;
 import rocket.agile.com.mainlibrary.model.actionItems.ActionEmail;
 import rocket.agile.com.mainlibrary.model.appInfo.AppInfo;
 
+import static android.R.attr.value;
+
 /**
  * Created by keithkowalski on 7/18/17.
  *

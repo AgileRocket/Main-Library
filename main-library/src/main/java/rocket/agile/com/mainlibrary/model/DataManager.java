@@ -1,6 +1,9 @@
 package rocket.agile.com.mainlibrary.model;
 
 import android.app.ProgressDialog;
+
+import java.util.List;
+
 import io.realm.RealmResults;
 import rocket.agile.com.mainlibrary.model.actionItems.ActionCall;
 import rocket.agile.com.mainlibrary.model.actionItems.ActionEmail;
@@ -29,7 +32,7 @@ public class DataManager {
 
     //----- Current Change State ---------
     public static boolean changeStateValue;
-    public static String changeStateIDs[];
+    public static List<String> changeStateIDs;
 
 //----- LayoutManager Selected --------------
 
