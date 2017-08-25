@@ -42,6 +42,9 @@ public class LayoutView_SideMenu extends LayoutManager
         Toolbar primaryHeader = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(primaryHeader);
 
+        // TODO: This is where the list of actionItems is created based on action items that exist (list not empty)
+        // Action items are populated via their own classes, but are only called based on what is made available from the menu list we create here (as stated above)
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, primaryHeader, R.string.navigation_drawer_open, R.string.navigation_drawer_close);

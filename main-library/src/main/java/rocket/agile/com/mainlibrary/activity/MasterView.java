@@ -18,8 +18,8 @@ import rocket.agile.com.mainlibrary.networking.NetworkingManagerGetAllData;
  * Created by keithkowalski on 6/19/17.
  *
  * Purpose:  Initial activity launched (not seen) when app opens
- * Function: A) Initiates networking class based on life cycle state of application
- *           B) Checks for initial network availability and Realm data persistence
+ * Function: A) Checks for Realm data; if none found, initiates networking calls
+ *           B) If Realm data is found, loads it and then checks for changeState value
  *
  */
 
@@ -35,10 +35,10 @@ public class MasterView extends AppCompatActivity {
         Realm realm = Realm.getDefaultInstance();
 
         if(realm.isEmpty()) {
-            Log.d("Realm", "Empty");
+            Log.d(dataManager.MASTER_VIEW_TAG, "Realm Empty");
             startInitialNetworkCall();
         } else {
-            Log.d("Realm", "Has data");
+            Log.d(dataManager.MASTER_VIEW_TAG, "Realm Has data");
             getDataFromRealmOnly();
 
 //            checkChangeStateNetworkCall();
@@ -58,7 +58,7 @@ public class MasterView extends AppCompatActivity {
                 new NetworkingManagerGetAllData(this).execute();
             } catch (Exception e) {
                 e.printStackTrace();
-                Log.d("Error", "Networking Manager Get All Data");
+                Log.d(dataManager.MASTER_VIEW_TAG, "ERROR: Networking Manager Get All Data");
             }
         } else {    // No network and no Realm data
             alertDialog = new AlertDialog.Builder(this).create();
@@ -95,7 +95,7 @@ public class MasterView extends AppCompatActivity {
             new NetworkGetChangeState(this).execute();
         } catch (Exception e) {
             e.printStackTrace();
-            Log.d("Error", "Networking Manager Get Change State");
+            Log.d(dataManager.MASTER_VIEW_TAG, "ERROR: Networking Manager Get Change State");
         }
     }
 

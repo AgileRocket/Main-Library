@@ -10,8 +10,17 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import io.realm.Realm;
+import io.realm.RealmResults;
+import rocket.agile.com.mainlibrary.Interface.ActionModel;
 import rocket.agile.com.mainlibrary.R;
 import rocket.agile.com.mainlibrary.model.DataManager;
+import rocket.agile.com.mainlibrary.model.actionItems.ActionCall;
+import rocket.agile.com.mainlibrary.model.actionItems.ActionStaff;
+
+import static android.R.attr.data;
+import static rocket.agile.com.mainlibrary.model.DataManager.actionStaff;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,13 +45,20 @@ public class AboutUsFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Check if value is null (no data added by admin)
+//        Realm realm = Realm.getDefaultInstance();
+//        ActionStaff staff = realm.where(ActionStaff.class).findFirst();
+        if(dataManager.actionStaff.size() == 0) {
+            Log.d(dataManager.SIDE_MENU_TAG, "actionStaff list is empty and not in use");
+        }
+
         // Set Title Text
         TextView textView_title = (TextView) view.findViewById(R.id.aboutus_text_title);
         textView_title.setText("Phone number: " + dataManager.actionCall.get(0).getNumber());
 
         // Set Details Text
         TextView textView_details = (TextView) view.findViewById(R.id.aboutus_text_details);
-        textView_details.setText(dataManager.address);
+        textView_details.setText(dataManager.appName);
 
         // Set Body Text
         TextView textView_body = (TextView) view.findViewById(R.id.aboutus_text_body);

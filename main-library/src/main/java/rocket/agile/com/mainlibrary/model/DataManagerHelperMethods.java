@@ -4,9 +4,8 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 import rocket.agile.com.mainlibrary.model.actionItems.ActionCall;
 import rocket.agile.com.mainlibrary.model.actionItems.ActionEmail;
+import rocket.agile.com.mainlibrary.model.actionItems.ActionStaff;
 import rocket.agile.com.mainlibrary.model.appInfo.AppInfo;
-
-import static android.R.attr.value;
 
 /**
  * Created by keithkowalski on 7/18/17.
@@ -25,7 +24,7 @@ public class DataManagerHelperMethods extends DataManager {
 
         for(AppInfo value: values) {
             appName = value.getAppName();
-            address = value.getAddress();
+            mailingAddress = value.getAddress();
             mondayHours = value.getHours().getMonday();
             tuesdayHours = value.getHours().getTuesday();
             wednesdayHours = value.getHours().getWednesday();
@@ -35,6 +34,13 @@ public class DataManagerHelperMethods extends DataManager {
             sundayHours = value.getHours().getSunday();
         }
         realm.close();
+    }
+
+    // SET ALL ACTION ITEMS LIST
+    public static void setAllActionItemsList() {
+        allActionsList.add("actionEmail");
+        allActionsList.add("actionCall");
+        allActionsList.add("actionStaff");
     }
 
     // GET ACTION ITEMS
@@ -52,10 +58,16 @@ public class DataManagerHelperMethods extends DataManager {
         actionCall = actionCalls;
     }
 
+    public static void getActionStaff() {
+        Realm realm = Realm.getDefaultInstance();
+        RealmResults<ActionStaff> actionStaffs = realm.where(ActionStaff.class).findAll();
+        actionStaff = actionStaffs;
+    }
+
     // Calls all action items at one time, which are stored in Realm
     public static void getAllActionItemsFromRealm() {
-
         getActionEmails();
         getActionCall();
+        getActionStaff();
     }
 }

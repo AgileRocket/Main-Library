@@ -26,8 +26,8 @@ public class ApplicationLifeCycleTracker implements Application.ActivityLifecycl
 
         if (numStarted == 0) {
             // App went to foreground
-            Log.d("Application Status", "FOREGROUND");
-            Log.d("Initial Start", initialStart + "");
+            Log.d(DataManager.APP_LIFE_CYCLE_TAG, "Application Status: FOREGROUND");
+            Log.d(DataManager.APP_LIFE_CYCLE_TAG, "Initial Start: " + initialStart + "");
         }
         numStarted++;
     }
@@ -45,7 +45,7 @@ public class ApplicationLifeCycleTracker implements Application.ActivityLifecycl
         numStarted--;
         if(numStarted == 0) {
             // App went to background
-            Log.d("Application Status", "BACKGROUND");
+            Log.d(DataManager.APP_LIFE_CYCLE_TAG, "Application Status: BACKGROUND");
             initialStart = false;
         }
     }

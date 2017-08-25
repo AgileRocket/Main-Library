@@ -80,7 +80,7 @@ public class RealmPersistence extends MasterView {
                         Log.d("case", "3");
                         break;
                     default:
-                        Log.d("case", "default");
+                        Log.d("case", "-1");
                         break;
                 }
             }

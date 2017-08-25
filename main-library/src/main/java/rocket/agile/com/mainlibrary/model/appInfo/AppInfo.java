@@ -7,7 +7,7 @@ import io.realm.annotations.PrimaryKey;
 /**
  * Created by keithkowalski on 5/18/17.
  *
- * Purpose:  Create the list of basic values (i.e. app name, colors, hours, contact email address, etc)
+ * Purpose:  Create the list of basic values (i.e. app name, colors, hours, contact email mailingAddress, etc)
  * Function: A) Responsible for storing values to Realm
  *
  */
@@ -17,7 +17,7 @@ public class AppInfo extends RealmObject {
     @PrimaryKey @SerializedName("id")
     private int id;
 
-    @SerializedName("address")
+    @SerializedName("mailingAddress")
     private String address;
 
     @SerializedName("appName")

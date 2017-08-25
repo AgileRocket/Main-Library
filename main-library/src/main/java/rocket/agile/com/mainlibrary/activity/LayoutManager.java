@@ -36,7 +36,7 @@ public class LayoutManager extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        Log.d("LifeCycle_Resume", "LayoutManager");
+        Log.d(dataManager.LAYOUT_MANAGER_TAG, "LifeCycle_OnResume()");
 
         // TODO: Handle resuming foreground here, check for ChangeState data
 //        if(networkCalls.isNetworkAvailable()) {
@@ -58,7 +58,7 @@ public class LayoutManager extends AppCompatActivity {
 
     public void setLayout() {
 
-        Log.d("Method", "setLayout()");
+        Log.d(dataManager.LAYOUT_MANAGER_TAG, "METHOD: setLayout()");
 
         switch (dataManager.layoutValue) {
             case 0:

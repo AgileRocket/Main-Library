@@ -1,12 +1,17 @@
 package rocket.agile.com.mainlibrary.model;
 
 import android.app.ProgressDialog;
-
 import java.util.List;
-
 import io.realm.RealmResults;
+import rocket.agile.com.mainlibrary.activity.LayoutManager;
+import rocket.agile.com.mainlibrary.activity.LayoutView_Buttons_Grid;
+import rocket.agile.com.mainlibrary.activity.LayoutView_Buttons_Long;
+import rocket.agile.com.mainlibrary.activity.LayoutView_SideMenu;
+import rocket.agile.com.mainlibrary.activity.LayoutView_TabBar;
+import rocket.agile.com.mainlibrary.activity.MasterView;
 import rocket.agile.com.mainlibrary.model.actionItems.ActionCall;
 import rocket.agile.com.mainlibrary.model.actionItems.ActionEmail;
+import rocket.agile.com.mainlibrary.model.actionItems.ActionStaff;
 
 /**
  * Created by keithkowalski on 3/21/17.
@@ -34,12 +39,12 @@ public class DataManager {
     public static boolean changeStateValue;
     public static List<String> changeStateIDs;
 
-//----- LayoutManager Selected --------------
+//----- LayoutManager Selected ---------
 
     //    LAYOUT THEME
-    public static int layoutValue = 0;     // TODO: MAKE NETWORK CALL
+    public static int layoutValue = 0;     // TODO: GET FROM NETWORK CALL
 
-//----- Primary AppInfo ---------------
+//----- Primary AppInfo ----------------
 
     //    APP NAME
     public static String appName;
@@ -51,7 +56,7 @@ public class DataManager {
     public static String primaryBackgroundColor = "#34495e";
 
     //    ADDRESS
-    public static String address;
+    public static String mailingAddress;
 
     //    HOURS
     public static String mondayHours;
@@ -62,8 +67,7 @@ public class DataManager {
     public static String saturdayHours;
     public static String sundayHours;
 
-
-//----- Available Social Media Data ------
+//----- Social Media Data ---------------
 
     //    BUSINESS WEBSITE
     public static String website;
@@ -86,6 +90,9 @@ public class DataManager {
     //    GOOGLE+
     public static String google;
 
+//----- Action Item List -----------------
+    public static List<String> allActionsList;  // includes all possible actions, regardless if they have data
+
 //----- Fragment Data --------------------
 
     //    Email
@@ -93,5 +100,19 @@ public class DataManager {
 
     //    Call Us
     public static RealmResults<ActionCall> actionCall;
+
+    //    Staff
+    public static RealmResults<ActionStaff> actionStaff;
+
+
+//----- DEBUG TAGS --------------------
+    public static final String MASTER_VIEW_TAG = MasterView.class.getSimpleName();
+    public static final String TAB_BAR_TAG = LayoutView_TabBar.class.getSimpleName();
+    public static final String SIDE_MENU_TAG = LayoutView_SideMenu.class.getSimpleName();
+    public static final String BUTTONS_LONG_TAG = LayoutView_Buttons_Long.class.getSimpleName();
+    public static final String BUTTONS_GRID_TAG = LayoutView_Buttons_Grid.class.getSimpleName();
+    public static final String LAYOUT_MANAGER_TAG = LayoutManager.class.getSimpleName();
+    public static final String APP_LIFE_CYCLE_TAG = ApplicationLifeCycleTracker.class.getSimpleName();
+
 
 }
