@@ -2,6 +2,7 @@ package rocket.agile.com.mainlibrary.model.appInfo;
 
 import com.google.gson.annotations.SerializedName;
 import io.realm.RealmObject;
+import rocket.agile.com.mainlibrary.Interface.ActionModel;
 
 /**
  * Created by keithkowalski on 5/18/17.

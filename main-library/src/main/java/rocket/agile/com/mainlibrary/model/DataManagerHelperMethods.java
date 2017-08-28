@@ -1,7 +1,15 @@
 package rocket.agile.com.mainlibrary.model;
 
+import android.util.Log;
+
+import java.util.Set;
+
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
+import io.realm.RealmModel;
 import io.realm.RealmResults;
+import rocket.agile.com.mainlibrary.Interface.ActionModel;
+import rocket.agile.com.mainlibrary.R;
 import rocket.agile.com.mainlibrary.model.actionItems.ActionCall;
 import rocket.agile.com.mainlibrary.model.actionItems.ActionEmail;
 import rocket.agile.com.mainlibrary.model.actionItems.ActionStaff;
@@ -41,6 +49,16 @@ public class DataManagerHelperMethods extends DataManager {
         allActionsList.add("actionEmail");
         allActionsList.add("actionCall");
         allActionsList.add("actionStaff");
+
+
+        //TODO: Look into getting all available classes...
+//        Realm realm = Realm.getDefaultInstance();
+//        RealmConfiguration realmConfiguration = new RealmConfiguration
+//                .Builder()
+//                .build();
+//        Set<Class<? extends RealmModel>> schemaClasses = realmConfiguration.getRealmObjectClasses();
+
+
     }
 
     // GET ACTION ITEMS

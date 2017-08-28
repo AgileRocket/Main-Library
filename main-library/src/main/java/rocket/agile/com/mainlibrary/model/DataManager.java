@@ -1,6 +1,8 @@
 package rocket.agile.com.mainlibrary.model;
 
 import android.app.ProgressDialog;
+
+import java.util.ArrayList;
 import java.util.List;
 import io.realm.RealmResults;
 import rocket.agile.com.mainlibrary.activity.LayoutManager;
@@ -91,7 +93,7 @@ public class DataManager {
     public static String google;
 
 //----- Action Item List -----------------
-    public static List<String> allActionsList;  // includes all possible actions, regardless if they have data
+    public static List<String> allActionsList = new ArrayList<String>();  // includes all possible actions, regardless if they have data
 
 //----- Fragment Data --------------------
 

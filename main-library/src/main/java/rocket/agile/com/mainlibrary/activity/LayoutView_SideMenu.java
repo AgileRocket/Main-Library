@@ -14,6 +14,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import io.realm.Realm;
 import rocket.agile.com.mainlibrary.R;
 import rocket.agile.com.mainlibrary.fragments.AboutUsFragment;
 import rocket.agile.com.mainlibrary.fragments.WebsiteFragment;
@@ -55,6 +57,44 @@ public class LayoutView_SideMenu extends LayoutManager
         navigationView.setNavigationItemSelectedListener(this);
 
 // CUSTOM PRIMARY SETTINGS
+
+
+        // MENU BUTTONS TO CREATE
+
+        for(int i=0;i<dataManager.allActionsList.size();i++) {
+            switch(dataManager.allActionsList.get(i)) {
+                case "actionEmail":
+                    if(dataManager.actionEmail.size() > 0) {
+                        Log.d(dataManager.SIDE_MENU_TAG, "EMAIL");
+                        //TODO: ADD TO BUTTON OR MENU LIST
+                    } else {
+                        Log.d(dataManager.SIDE_MENU_TAG, "actionEmail list is empty and not in use");
+                    }
+                    break;
+                case "actionCall":
+                    if(dataManager.actionCall.size() > 0) {
+                        Log.d(dataManager.SIDE_MENU_TAG, "CALL");
+                        //TODO: ADD TO BUTTON OR MENU LIST
+                    } else {
+                        Log.d(dataManager.SIDE_MENU_TAG, "actionCall list is empty and not in use");
+                    }
+                    break;
+                case "actionStaff":
+                    if(dataManager.actionStaff.size() > 0) {
+                        Log.d(dataManager.SIDE_MENU_TAG, "STAFF");
+                        //TODO: ADD TO BUTTON OR MENU LIST
+                    } else {
+                        Log.d(dataManager.SIDE_MENU_TAG, "actionStaff list is empty and not in use");
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+
+
+
 
         // PRIMARY COLOR
         View primaryBackground = findViewById(R.id.id_main);

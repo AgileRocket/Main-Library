@@ -20,7 +20,6 @@ import rocket.agile.com.mainlibrary.model.actionItems.ActionCall;
 import rocket.agile.com.mainlibrary.model.actionItems.ActionStaff;
 
 import static android.R.attr.data;
-import static rocket.agile.com.mainlibrary.model.DataManager.actionStaff;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -44,13 +43,6 @@ public class AboutUsFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        // Check if value is null (no data added by admin)
-//        Realm realm = Realm.getDefaultInstance();
-//        ActionStaff staff = realm.where(ActionStaff.class).findFirst();
-        if(dataManager.actionStaff.size() == 0) {
-            Log.d(dataManager.SIDE_MENU_TAG, "actionStaff list is empty and not in use");
-        }
 
         // Set Title Text
         TextView textView_title = (TextView) view.findViewById(R.id.aboutus_text_title);
