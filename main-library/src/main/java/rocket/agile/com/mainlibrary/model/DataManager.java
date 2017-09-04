@@ -33,6 +33,7 @@ public class DataManager {
     }
 
     //----- Set base URL -----------------
+//    public String baseURL = "http://192.168.7.111:8080/api/";
     public String baseURL = "http://rocketdepot.com/api/";
 
     //----- Progress Dialog --------------

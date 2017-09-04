@@ -68,7 +68,6 @@ public class RealmPersistence extends MasterView {
                         ActionEmail actionEmail = new Gson().fromJson(jsonObject.toString(), ActionEmail.class);
                         RealmPersistence.createRealmObject(actionEmail);
                         break;
-
                     case 1:
                         Log.d("case", "1");
                         break;
@@ -80,7 +79,6 @@ public class RealmPersistence extends MasterView {
                         Log.d("case", "3");
                         break;
                     default:
-                        Log.d("case", "-1");
                         break;
                 }
             }
