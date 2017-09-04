@@ -14,8 +14,6 @@ import rocket.agile.com.mainlibrary.model.DataManagerHelperMethods;
 import rocket.agile.com.mainlibrary.networking.NetworkGetChangeState;
 import rocket.agile.com.mainlibrary.networking.NetworkingManagerGetAllData;
 
-import static rocket.agile.com.mainlibrary.model.DataManagerHelperMethods.setAllActionItemsList;
-
 /**
  * Created by keithkowalski on 6/19/17.
  *
@@ -82,7 +80,6 @@ public class MasterView extends AppCompatActivity {
 
         DataManagerHelperMethods.getAppInfo();
         DataManagerHelperMethods.getAllActionItemsFromRealm();
-        DataManagerHelperMethods.setAllActionItemsList();
         new LayoutManager(this).setLayout();
 
         realm.close();

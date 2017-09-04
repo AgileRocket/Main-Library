@@ -94,7 +94,7 @@ public class DataManager {
     public static String google;
 
 //----- Action Item List -----------------
-    public static List<String> allActionsList = new ArrayList<String>();  // includes all possible actions, regardless if they have data
+    public static Class[] actionClasses = {ActionEmail.class, ActionCall.class, ActionStaff.class};  // includes all possible actions, regardless if they have data
 
 //----- Fragment Data --------------------
 

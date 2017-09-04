@@ -44,27 +44,6 @@ public class DataManagerHelperMethods extends DataManager {
         realm.close();
     }
 
-    // SET ALL ACTION ITEMS LIST
-    public static void setAllActionItemsList() {
-        allActionsList.add("actionEmail");
-        allActionsList.add("actionCall");
-        allActionsList.add("actionStaff");
-
-
-        //TODO: Look into getting all available model classes...
-        RealmConfiguration realmConfiguration = new RealmConfiguration
-                .Builder()
-                .build();
-
-        Set<Class<? extends RealmModel>> schemaClasses = realmConfiguration.getRealmObjectClasses();
-
-        Object[] classes = schemaClasses.toArray();
-
-
-//        Log.d("CLASSES", classes[0].);
-
-    }
-
     // GET ACTION ITEMS
     public static void getActionEmails() {
 

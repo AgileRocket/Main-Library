@@ -15,12 +15,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import io.realm.Realm;
+import io.realm.RealmObject;
+import io.realm.RealmResults;
 import rocket.agile.com.mainlibrary.R;
 import rocket.agile.com.mainlibrary.fragments.AboutUsFragment;
 import rocket.agile.com.mainlibrary.fragments.WebsiteFragment;
 import rocket.agile.com.mainlibrary.model.DataManager;
 import rocket.agile.com.mainlibrary.model.DataManagerHelperMethods;
+import rocket.agile.com.mainlibrary.model.actionItems.ActionEmail;
 
 /**
  * Created by keithkowalski on 6/19/17.
@@ -58,41 +65,48 @@ public class LayoutView_SideMenu extends LayoutManager
 
 // CUSTOM PRIMARY SETTINGS
 
-
         // MENU BUTTONS TO CREATE
+        Realm realm = Realm.getDefaultInstance();
+        ArrayList<Object> actionList = new ArrayList<>();
 
-        for(int i=0;i<dataManager.allActionsList.size();i++) {
-            switch(dataManager.allActionsList.get(i)) {
-                case "actionEmail":
-                    if(dataManager.actionEmail.size() > 0) {
-                        Log.d(dataManager.SIDE_MENU_TAG, "EMAIL");
-                        //TODO: ADD TO BUTTON OR MENU LIST
-                    } else {
-                        Log.d(dataManager.SIDE_MENU_TAG, "actionEmail list is empty and not in use");
-                    }
-                    break;
-                case "actionCall":
-                    if(dataManager.actionCall.size() > 0) {
-                        Log.d(dataManager.SIDE_MENU_TAG, "CALL");
-                        //TODO: ADD TO BUTTON OR MENU LIST
-                    } else {
-                        Log.d(dataManager.SIDE_MENU_TAG, "actionCall list is empty and not in use");
-                    }
-                    break;
-                case "actionStaff":
-                    if(dataManager.actionStaff.size() > 0) {
-                        Log.d(dataManager.SIDE_MENU_TAG, "STAFF");
-                        //TODO: ADD TO BUTTON OR MENU LIST
-                    } else {
-                        Log.d(dataManager.SIDE_MENU_TAG, "actionStaff list is empty and not in use");
-                    }
-                    break;
-                default:
-                    break;
-            }
+        for(Class actionClass: dataManager.actionClasses) {
+            RealmResults<RealmObject> actionResults = realm.where(actionClass).findAll();
+
+            Object[] actions = actionResults.toArray();
+            ArrayList<Object> actionsList = new ArrayList(Arrays.asList(actions));
+
+            actionList.addAll(actionsList);
         }
 
+        Object[] allActions = actionList.toArray();
 
+        for(Object obj: allActions) {
+            String rawName = obj.getClass().getSimpleName();
+            if(rawName.endsWith("RealmProxy")) {
+                // Filter out class name
+                String className = rawName.substring(0, rawName.indexOf("RealmProxy"));
+
+                switch(className) {
+                    case "ActionEmail":
+                        Log.d(dataManager.LAYOUT_MANAGER_TAG, "CREATE ACTION EMAIL BUTTON");
+                        break;
+                    case "ActionCall":
+                        Log.d(dataManager.LAYOUT_MANAGER_TAG, "CREATE ACTION CALL BUTTON");
+                        break;
+                    case "ActionStaff":
+                        Log.d(dataManager.LAYOUT_MANAGER_TAG, "CREATE ACTION STAFF BUTTON");
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+
+//            if (obj instanceof ActionEmail) {
+//                ActionEmail emailAction = (ActionEmail)obj;
+//                Log.d("MY-EMAIL", emailAction.getEmailAddress());
+//            }
+        }
 
 
 
