@@ -51,13 +51,17 @@ public class DataManagerHelperMethods extends DataManager {
         allActionsList.add("actionStaff");
 
 
-        //TODO: Look into getting all available classes...
-//        Realm realm = Realm.getDefaultInstance();
-//        RealmConfiguration realmConfiguration = new RealmConfiguration
-//                .Builder()
-//                .build();
-//        Set<Class<? extends RealmModel>> schemaClasses = realmConfiguration.getRealmObjectClasses();
+        //TODO: Look into getting all available model classes...
+        RealmConfiguration realmConfiguration = new RealmConfiguration
+                .Builder()
+                .build();
 
+        Set<Class<? extends RealmModel>> schemaClasses = realmConfiguration.getRealmObjectClasses();
+
+        Object[] classes = schemaClasses.toArray();
+
+
+//        Log.d("CLASSES", classes[0].);
 
     }
 

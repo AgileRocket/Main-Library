@@ -14,6 +14,7 @@ import rocket.agile.com.mainlibrary.activity.MasterView;
 import rocket.agile.com.mainlibrary.model.actionItems.ActionCall;
 import rocket.agile.com.mainlibrary.model.actionItems.ActionEmail;
 import rocket.agile.com.mainlibrary.model.actionItems.ActionStaff;
+import rocket.agile.com.mainlibrary.networking.NetworkingManagerGetAllData;
 
 /**
  * Created by keithkowalski on 3/21/17.
@@ -115,6 +116,7 @@ public class DataManager {
     public static final String BUTTONS_GRID_TAG = LayoutView_Buttons_Grid.class.getSimpleName();
     public static final String LAYOUT_MANAGER_TAG = LayoutManager.class.getSimpleName();
     public static final String APP_LIFE_CYCLE_TAG = ApplicationLifeCycleTracker.class.getSimpleName();
+    public static final String NETWORKING_MANAGER_TAG = NetworkingManagerGetAllData.class.getSimpleName();
 
 
 }
