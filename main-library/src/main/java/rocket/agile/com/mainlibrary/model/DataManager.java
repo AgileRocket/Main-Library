@@ -100,13 +100,13 @@ public class DataManager {
 //----- Fragment Data --------------------
 
     //    Email
-    public static RealmResults<ActionEmail> actionEmail;
+    public static RealmResults<ActionEmail> actionEmail = null;
 
     //    Call Us
-    public static RealmResults<ActionCall> actionCall;
+    public static RealmResults<ActionCall> actionCall = null;
 
     //    Staff
-    public static RealmResults<ActionStaff> actionStaff;
+    public static RealmResults<ActionStaff> actionStaff = null;
 
 
 //----- DEBUG TAGS --------------------

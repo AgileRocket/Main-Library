@@ -27,6 +27,9 @@ import rocket.agile.com.mainlibrary.R;
 import rocket.agile.com.mainlibrary.fragments.AboutUsFragment;
 import rocket.agile.com.mainlibrary.fragments.WebsiteFragment;
 import rocket.agile.com.mainlibrary.model.DataManager;
+import rocket.agile.com.mainlibrary.model.actionItems.ActionCall;
+import rocket.agile.com.mainlibrary.model.actionItems.ActionEmail;
+import rocket.agile.com.mainlibrary.model.actionItems.ActionStaff;
 
 /**
  * Created by keithkowalski on 6/19/17.
@@ -76,44 +79,55 @@ public class LayoutView_SideMenu extends LayoutManager
 
     public void pullMenuItemsFromNetworkCall() {
         // MENU BUTTONS TO CREATE
-        Realm realm = Realm.getDefaultInstance();
-        ArrayList<Object> actionList = new ArrayList<>();
+
+        // FIRST ATTEMPT TO TRAVERSE ALL CLASSES -----------------------------------------
+//        Realm realm = Realm.getDefaultInstance();
+//        ArrayList<Object> actionList = new ArrayList<>();
+//
+//        for(Class actionClass: dataManager.actionClasses) {
+//            RealmResults<RealmObject> actionResults = realm.where(actionClass).findAll();
+//            Object[] actions = actionResults.toArray();
+//            ArrayList<Object> actionsList = new ArrayList(Arrays.asList(actions));
+//            actionList.addAll(actionsList);
+//
+//            Log.d("actionResults", actionResults.toString());
+//        }
+//
+//        Object[] allActions = actionList.toArray();
+
+//        for(Object obj: allActions) {
+
+//            String rawName = obj.getClass().getSimpleName();
+//            if(rawName.endsWith("RealmProxy")) {
+                // Filter out class name
+//                String className = rawName.substring(0, rawName.indexOf("RealmProxy"));
+                // Run switch case over substring of raw name
+//        ---------------------------------------------------------------------------------
 
         for(Class actionClass: dataManager.actionClasses) {
-            RealmResults<RealmObject> actionResults = realm.where(actionClass).findAll();
-            Object[] actions = actionResults.toArray();
-            ArrayList<Object> actionsList = new ArrayList(Arrays.asList(actions));
-            actionList.addAll(actionsList);
-        }
-
-        Object[] allActions = actionList.toArray();
-
-        for(Object obj: allActions) {
-            String name = obj.getClass().toString();
-            String rawName = obj.getClass().getSimpleName();
-            if(rawName.endsWith("RealmProxy")) {
-                // Filter out class name
-                String className = rawName.substring(0, rawName.indexOf("RealmProxy"));
-
-                switch(className) {
-                    case "ActionEmail":
-                        buildMenu(dataManager.actionEmail.get(0).getName(), "");
-                        Log.d(dataManager.SIDE_MENU_TAG, "CREATE ACTION EMAIL BUTTON");
-                        break;
-                    case "ActionCall":
-                        buildMenu(dataManager.actionCall.first().getName(), "");
-                        Log.d(dataManager.SIDE_MENU_TAG, "CREATE ACTION CALL BUTTON");
-                        break;
-                    case "ActionStaff":
-                        buildMenu(dataManager.actionStaff.first().getName(), "");
-                        Log.d(dataManager.SIDE_MENU_TAG, "CREATE ACTION STAFF BUTTON");
-                        break;
-                    default:
-                        break;
-                }
+            switch(actionClass.getSimpleName()) {
+                case "ActionEmail":
+                    for(ActionEmail actionEmail: dataManager.actionEmail) {
+                        buildMenu(actionEmail.getName(), "");
+                    }
+                    Log.d(dataManager.SIDE_MENU_TAG, "CREATE ACTION EMAIL BUTTONS");
+                    break;
+                case "ActionCall":
+                    for(ActionCall actionCall: dataManager.actionCall) {
+                        buildMenu(actionCall.getName(), "");
+                    }
+                    Log.d(dataManager.SIDE_MENU_TAG, "CREATE ACTION CALL BUTTONS");
+                    break;
+                case "ActionStaff":
+                    for(ActionStaff actionStaff: dataManager.actionStaff) {
+                        buildMenu(actionStaff.getName(), "");
+                    }
+                    Log.d(dataManager.SIDE_MENU_TAG, "CREATE ACTION STAFF BUTTONS");
+                    break;
+                default:
+                    break;
             }
         }
-        realm.close();
     }
 
     public void buildMenu(String title, String icon) {
