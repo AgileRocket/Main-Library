@@ -1,8 +1,6 @@
 package rocket.agile.com.mainlibrary.model;
 
 import android.app.ProgressDialog;
-
-import java.util.ArrayList;
 import java.util.List;
 import io.realm.RealmResults;
 import rocket.agile.com.mainlibrary.activity.LayoutManager;
@@ -118,6 +116,4 @@ public class DataManager {
     public static final String LAYOUT_MANAGER_TAG = LayoutManager.class.getSimpleName();
     public static final String APP_LIFE_CYCLE_TAG = ApplicationLifeCycleTracker.class.getSimpleName();
     public static final String NETWORKING_MANAGER_TAG = NetworkingManagerGetAllData.class.getSimpleName();
-
-
 }

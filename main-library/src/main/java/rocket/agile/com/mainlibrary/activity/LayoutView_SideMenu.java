@@ -70,13 +70,13 @@ public class LayoutView_SideMenu extends LayoutManager
         primaryHeader.setBackgroundColor(Color.parseColor(dataManager.primaryHeaderColor));
         this.setTitle(dataManager.appName);
 
-
         if(this.getTitle() == null) {
             finish();
             startActivity(getIntent());
         }
     }
 
+//    Pass each action item's name, font awesome icon, and actionType value (int)
     public void pullMenuItemsFromNetworkCall() {
         // MENU BUTTONS TO CREATE
 
@@ -104,25 +104,32 @@ public class LayoutView_SideMenu extends LayoutManager
                 // Run switch case over substring of raw name
 //        ---------------------------------------------------------------------------------
 
+        //TODO: May remove for loops to prevent multiple button creation; pending discussion
         for(Class actionClass: dataManager.actionClasses) {
             switch(actionClass.getSimpleName()) {
                 case "ActionEmail":
-                    for(ActionEmail actionEmail: dataManager.actionEmail) {
-                        buildMenu(actionEmail.getName(), "");
+                    if(dataManager.actionEmail.size() > 0) {
+                        for (ActionEmail actionEmail : dataManager.actionEmail) {
+                            buildMenu(actionEmail.getName(), "", actionEmail.getActionType());
+                        }
+                        Log.d(dataManager.SIDE_MENU_TAG, "CREATE ACTION EMAIL BUTTONS");
                     }
-                    Log.d(dataManager.SIDE_MENU_TAG, "CREATE ACTION EMAIL BUTTONS");
                     break;
                 case "ActionCall":
-                    for(ActionCall actionCall: dataManager.actionCall) {
-                        buildMenu(actionCall.getName(), "");
+                    if(dataManager.actionCall.size() > 0) {
+                        for (ActionCall actionCall : dataManager.actionCall) {
+                            buildMenu(actionCall.getName(), "", actionCall.getActionType());
+                        }
+                        Log.d(dataManager.SIDE_MENU_TAG, "CREATE ACTION CALL BUTTONS");
                     }
-                    Log.d(dataManager.SIDE_MENU_TAG, "CREATE ACTION CALL BUTTONS");
                     break;
                 case "ActionStaff":
-                    for(ActionStaff actionStaff: dataManager.actionStaff) {
-                        buildMenu(actionStaff.getName(), "");
+                    if(dataManager.actionStaff.size() > 0) {
+                        for (ActionStaff actionStaff : dataManager.actionStaff) {
+                            buildMenu(actionStaff.getName(), "", actionStaff.getActionType());
+                        }
+                        Log.d(dataManager.SIDE_MENU_TAG, "CREATE ACTION STAFF BUTTONS");
                     }
-                    Log.d(dataManager.SIDE_MENU_TAG, "CREATE ACTION STAFF BUTTONS");
                     break;
                 default:
                     break;
@@ -130,54 +137,54 @@ public class LayoutView_SideMenu extends LayoutManager
         }
     }
 
-    public void buildMenu(String title, String icon) {
+//    Set each button based on data passed in from list data
+    public void buildMenu(String title, String icon, int itemID) {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         Menu menu = navigationView.getMenu();
         // TODO: Resolve how to use Font Awesome with 'drawable'
 //        menu.add(title).setIcon(R.drawable.ic_menu_manage);
-        menu.add(title);
+//        menu.add(title);
+        menu.add(0,itemID,0,title);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-        String id2 = (String)item.getTitle();
+        // Home Button ID
+        int homeID = item.getItemId();
+        // All other buttons IDs
+        int menuButtonsID = item.getItemId();
 
         FragmentManager manager = getSupportFragmentManager();
         WebsiteFragment websiteFragment = new WebsiteFragment();
         AboutUsFragment aboutUsFragment = new AboutUsFragment();
 
-        if (id == R.id.nav_home && manager.findFragmentById(R.id.relative_layout_for_fragment) != null) {
+        // Home Button
+        if (homeID == R.id.nav_home && manager.findFragmentById(R.id.relative_layout_for_fragment) != null) {
             manager.beginTransaction().remove(manager.findFragmentById(R.id.relative_layout_for_fragment)).commit();
         }
 
-        // TODO: See if id2 can reflect list of realm classes with data (data manager?)
-        switch(id2) {
-            case "Contact Us":
+        // ** NOTE ** menuButtonsID was created from 'actionType' of each Realm class!
+        switch(menuButtonsID) {
+            // ActionEmail
+            case 0:
                 manager.beginTransaction().replace(
                         R.id.relative_layout_for_fragment,
                         aboutUsFragment,
                         aboutUsFragment.getTag()).commit();
-            default: break;
+                break;
+            // ActionCall
+            case 2:
+                manager.beginTransaction().replace(
+                        R.id.relative_layout_for_fragment,
+                        websiteFragment,
+                        websiteFragment.getTag()).commit();
+                break;
+            default:
+                break;
         }
-
-//        if (id == R.id.nav_website) {
-//            manager.beginTransaction().replace(
-//                    R.id.relative_layout_for_fragment,
-//                    websiteFragment,
-//                    websiteFragment.getTag()).commit();
-//        } else if (id2 == "Agile Rocket") {
-//            manager.beginTransaction().replace(
-//                    R.id.relative_layout_for_fragment,
-//                    aboutUsFragment,
-//                    aboutUsFragment.getTag()).commit();
-//        } else if (id == R.id.nav_home && manager.findFragmentById(R.id.relative_layout_for_fragment) != null) {
-//            manager.beginTransaction().remove(manager.findFragmentById(R.id.relative_layout_for_fragment)).commit();
-//        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
