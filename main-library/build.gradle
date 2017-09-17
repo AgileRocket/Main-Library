@@ -50,6 +50,9 @@ dependencies {
     androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
     androidTestCompile 'tools.fastlane:screengrab:1.0.0'
 
+    // Font Awesome Library Conversion for Drawables
+    compile 'com.joanzapata.iconify:android-iconify-fontawesome:2.2.2' // (v4.5)
+
     // GSON with Retrofit
     compile 'com.android.support:appcompat-v7:25.3.0'
     compile 'com.android.support:design:25.2.0'

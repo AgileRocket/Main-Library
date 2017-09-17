@@ -18,6 +18,11 @@ import android.view.SubMenu;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.joanzapata.iconify.IconDrawable;
+import com.joanzapata.iconify.Iconify;
+import com.joanzapata.iconify.fonts.FontAwesomeIcons;
+import com.joanzapata.iconify.fonts.FontAwesomeModule;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import io.realm.Realm;
@@ -48,6 +53,9 @@ public class LayoutView_SideMenu extends LayoutManager
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Set FontAwesome Library to be active for this class
+        Iconify.with(new FontAwesomeModule());
 
         setContentView(R.layout.side_menu_activity_nav_drawer_main);
         Toolbar primaryHeader = (Toolbar) findViewById(R.id.toolbar);
@@ -110,7 +118,7 @@ public class LayoutView_SideMenu extends LayoutManager
                 case "ActionEmail":
                     if(dataManager.actionEmail.size() > 0) {
                         for (ActionEmail actionEmail : dataManager.actionEmail) {
-                            buildMenu(actionEmail.getName(), "", actionEmail.getActionType());
+                            buildMenu(actionEmail.getName(), actionEmail.getFAIcon(), actionEmail.getActionType());
                         }
                         Log.d(dataManager.SIDE_MENU_TAG, "CREATE ACTION EMAIL BUTTONS");
                     }
@@ -118,7 +126,7 @@ public class LayoutView_SideMenu extends LayoutManager
                 case "ActionCall":
                     if(dataManager.actionCall.size() > 0) {
                         for (ActionCall actionCall : dataManager.actionCall) {
-                            buildMenu(actionCall.getName(), "", actionCall.getActionType());
+                            buildMenu(actionCall.getName(), actionCall.getFAIcon(), actionCall.getActionType());
                         }
                         Log.d(dataManager.SIDE_MENU_TAG, "CREATE ACTION CALL BUTTONS");
                     }
@@ -144,9 +152,13 @@ public class LayoutView_SideMenu extends LayoutManager
 
         Menu menu = navigationView.getMenu();
         // TODO: Resolve how to use Font Awesome with 'drawable'
-//        menu.add(title).setIcon(R.drawable.ic_menu_manage);
-//        menu.add(title);
-        menu.add(0,itemID,0,title);
+        menu.add(0,itemID,0,title).setIcon(new IconDrawable(this, icon));
+
+
+//        .setIcon(
+//                new IconDrawable(this, FontAwesomeIcons.fa_share)
+//                        .colorRes(R.color.ab_icon)
+//                        .actionBarSize());
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
