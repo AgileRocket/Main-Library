@@ -54,6 +54,8 @@ public class LayoutView_SideMenu extends LayoutManager
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // TODO: Look into setting drawer header image; currently shows up as null when accessed anywhere in this class
+
         // Set FontAwesome Library to be active for this class
         Iconify.with(new FontAwesomeModule());
 
@@ -112,7 +114,6 @@ public class LayoutView_SideMenu extends LayoutManager
                 // Run switch case over substring of raw name
 //        ---------------------------------------------------------------------------------
 
-        //TODO: May remove for loops to prevent multiple button creation; pending discussion
         for(Class actionClass: dataManager.actionClasses) {
             switch(actionClass.getSimpleName()) {
                 case "ActionEmail":
@@ -134,7 +135,7 @@ public class LayoutView_SideMenu extends LayoutManager
                 case "ActionStaff":
                     if(dataManager.actionStaff.size() > 0) {
                         for (ActionStaff actionStaff : dataManager.actionStaff) {
-                            buildMenu(actionStaff.getName(), "", actionStaff.getActionType());
+                            buildMenu(actionStaff.getName(), actionStaff.getFAIcon(), actionStaff.getActionType());
                         }
                         Log.d(dataManager.SIDE_MENU_TAG, "CREATE ACTION STAFF BUTTONS");
                     }
@@ -147,18 +148,12 @@ public class LayoutView_SideMenu extends LayoutManager
 
 //    Set each button based on data passed in from list data
     public void buildMenu(String title, String icon, int itemID) {
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         Menu menu = navigationView.getMenu();
-        // TODO: Resolve how to use Font Awesome with 'drawable'
         menu.add(0,itemID,0,title).setIcon(new IconDrawable(this, icon));
-
-
-//        .setIcon(
-//                new IconDrawable(this, FontAwesomeIcons.fa_share)
-//                        .colorRes(R.color.ab_icon)
-//                        .actionBarSize());
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -172,6 +167,11 @@ public class LayoutView_SideMenu extends LayoutManager
         FragmentManager manager = getSupportFragmentManager();
         WebsiteFragment websiteFragment = new WebsiteFragment();
         AboutUsFragment aboutUsFragment = new AboutUsFragment();
+        Bundle bundle = new Bundle();
+
+        // Set actionItem title as key that tells our fragment which actionItem name was tapped
+        String actionTitle = item.getTitle().toString();
+        bundle.putString("title", actionTitle);
 
         // Home Button
         if (homeID == R.id.nav_home && manager.findFragmentById(R.id.relative_layout_for_fragment) != null) {
@@ -182,6 +182,8 @@ public class LayoutView_SideMenu extends LayoutManager
         switch(menuButtonsID) {
             // ActionEmail
             case 0:
+                // Send name of actionItem to fragment based on what user tapped
+                aboutUsFragment.setArguments(bundle);
                 manager.beginTransaction().replace(
                         R.id.relative_layout_for_fragment,
                         aboutUsFragment,
@@ -189,6 +191,8 @@ public class LayoutView_SideMenu extends LayoutManager
                 break;
             // ActionCall
             case 2:
+                // Send name of actionItem to fragment based on what user tapped
+                websiteFragment.setArguments(bundle);
                 manager.beginTransaction().replace(
                         R.id.relative_layout_for_fragment,
                         websiteFragment,

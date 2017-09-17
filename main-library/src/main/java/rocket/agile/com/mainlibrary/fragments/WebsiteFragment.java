@@ -2,6 +2,7 @@ package rocket.agile.com.mainlibrary.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,11 +28,18 @@ public class WebsiteFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            String actionTitle = bundle.get("title").toString();
+            Log.d("FRAGMENT TEST", actionTitle);
+        }
+
         View v = inflater.inflate(R.layout.fragment_website, container, false);
 
         // SET WEBSITE
         webView = (WebView) v.findViewById(R.id.web_view);
-        webView.loadUrl("https://www.google.com");          // NEEDS PERSISTENCE
+        // TODO: Load site from network call
+        webView.loadUrl("https://www.google.com");
 
         // Enable Java Script
         WebSettings webSettings = webView.getSettings();
