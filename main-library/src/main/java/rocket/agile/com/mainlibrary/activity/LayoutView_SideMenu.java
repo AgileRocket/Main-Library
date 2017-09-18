@@ -60,6 +60,7 @@ public class LayoutView_SideMenu extends LayoutManager
         Iconify.with(new FontAwesomeModule());
 
         setContentView(R.layout.side_menu_activity_nav_drawer_main);
+
         Toolbar primaryHeader = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(primaryHeader);
 
@@ -84,6 +85,12 @@ public class LayoutView_SideMenu extends LayoutManager
             finish();
             startActivity(getIntent());
         }
+
+        // Access the drawer header imageView
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View header = navigationView.getHeaderView(0);
+        ImageView imageView = (ImageView) header.findViewById(R.id.drawerHeaderImageView);
+        imageView.setImageResource(R.drawable.agile_rocket_logo);
     }
 
 //    Pass each action item's name, font awesome icon, and actionType value (int)
