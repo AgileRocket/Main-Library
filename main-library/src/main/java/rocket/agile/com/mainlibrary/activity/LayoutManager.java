@@ -2,6 +2,7 @@ package rocket.agile.com.mainlibrary.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import rocket.agile.com.mainlibrary.R;
 import rocket.agile.com.mainlibrary.model.ApplicationLifeCycleTracker;
 import rocket.agile.com.mainlibrary.model.DataManager;
+import rocket.agile.com.mainlibrary.model.actionItems.ActionEmail;
 
 /**
  * Created by keithkowalski on 6/19/17.

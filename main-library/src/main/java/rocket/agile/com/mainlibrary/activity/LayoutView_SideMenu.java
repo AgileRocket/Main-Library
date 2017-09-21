@@ -1,13 +1,21 @@
 package rocket.agile.com.mainlibrary.activity;
 
+import android.Manifest;
 import android.content.ComponentName;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -25,11 +33,13 @@ import com.joanzapata.iconify.fonts.FontAwesomeModule;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
 import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.RealmResults;
 import rocket.agile.com.mainlibrary.R;
 import rocket.agile.com.mainlibrary.fragments.AboutUsFragment;
+import rocket.agile.com.mainlibrary.fragments.CallUsFragment;
 import rocket.agile.com.mainlibrary.fragments.WebsiteFragment;
 import rocket.agile.com.mainlibrary.model.DataManager;
 import rocket.agile.com.mainlibrary.model.actionItems.ActionCall;
@@ -38,10 +48,9 @@ import rocket.agile.com.mainlibrary.model.actionItems.ActionStaff;
 
 /**
  * Created by keithkowalski on 6/19/17.
- *
+ * <p>
  * Purpose:  Present side menu layout view to users
  * Function: A) List of action items presented in side menu; graphics and social media presented on home page
- *
  */
 
 public class LayoutView_SideMenu extends LayoutManager
@@ -49,12 +58,11 @@ public class LayoutView_SideMenu extends LayoutManager
 
     // Call singleton class for data manager
     DataManager dataManager = DataManager.getInstance();
+    private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // TODO: Look into setting drawer header image; currently shows up as null when accessed anywhere in this class
 
         // Set FontAwesome Library to be active for this class
         Iconify.with(new FontAwesomeModule());
@@ -81,7 +89,7 @@ public class LayoutView_SideMenu extends LayoutManager
         primaryHeader.setBackgroundColor(Color.parseColor(dataManager.primaryHeaderColor));
         this.setTitle(dataManager.appName);
 
-        if(this.getTitle() == null) {
+        if (this.getTitle() == null) {
             finish();
             startActivity(getIntent());
         }
@@ -93,7 +101,7 @@ public class LayoutView_SideMenu extends LayoutManager
         imageView.setImageResource(R.drawable.agile_rocket_logo);
     }
 
-//    Pass each action item's name, font awesome icon, and actionType value (int)
+    //    Pass each action item's name, font awesome icon, and actionType value (int)
     public void pullMenuItemsFromNetworkCall() {
         // MENU BUTTONS TO CREATE
 
@@ -116,15 +124,15 @@ public class LayoutView_SideMenu extends LayoutManager
 
 //            String rawName = obj.getClass().getSimpleName();
 //            if(rawName.endsWith("RealmProxy")) {
-                // Filter out class name
+        // Filter out class name
 //                String className = rawName.substring(0, rawName.indexOf("RealmProxy"));
-                // Run switch case over substring of raw name
+        // Run switch case over substring of raw name
 //        ---------------------------------------------------------------------------------
 
-        for(Class actionClass: dataManager.actionClasses) {
-            switch(actionClass.getSimpleName()) {
+        for (Class actionClass : dataManager.actionClasses) {
+            switch (actionClass.getSimpleName()) {
                 case "ActionEmail":
-                    if(dataManager.actionEmail.size() > 0) {
+                    if (dataManager.actionEmail.size() > 0) {
                         for (ActionEmail actionEmail : dataManager.actionEmail) {
                             buildMenu(actionEmail.getName(), actionEmail.getFAIcon(), actionEmail.getActionType());
                         }
@@ -132,7 +140,7 @@ public class LayoutView_SideMenu extends LayoutManager
                     }
                     break;
                 case "ActionCall":
-                    if(dataManager.actionCall.size() > 0) {
+                    if (dataManager.actionCall.size() > 0) {
                         for (ActionCall actionCall : dataManager.actionCall) {
                             buildMenu(actionCall.getName(), actionCall.getFAIcon(), actionCall.getActionType());
                         }
@@ -140,7 +148,7 @@ public class LayoutView_SideMenu extends LayoutManager
                     }
                     break;
                 case "ActionStaff":
-                    if(dataManager.actionStaff.size() > 0) {
+                    if (dataManager.actionStaff.size() > 0) {
                         for (ActionStaff actionStaff : dataManager.actionStaff) {
                             buildMenu(actionStaff.getName(), actionStaff.getFAIcon(), actionStaff.getActionType());
                         }
@@ -153,14 +161,13 @@ public class LayoutView_SideMenu extends LayoutManager
         }
     }
 
-//    Set each button based on data passed in from list data
+    //    Set each button based on data passed in from list data
     public void buildMenu(String title, String icon, int itemID) {
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
+        // Add item to menu
         Menu menu = navigationView.getMenu();
-        menu.add(0,itemID,0,title).setIcon(new IconDrawable(this, icon));
+        menu.add(0, itemID, 0, title).setIcon(new IconDrawable(this, icon));
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -170,14 +177,15 @@ public class LayoutView_SideMenu extends LayoutManager
         int homeID = item.getItemId();
         // All other buttons IDs
         int menuButtonsID = item.getItemId();
+        Bundle bundle = new Bundle();
 
         FragmentManager manager = getSupportFragmentManager();
         WebsiteFragment websiteFragment = new WebsiteFragment();
         AboutUsFragment aboutUsFragment = new AboutUsFragment();
-        Bundle bundle = new Bundle();
+        CallUsFragment callUsFragment   = new CallUsFragment();
 
         // Set actionItem title as key that tells our fragment which actionItem name was tapped
-        String actionTitle = item.getTitle().toString();
+        String actionTitle = item.getTitle().toString();    // item is MenuItem passed in to this method
         bundle.putString("title", actionTitle);
 
         // Home Button
@@ -186,9 +194,27 @@ public class LayoutView_SideMenu extends LayoutManager
         }
 
         // ** NOTE ** menuButtonsID was created from 'actionType' of each Realm class!
-        switch(menuButtonsID) {
+        switch (menuButtonsID) {
             // ActionEmail
             case 0:
+                // Email class
+                ActionEmail actionEmailSelected = null;
+                // Determine which email action item was selected
+                for (ActionEmail actionEmail : dataManager.actionEmail) {
+                    if (actionEmail.getName().contentEquals(actionTitle)) {
+                        // Set action email here, based on title
+                        actionEmailSelected = actionEmail;
+                    }
+                }
+                final Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                emailIntent.setType("plain/text");
+                emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{actionEmailSelected.getEmailAddress()});
+                emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, actionEmailSelected.getSubject());
+                this.startActivity(emailIntent);
+                break;
+
+            // ActionStaff
+            case 1:
                 // Send name of actionItem to fragment based on what user tapped
                 aboutUsFragment.setArguments(bundle);
                 manager.beginTransaction().replace(
@@ -199,12 +225,14 @@ public class LayoutView_SideMenu extends LayoutManager
             // ActionCall
             case 2:
                 // Send name of actionItem to fragment based on what user tapped
-                websiteFragment.setArguments(bundle);
-                manager.beginTransaction().replace(
-                        R.id.relative_layout_for_fragment,
-                        websiteFragment,
-                        websiteFragment.getTag()).commit();
+                int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE);
+                if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, MY_PERMISSIONS_REQUEST_CALL_PHONE);
+                }
+                callUsFragment.setArguments(bundle);
+                callUsFragment.show(manager, callUsFragment.getTag());
                 break;
+            // Default
             default:
                 break;
         }
