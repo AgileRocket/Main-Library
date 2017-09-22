@@ -25,6 +25,7 @@ import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.Iconify;
@@ -68,15 +69,19 @@ public class LayoutView_SideMenu extends LayoutManager
         Iconify.with(new FontAwesomeModule());
 
         setContentView(R.layout.side_menu_activity_nav_drawer_main);
-
         Toolbar primaryHeader = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(primaryHeader);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, primaryHeader, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+        // MENU TITLE (App Name)
+        TextView appTitle = (TextView) primaryHeader.findViewById(R.id.toolbar_title);
+        appTitle.setText(dataManager.appName);
+        appTitle.setTextSize(24);
+        appTitle.setTextColor(Color.WHITE);
 
         // CUSTOM PRIMARY SETTINGS
         pullMenuItemsFromNetworkCall();
@@ -87,12 +92,6 @@ public class LayoutView_SideMenu extends LayoutManager
 
         // PRIMARY HEADER COLOR AND TITLE
         primaryHeader.setBackgroundColor(Color.parseColor(dataManager.primaryHeaderColor));
-        this.setTitle(dataManager.appName);
-
-        if (this.getTitle() == null) {
-            finish();
-            startActivity(getIntent());
-        }
 
         // Access the drawer header imageView
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
