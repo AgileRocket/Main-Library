@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
@@ -69,31 +70,37 @@ public class LayoutView_SideMenu extends LayoutManager
         Iconify.with(new FontAwesomeModule());
 
         setContentView(R.layout.side_menu_activity_nav_drawer_main);
-        Toolbar primaryHeader = (Toolbar) findViewById(R.id.toolbar);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        Toolbar toolbarHeader = (Toolbar) findViewById(R.id.toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, primaryHeader, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, toolbarHeader, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        // MENU TITLE (App Name)
-        TextView appTitle = (TextView) primaryHeader.findViewById(R.id.toolbar_title);
-        appTitle.setText(dataManager.appName);
-        appTitle.setTextSize(24);
-        appTitle.setTextColor(Color.WHITE);
-
-        // CUSTOM PRIMARY SETTINGS
+        // CUSTOM BUILDS
         pullMenuItemsFromNetworkCall();
+        updateView(toolbarHeader);
+    }
+
+    private void updateView(Toolbar toolbarHeader) {
 
         // PRIMARY COLOR
         View primaryBackground = findViewById(R.id.id_main);
         primaryBackground.setBackgroundColor(Color.parseColor(dataManager.primaryBackgroundColor));
 
         // PRIMARY HEADER COLOR AND TITLE
-        primaryHeader.setBackgroundColor(Color.parseColor(dataManager.primaryHeaderColor));
+        toolbarHeader.setBackgroundColor(Color.parseColor(dataManager.primaryHeaderColor));
 
-        // Access the drawer header imageView
+        // MENU TITLE (App Name)
+        TextView appTitle = (TextView) toolbarHeader.findViewById(R.id.toolbar_title);
+        appTitle.setText(dataManager.appName);
+        appTitle.setTextSize(24);
+        appTitle.setTextColor(Color.WHITE);
+
+        // Access drawer header imageView
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View header = navigationView.getHeaderView(0);
         ImageView imageView = (ImageView) header.findViewById(R.id.drawerHeaderImageView);

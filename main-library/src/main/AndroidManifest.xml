@@ -29,6 +29,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:screenOrientation="portrait"
             android:name=".activity.MasterView"
             android:theme="@style/SplashTheme">
             <intent-filter>
