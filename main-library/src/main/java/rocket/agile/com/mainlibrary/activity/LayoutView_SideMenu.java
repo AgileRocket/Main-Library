@@ -87,17 +87,20 @@ public class LayoutView_SideMenu extends LayoutManager
 
     private void updateView(Toolbar toolbarHeader) {
 
-        // PRIMARY COLOR
         View primaryBackground = findViewById(R.id.id_main);
+        View titleBar = findViewById(R.id.appBarLayout);
+
+        // Set Background Color
         primaryBackground.setBackgroundColor(Color.parseColor(dataManager.primaryBackgroundColor));
 
         // PRIMARY HEADER COLOR AND TITLE
+        titleBar.setBackgroundColor(Color.parseColor(dataManager.primaryHeaderColor));
         toolbarHeader.setBackgroundColor(Color.parseColor(dataManager.primaryHeaderColor));
 
         // MENU TITLE (App Name)
-        TextView appTitle = (TextView) toolbarHeader.findViewById(R.id.toolbar_title);
+        TextView appTitle = (TextView) findViewById(R.id.app_name);
         appTitle.setText(dataManager.appName);
-        appTitle.setTextSize(24);
+        appTitle.setTextSize(20);
         appTitle.setTextColor(Color.WHITE);
 
         // Access drawer header imageView
