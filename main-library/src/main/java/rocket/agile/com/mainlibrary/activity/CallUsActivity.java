@@ -1,52 +1,42 @@
-package rocket.agile.com.mainlibrary.fragments;
+package rocket.agile.com.mainlibrary.activity;
 
 import android.Manifest;
-import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import rocket.agile.com.mainlibrary.R;
+import android.support.v7.app.AppCompatActivity;
 import rocket.agile.com.mainlibrary.model.DataManager;
 import rocket.agile.com.mainlibrary.model.actionItems.ActionCall;
 
-/**
- *
- *  Created by keithkowalski on 9/21/17.
- *
- *  This class is responsible for checking that the user has granted permission to make phone calls
- *  directly from the app, as well as making the phone call itself.
- *
- */
-public class CallUsFragment extends DialogFragment {
+public class CallUsActivity extends AppCompatActivity {
 
     private DataManager dataManager = DataManager.getInstance();
     private ActionCall actionCall;
+    private String actionTitle;
+    private Context context;
 
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
+    public CallUsActivity(String actionTitle, Context context) {
+        this.actionTitle = actionTitle;
+        this.context = context;
+    }
 
+    public void callAlertDialog() {
         // Find which ActionEmail is equivalent to the one tapped
-        Bundle bundle = this.getArguments();
-        if (bundle != null) {
-            String actionTitle = bundle.get("title").toString();
-
-            for (ActionCall actionCall : dataManager.actionCall) {
-                if (actionCall.getName().contentEquals(actionTitle)) {
-                    // Set action email here, based on title
-                    this.actionCall = actionCall;
-                }
+        for (ActionCall actionCalls : dataManager.actionCall) {
+            if (actionCalls.getName().contentEquals(actionTitle)) {
+                // Set action email here, based on title
+                actionCall = actionCalls;
             }
         }
 
         // Use the Builder class for convenient dialog construction
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
         builder.setMessage("Do you wish to call " + dataManager.appName + "?")
                 .setPositiveButton("Call", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -57,37 +47,36 @@ public class CallUsFragment extends DialogFragment {
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // User cancelled the dialog
-                        FragmentManager manager = getFragmentManager();
-                        if (manager.findFragmentById(R.id.relative_layout_for_fragment) != null) {
-                            manager.beginTransaction().remove(manager.findFragmentById(R.id.relative_layout_for_fragment)).commit();
-                        }
                     }
                 });
-        // Create the AlertDialog object and return it
-        return builder.create();
+        builder.create();
+        builder.show();
     }
 
 
-//    PERMISSIONS FOR MAKING PHONE CALLS DIRECTLY FROM APP
+    //    PERMISSIONS FOR MAKING PHONE CALLS DIRECTLY FROM APP
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
 
     public void makePhoneCall() {
 
-        int permissionCheck = ContextCompat.checkSelfPermission(this.getActivity(), Manifest.permission.CALL_PHONE);
+
+        int permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE);
+        // If permission is not granted, kill call activity
         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this.getActivity(), new String[]{Manifest.permission.CALL_PHONE}, MY_PERMISSIONS_REQUEST_CALL_PHONE);
+            finish();
         } else {
             callPhone();
         }
 
     }
 
-    @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_CALL_PHONE: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     callPhone();
+                } else {
+                    finish();
                 }
             }
         }
@@ -96,8 +85,8 @@ public class CallUsFragment extends DialogFragment {
     private void callPhone() {
         Intent intent = new Intent(Intent.ACTION_CALL);
         intent.setData(Uri.parse("tel:" + actionCall.getNumber()));
-        if (ActivityCompat.checkSelfPermission(this.getContext(), Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
-            startActivity(intent);
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+            context.startActivity(intent);
         }
     }
 }

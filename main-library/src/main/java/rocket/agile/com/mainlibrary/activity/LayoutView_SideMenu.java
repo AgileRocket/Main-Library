@@ -16,6 +16,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.telecom.Call;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -243,14 +244,15 @@ public class LayoutView_SideMenu extends LayoutManager
                         aboutUsFragment.getTag()).commit();
                 break;
             // ActionCall
+            // ActionCall uses an activity view; it is not dependent on data from the layout menu activity and should be independently presented.
             case 2:
-                // Send name of actionItem to fragment based on what user tapped
+                // Check phone call permissions
                 int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE);
                 if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, MY_PERMISSIONS_REQUEST_CALL_PHONE);
                 }
-                callUsFragment.setArguments(bundle);
-                callUsFragment.show(manager, callUsFragment.getTag());
+                CallUsActivity callUsActivity = new CallUsActivity(actionTitle, this);
+                callUsActivity.callAlertDialog();
                 break;
             // Default
             default:
