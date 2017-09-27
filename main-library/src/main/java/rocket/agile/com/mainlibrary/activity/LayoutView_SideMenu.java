@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.media.Image;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.design.widget.NavigationView;
@@ -16,14 +14,11 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.telecom.Call;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.joanzapata.iconify.IconDrawable;
@@ -32,7 +27,6 @@ import com.joanzapata.iconify.fonts.FontAwesomeModule;
 
 import rocket.agile.com.mainlibrary.R;
 import rocket.agile.com.mainlibrary.fragments.AboutUsFragment;
-import rocket.agile.com.mainlibrary.fragments.CallUsFragment;
 import rocket.agile.com.mainlibrary.fragments.WebsiteFragment;
 import rocket.agile.com.mainlibrary.model.DataManager;
 import rocket.agile.com.mainlibrary.model.actionItems.ActionCall;
@@ -194,7 +188,6 @@ public class LayoutView_SideMenu extends LayoutManager
         FragmentManager manager = getSupportFragmentManager();
         WebsiteFragment websiteFragment = new WebsiteFragment();
         AboutUsFragment aboutUsFragment = new AboutUsFragment();
-        CallUsFragment callUsFragment   = new CallUsFragment();
 
         // Title Bar Name
         appTitle = (TextView) findViewById(R.id.app_name);
