@@ -1,14 +1,13 @@
 package rocket.agile.com.mainlibrary.activity;
 
 import android.Manifest;
-import android.content.ComponentName;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.net.Uri;
+import android.media.Image;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.design.widget.NavigationView;
@@ -16,29 +15,20 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.SubMenu;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.Iconify;
-import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import io.realm.Realm;
-import io.realm.RealmObject;
-import io.realm.RealmResults;
 import rocket.agile.com.mainlibrary.R;
 import rocket.agile.com.mainlibrary.fragments.AboutUsFragment;
 import rocket.agile.com.mainlibrary.fragments.CallUsFragment;
@@ -59,8 +49,11 @@ public class LayoutView_SideMenu extends LayoutManager
         implements NavigationView.OnNavigationItemSelectedListener {
 
     // Call singleton class for data manager
-    DataManager dataManager = DataManager.getInstance();
+    private DataManager dataManager = DataManager.getInstance();
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
+    private TextView appTitle;
+    private ImageView homeImageView;
+    private Toolbar toolbarHeader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +65,7 @@ public class LayoutView_SideMenu extends LayoutManager
         setContentView(R.layout.side_menu_activity_nav_drawer_main);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        Toolbar toolbarHeader = (Toolbar) findViewById(R.id.toolbar);
+        toolbarHeader = (Toolbar) findViewById(R.id.toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -82,11 +75,17 @@ public class LayoutView_SideMenu extends LayoutManager
 
         // CUSTOM BUILDS
         pullMenuItemsFromNetworkCall();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         updateView(toolbarHeader);
     }
 
     private void updateView(Toolbar toolbarHeader) {
 
+        appTitle = (TextView) findViewById(R.id.app_name);
         View primaryBackground = findViewById(R.id.id_main);
         View titleBar = findViewById(R.id.appBarLayout);
 
@@ -98,16 +97,19 @@ public class LayoutView_SideMenu extends LayoutManager
         toolbarHeader.setBackgroundColor(Color.parseColor(dataManager.primaryHeaderColor));
 
         // MENU TITLE (App Name)
-        TextView appTitle = (TextView) findViewById(R.id.app_name);
         appTitle.setText(dataManager.appName);
         appTitle.setTextSize(20);
         appTitle.setTextColor(Color.WHITE);
 
+        // Background Image
+        homeImageView = (ImageView) findViewById(R.id.imageView);
+        homeImageView.setImageResource(R.drawable.agile_rocket_logo);
+
         // Access drawer header imageView
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View header = navigationView.getHeaderView(0);
-        ImageView imageView = (ImageView) header.findViewById(R.id.drawerHeaderImageView);
-        imageView.setImageResource(R.drawable.agile_rocket_logo);
+        ImageView headerImageView = (ImageView) header.findViewById(R.id.drawerHeaderImageView);
+        headerImageView.setImageResource(R.drawable.agile_rocket_logo);
     }
 
     //    Pass each action item's name, font awesome icon, and actionType value (int)
@@ -193,6 +195,9 @@ public class LayoutView_SideMenu extends LayoutManager
         AboutUsFragment aboutUsFragment = new AboutUsFragment();
         CallUsFragment callUsFragment   = new CallUsFragment();
 
+        // Title Bar Name
+        appTitle = (TextView) findViewById(R.id.app_name);
+
         // Set actionItem title as key that tells our fragment which actionItem name was tapped
         String actionTitle = item.getTitle().toString();    // item is MenuItem passed in to this method
         bundle.putString("title", actionTitle);
@@ -200,12 +205,15 @@ public class LayoutView_SideMenu extends LayoutManager
         // Home Button
         if (homeID == R.id.nav_home && manager.findFragmentById(R.id.relative_layout_for_fragment) != null) {
             manager.beginTransaction().remove(manager.findFragmentById(R.id.relative_layout_for_fragment)).commit();
+
+            appTitle.setText(dataManager.appName);
+            homeImageView.setVisibility(View.VISIBLE);
         }
 
         // ** NOTE ** menuButtonsID was created from 'actionType' of each Realm class!
         switch (menuButtonsID) {
             // ActionEmail
-            case 0:
+            case 1:
                 // Email class
                 ActionEmail actionEmailSelected = null;
                 // Determine which email action item was selected
@@ -223,7 +231,10 @@ public class LayoutView_SideMenu extends LayoutManager
                 break;
 
             // ActionStaff
-            case 1:
+            case 0:
+                homeImageView.setVisibility(View.GONE);
+                appTitle.setText("About Us");
+
                 // Send name of actionItem to fragment based on what user tapped
                 aboutUsFragment.setArguments(bundle);
                 manager.beginTransaction().replace(
@@ -250,4 +261,6 @@ public class LayoutView_SideMenu extends LayoutManager
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    // TODO: Create methods that manipulate fragment data, based on menu item tapped
 }

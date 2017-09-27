@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.joanzapata.iconify.Iconify;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
@@ -58,21 +59,27 @@ public class AboutUsFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
+
+
+//        ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
+//        imageView.setImageResource(R.drawable.agile_rocket_logo);
+
         // Set Image at top
-        ImageView imageView = (ImageView) view.findViewById(R.id.aboutus_image_header_icon);
-        imageView.setImageResource(R.drawable.ic_menu_gallery);
-
-        // Set Title Text
-        TextView textView_title = (TextView) view.findViewById(R.id.aboutus_text_title);
-        textView_title.setText(this.actionEmail.getName());
-
-        // Set Details Text
-        TextView textView_details = (TextView) view.findViewById(R.id.aboutus_text_details);
-        textView_details.setText(this.actionEmail.getEmailAddress());
-
-        // Set Body Text
-        TextView textView_body = (TextView) view.findViewById(R.id.aboutus_text_body);
-        textView_body.setText(this.actionEmail.getSubject());
+//        ImageView imageView = (ImageView) view.findViewById(R.id.aboutus_image_header_icon);
+//        imageView.setImageResource(R.drawable.ic_menu_gallery);
+//
+//        // Set Title Text
+//        TextView textView_title = (TextView) view.findViewById(R.id.aboutus_text_title);
+//        textView_title.setText(this.actionEmail.getName());
+//
+//        // Set Details Text
+//        TextView textView_details = (TextView) view.findViewById(R.id.aboutus_text_details);
+//        textView_details.setText(this.actionEmail.getEmailAddress());
+//
+//        // Set Body Text
+//        TextView textView_body = (TextView) view.findViewById(R.id.aboutus_text_body);
+//        textView_body.setText(this.actionEmail.getSubject());
 
         // Set Action Items List
 //        ListView listView = (ListView) view.findViewById(R.id.action_item_listview);
