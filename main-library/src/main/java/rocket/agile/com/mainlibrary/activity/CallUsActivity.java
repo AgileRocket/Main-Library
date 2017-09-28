@@ -53,7 +53,6 @@ public class CallUsActivity extends AppCompatActivity {
         builder.show();
     }
 
-
     //    PERMISSIONS FOR MAKING PHONE CALLS DIRECTLY FROM APP
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
 

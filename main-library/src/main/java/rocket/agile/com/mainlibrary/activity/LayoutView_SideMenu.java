@@ -78,6 +78,7 @@ public class LayoutView_SideMenu extends LayoutManager
         updateView(toolbarHeader);
     }
 
+    // TODO: ActionItems will have a priority property; will dictate initial view when available
     private void updateView(Toolbar toolbarHeader) {
 
         appTitle = (TextView) findViewById(R.id.app_name);
@@ -207,7 +208,7 @@ public class LayoutView_SideMenu extends LayoutManager
         // ** NOTE ** menuButtonsID was created from 'actionType' of each Realm class!
         switch (menuButtonsID) {
             // ActionEmail
-            case 1:
+            case 0:
                 // Email class
                 ActionEmail actionEmailSelected = null;
                 // Determine which email action item was selected
@@ -224,8 +225,8 @@ public class LayoutView_SideMenu extends LayoutManager
                 this.startActivity(emailIntent);
                 break;
 
-            // ActionStaff
-            case 0:
+            // ActionAboutUs
+            case 1:
                 homeImageView.setVisibility(View.GONE);
                 appTitle.setText("About Us");
 
