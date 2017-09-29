@@ -44,7 +44,7 @@ public class DataManager {
 //----- LayoutManager Selected ---------
 
     //    LAYOUT THEME
-    public static int layoutValue = 0;     // TODO: GET FROM NETWORK CALL
+    public static int layoutValue = 2;     // TODO: GET FROM NETWORK CALL
 
 //----- Primary AppInfo ----------------
 
