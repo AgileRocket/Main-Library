@@ -78,7 +78,10 @@ public class LayoutView_Buttons_Grid extends LayoutManager {
         button1.setText("TEST");
         button1.setBackgroundColor(Color.BLUE);
 
+        set.clone(nestedScrollView);
         set.connect(button1.getId(), ConstraintSet.TOP, initalButtonLeft.getId(), ConstraintSet.BOTTOM, 8);
+//        set.con //TODO: See if you can set further constraints for each side of button
+        set.constrainMaxHeight(button1.getId(), 150);
         set.applyTo(nestedScrollView);
 
     }
