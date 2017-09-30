@@ -3,6 +3,7 @@ package rocket.agile.com.mainlibrary.activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
+import android.support.constraint.ConstraintSet;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.NestedScrollView;
@@ -67,12 +68,18 @@ public class LayoutView_Buttons_Grid extends LayoutManager {
 
         // TEST BUILD BUTTONS
 
-//        NestedScrollView nestedScrollView = (NestedScrollView) findViewById(R.id.buttons_nested_scroll_view);
-//        IconButton button1 = new IconButton(this);
-//
-//        button1.setText("TEST");
-//        button1.setBackgroundColor(Color.BLUE);
+        ConstraintLayout nestedScrollView = (ConstraintLayout) findViewById(R.id.buttons_nested_scroll_view);
+        IconButton button1 = new IconButton(this);
+        ConstraintSet set = new ConstraintSet();
+        Button initalButtonLeft = (Button) findViewById(R.id.button_1);
 
-//        nestedScrollView.addView(button1);
+        nestedScrollView.addView(button1);
+
+        button1.setText("TEST");
+        button1.setBackgroundColor(Color.BLUE);
+
+        set.connect(button1.getId(), ConstraintSet.TOP, initalButtonLeft.getId(), ConstraintSet.BOTTOM, 8);
+        set.applyTo(nestedScrollView);
+
     }
 }
