@@ -7,8 +7,8 @@ group = 'com.github.SBKeith'
 
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.1"
+    compileSdkVersion 26
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "rocket.agile.com.mainlibrary2"
         minSdkVersion 21
