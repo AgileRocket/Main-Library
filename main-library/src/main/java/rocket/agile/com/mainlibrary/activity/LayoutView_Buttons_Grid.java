@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
+import android.support.constraint.Guideline;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.NestedScrollView;
@@ -23,6 +24,9 @@ import java.util.List;
 
 import rocket.agile.com.mainlibrary.R;
 import rocket.agile.com.mainlibrary.model.DataManager;
+
+import static android.support.constraint.solver.widgets.ConstraintWidget.MATCH_CONSTRAINT_SPREAD;
+import static android.support.constraint.solver.widgets.ConstraintWidget.MATCH_CONSTRAINT_WRAP;
 
 /**
  * Created by keithkowalski on 6/19/17.
@@ -66,21 +70,46 @@ public class LayoutView_Buttons_Grid extends LayoutManager {
         appTitleImageView.setImageResource(R.drawable.agile_rocket_logo);
         appTitleImageView.setVisibility(View.VISIBLE);
 
-        // TEST BUILD BUTTONS
+        //---- TEST BUILD BUTTONS ---- //
 
+        // Constraint layout (scroll view)
         ConstraintLayout nestedScrollView = (ConstraintLayout) findViewById(R.id.buttons_nested_scroll_view);
+
+        // Default initial button
+        Button initialButtonLeft = (Button) findViewById(R.id.button_1);
+
+        // Scroll view vertical guide
+        Guideline buttonsVerticalGuideline = (Guideline) findViewById(R.id.button_guideline_vertical);
+
+        // Dynamic Button
         IconButton button1 = new IconButton(this);
-        ConstraintSet set = new ConstraintSet();
-        Button initalButtonLeft = (Button) findViewById(R.id.button_1);
-
-        nestedScrollView.addView(button1);
-
         button1.setText("TEST");
         button1.setBackgroundColor(Color.BLUE);
+//        button1.setWidth(0);
+//        button1.setHeight(150);
 
+        // Constraint set to be used for dynamic button
+        ConstraintSet set = new ConstraintSet();
+
+        // Set constraints for dynamic button
+        nestedScrollView.addView(button1);
         set.clone(nestedScrollView);
-        set.connect(button1.getId(), ConstraintSet.TOP, initalButtonLeft.getId(), ConstraintSet.BOTTOM, 8);
-//        set.con //TODO: See if you can set further constraints for each side of button
+        set.connect(button1.getId(), ConstraintSet.TOP, initialButtonLeft.getId(), ConstraintSet.BOTTOM, 8);
+//        set.connect(button1.getId(), ConstraintSet.RIGHT, buttonsVerticalGuideline.getId(), ConstraintSet.VERTICAL_GUIDELINE, 16);
+//        set.connect(button1.getId(), ConstraintSet.LEFT, nestedScrollView.getId(), ConstraintSet.LEFT, 16);
+
+
+        set.connect(button1.getId(), ConstraintSet.START, initialButtonLeft.getId(), ConstraintSet.START, 8);
+        set.connect(button1.getId(), ConstraintSet.END, initialButtonLeft.getId(), ConstraintSet.END, 8);
+        set.connect(button1.getId(), ConstraintSet.BOTTOM, nestedScrollView.getId(), ConstraintSet.BOTTOM, 16);
+
+        set.constrainWidth(button1.getId(), 0);
+        set.constrainHeight(button1.getId(), 0);
+
+//        set.connect(button1.getId(), ConstraintSet.BOTTOM, nestedScrollView.getId(), ConstraintSet.BOTTOM, 8);
+
+        set.setVerticalBias(button1.getId(),0);
+        set.constrainDefaultHeight(button1.getId(), 150);
         set.constrainMaxHeight(button1.getId(), 150);
         set.applyTo(nestedScrollView);
 

@@ -68,7 +68,7 @@
 
 
             <android.support.constraint.Guideline
-                android:id="@+id/guideline"
+                android:id="@+id/button_guideline_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -91,7 +91,7 @@
                 android:layout_marginTop="8dp"
                 android:text="Button"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/guideline"
+                app:layout_constraintEnd_toStartOf="@+id/button_guideline_vertical"
                 app:layout_constraintHeight_max="150dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/guideline2"
@@ -110,7 +110,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_max="150dp"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintStart_toStartOf="@+id/button_guideline_vertical"
                 app:layout_constraintTop_toTopOf="@+id/guideline2"
                 app:layout_constraintVertical_bias="0.0" />
 
