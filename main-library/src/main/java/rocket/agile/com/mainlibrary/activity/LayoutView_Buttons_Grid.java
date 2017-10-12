@@ -3,14 +3,11 @@ package rocket.agile.com.mainlibrary.activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
-import android.support.constraint.ConstraintSet;
-import android.support.constraint.Guideline;
 import android.view.View;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.joanzapata.iconify.widget.IconButton;
-
+import rocket.agile.com.mainlibrary.Adapters.ActionItemAdapter;
 import rocket.agile.com.mainlibrary.R;
 import rocket.agile.com.mainlibrary.model.DataManager;
 
@@ -41,100 +38,118 @@ public class LayoutView_Buttons_Grid extends LayoutManager {
 
     private void updateView() {
         // Set layout Root View
-        ConstraintLayout rootView = (ConstraintLayout) findViewById(R.id.button_grid_root_view);
+        ConstraintLayout rootView = findViewById(R.id.button_grid_root_view);
         rootView.setBackgroundColor(Color.BLACK);
 
         // Set layout Title
-        TextView appTitle = (TextView) findViewById(R.id.button_grid_title);
+        TextView appTitle = findViewById(R.id.button_grid_title);
         appTitle.setText(dataManager.appName);
         appTitle.setTextColor(Color.TRANSPARENT);
         appTitle.setTextSize(24);
         appTitle.setVisibility(View.INVISIBLE);
 
         // Set layout Title Image
-        ImageView appTitleImageView = (ImageView) findViewById(R.id.button_grid_title_view);
+        ImageView appTitleImageView = findViewById(R.id.button_grid_title_view);
         appTitleImageView.setImageResource(R.drawable.agile_rocket_logo);
         appTitleImageView.setVisibility(View.VISIBLE);
 
-        //---- TEST BUILD BUTTONS ---- //
 
-        // Constraint layout (scroll view)
-        ConstraintLayout nestedScrollView = (ConstraintLayout) findViewById(R.id.nested_scroll_view);
+//        testBuildButtons1();
+        testBuildButtons2();
+    }
 
-        // Scroll view vertical / horizontal guides
-        Guideline buttonsVerticalGuideline = (Guideline) findViewById(R.id.button_guideline_vertical);
-        Guideline buttonsHorizontalGuideline = (Guideline) findViewById(R.id.button_guideline_horizontal);
-
-        // Dynamic Button
-        IconButton button1 = new IconButton(this);
-        button1.setText("TEST 1");
-        button1.setBackgroundColor(Color.BLUE);
-
-        IconButton button2 = new IconButton(this);
-        button2.setText("TEST 2");
-        button2.setBackgroundColor(Color.BLUE);
-
-        IconButton button3 = new IconButton(this);
-        button3.setText("TEST 3");
-        button3.setBackgroundColor(Color.BLUE);
-
-        IconButton button4 = new IconButton(this);
-        button4.setText("TEST 4");
-        button4.setBackgroundColor(Color.BLUE);
-
-        IconButton button5 = new IconButton(this);
-        button5.setText("TEST 5");
-        button5.setBackgroundColor(Color.BLUE);
-
-        IconButton button6 = new IconButton(this);
-        button6.setText("TEST 6");
-        button6.setBackgroundColor(Color.BLUE);
-
-
-        // Constraint set to be used for dynamic button
-        ConstraintSet set = new ConstraintSet();
-
-        // Set constraints for dynamic button
-        set.clone(nestedScrollView);
-        nestedScrollView.addView(button1);
-        nestedScrollView.addView(button2);
-//        nestedScrollView.addView(button3);
-//        nestedScrollView.addView(button4);
-//        nestedScrollView.addView(button5);
-//        nestedScrollView.addView(button6);
-
-
-        set.connect(button1.getId(), ConstraintSet.TOP, nestedScrollView.getId(), ConstraintSet.TOP);
-        set.connect(button1.getId(), ConstraintSet.LEFT, nestedScrollView.getId(), ConstraintSet.LEFT);
-        set.connect(button1.getId(), ConstraintSet.RIGHT, buttonsVerticalGuideline.getId(), ConstraintSet.LEFT, 16);
-        set.connect(button1.getId(), ConstraintSet.BOTTOM, buttonsHorizontalGuideline.getId(), ConstraintSet.BOTTOM, 16);
-
-        set.connect(button2.getId(), ConstraintSet.TOP, nestedScrollView.getId(), ConstraintSet.TOP);
-        set.connect(button2.getId(), ConstraintSet.LEFT, buttonsVerticalGuideline.getId(), ConstraintSet.RIGHT, 16);
-        set.connect(button2.getId(), ConstraintSet.RIGHT, nestedScrollView.getId(), ConstraintSet.RIGHT);
-        set.connect(button2.getId(), ConstraintSet.BOTTOM, buttonsHorizontalGuideline.getId(), ConstraintSet.BOTTOM, 16);
+//    protected void testBuildButtons1() {
 //
-//        set.connect(button3.getId(), ConstraintSet.TOP, nestedScrollView.getId(), ConstraintSet.TOP);
-//        set.connect(button3.getId(), ConstraintSet.LEFT, nestedScrollView.getId(), ConstraintSet.LEFT);
-//        set.connect(button3.getId(), ConstraintSet.RIGHT, buttonsVerticalGuideline.getId(), ConstraintSet.LEFT, 16);
-//        set.connect(button3.getId(), ConstraintSet.BOTTOM, buttonsHorizontalGuideline.getId(), ConstraintSet.BOTTOM, 16);
+//        //---- TEST BUILD BUTTONS ---- //
+//        // Constraint layout (scroll view)
+//        ConstraintLayout nestedScrollView = (ConstraintLayout) findViewById(R.id.nested_scroll_view);
 //
-//        set.connect(button4.getId(), ConstraintSet.TOP, nestedScrollView.getId(), ConstraintSet.TOP);
-//        set.connect(button4.getId(), ConstraintSet.LEFT, nestedScrollView.getId(), ConstraintSet.LEFT);
-//        set.connect(button4.getId(), ConstraintSet.RIGHT, buttonsVerticalGuideline.getId(), ConstraintSet.LEFT, 16);
-//        set.connect(button4.getId(), ConstraintSet.BOTTOM, buttonsHorizontalGuideline.getId(), ConstraintSet.BOTTOM, 16);
+//        // Scroll view vertical / horizontal guides
+//        Guideline buttonsVerticalGuideline = (Guideline) findViewById(R.id.button_guideline_vertical);
+//        Guideline buttonsHorizontalGuideline = (Guideline) findViewById(R.id.button_guideline_horizontal);
 //
-//        set.connect(button5.getId(), ConstraintSet.TOP, nestedScrollView.getId(), ConstraintSet.TOP);
-//        set.connect(button5.getId(), ConstraintSet.LEFT, nestedScrollView.getId(), ConstraintSet.LEFT);
-//        set.connect(button5.getId(), ConstraintSet.RIGHT, buttonsVerticalGuideline.getId(), ConstraintSet.LEFT, 16);
-//        set.connect(button5.getId(), ConstraintSet.BOTTOM, buttonsHorizontalGuideline.getId(), ConstraintSet.BOTTOM, 16);
+//        // Dynamic Button
+//        IconButton button1 = new IconButton(this);
+//        button1.setText("TEST 1");
+//        button1.setBackgroundColor(Color.BLUE);
 //
-//        set.connect(button6.getId(), ConstraintSet.TOP, nestedScrollView.getId(), ConstraintSet.TOP);
-//        set.connect(button6.getId(), ConstraintSet.LEFT, nestedScrollView.getId(), ConstraintSet.LEFT);
-//        set.connect(button6.getId(), ConstraintSet.RIGHT, buttonsVerticalGuideline.getId(), ConstraintSet.LEFT, 16);
-//        set.connect(button6.getId(), ConstraintSet.BOTTOM, buttonsHorizontalGuideline.getId(), ConstraintSet.BOTTOM, 16);
+//        IconButton button2 = new IconButton(this);
+//        button2.setText("TEST 2");
+//        button2.setBackgroundColor(Color.BLUE);
+//
+//        IconButton button3 = new IconButton(this);
+//        button3.setText("TEST 3");
+//        button3.setBackgroundColor(Color.BLUE);
+//
+//        IconButton button4 = new IconButton(this);
+//        button4.setText("TEST 4");
+//        button4.setBackgroundColor(Color.BLUE);
+//
+//        IconButton button5 = new IconButton(this);
+//        button5.setText("TEST 5");
+//        button5.setBackgroundColor(Color.BLUE);
+//
+//        IconButton button6 = new IconButton(this);
+//        button6.setText("TEST 6");
+//        button6.setBackgroundColor(Color.BLUE);
+//
+//
+//        // Constraint set to be used for dynamic button
+//        ConstraintSet set = new ConstraintSet();
+//
+//        // Set constraints for dynamic button
+//        set.clone(nestedScrollView);
+//        nestedScrollView.addView(button1);
+//        nestedScrollView.addView(button2);
+////        nestedScrollView.addView(button3);
+////        nestedScrollView.addView(button4);
+////        nestedScrollView.addView(button5);
+////        nestedScrollView.addView(button6);
+//
+//
+//        set.connect(button1.getId(), ConstraintSet.TOP, nestedScrollView.getId(), ConstraintSet.TOP);
+//        set.connect(button1.getId(), ConstraintSet.LEFT, nestedScrollView.getId(), ConstraintSet.LEFT);
+//        set.connect(button1.getId(), ConstraintSet.RIGHT, buttonsVerticalGuideline.getId(), ConstraintSet.LEFT, 16);
+//        set.connect(button1.getId(), ConstraintSet.BOTTOM, buttonsHorizontalGuideline.getId(), ConstraintSet.BOTTOM, 16);
+//
+////        set.connect(button2.getId(), ConstraintSet.TOP, nestedScrollView.getId(), ConstraintSet.TOP);
+////        set.connect(button2.getId(), ConstraintSet.LEFT, buttonsVerticalGuideline.getId(), ConstraintSet.RIGHT, 16);
+////        set.connect(button2.getId(), ConstraintSet.RIGHT, nestedScrollView.getId(), ConstraintSet.RIGHT);
+////        set.connect(button2.getId(), ConstraintSet.BOTTOM, buttonsHorizontalGuideline.getId(), ConstraintSet.BOTTOM, 16);
+////
+////        set.connect(button3.getId(), ConstraintSet.TOP, nestedScrollView.getId(), ConstraintSet.TOP);
+////        set.connect(button3.getId(), ConstraintSet.LEFT, nestedScrollView.getId(), ConstraintSet.LEFT);
+////        set.connect(button3.getId(), ConstraintSet.RIGHT, buttonsVerticalGuideline.getId(), ConstraintSet.LEFT, 16);
+////        set.connect(button3.getId(), ConstraintSet.BOTTOM, buttonsHorizontalGuideline.getId(), ConstraintSet.BOTTOM, 16);
+////
+////        set.connect(button4.getId(), ConstraintSet.TOP, nestedScrollView.getId(), ConstraintSet.TOP);
+////        set.connect(button4.getId(), ConstraintSet.LEFT, nestedScrollView.getId(), ConstraintSet.LEFT);
+////        set.connect(button4.getId(), ConstraintSet.RIGHT, buttonsVerticalGuideline.getId(), ConstraintSet.LEFT, 16);
+////        set.connect(button4.getId(), ConstraintSet.BOTTOM, buttonsHorizontalGuideline.getId(), ConstraintSet.BOTTOM, 16);
+////
+////        set.connect(button5.getId(), ConstraintSet.TOP, nestedScrollView.getId(), ConstraintSet.TOP);
+////        set.connect(button5.getId(), ConstraintSet.LEFT, nestedScrollView.getId(), ConstraintSet.LEFT);
+////        set.connect(button5.getId(), ConstraintSet.RIGHT, buttonsVerticalGuideline.getId(), ConstraintSet.LEFT, 16);
+////        set.connect(button5.getId(), ConstraintSet.BOTTOM, buttonsHorizontalGuideline.getId(), ConstraintSet.BOTTOM, 16);
+////
+////        set.connect(button6.getId(), ConstraintSet.TOP, nestedScrollView.getId(), ConstraintSet.TOP);
+////        set.connect(button6.getId(), ConstraintSet.LEFT, nestedScrollView.getId(), ConstraintSet.LEFT);
+////        set.connect(button6.getId(), ConstraintSet.RIGHT, buttonsVerticalGuideline.getId(), ConstraintSet.LEFT, 16);
+////        set.connect(button6.getId(), ConstraintSet.BOTTOM, buttonsHorizontalGuideline.getId(), ConstraintSet.BOTTOM, 16);
+//
+//        set.applyTo(nestedScrollView);
+//    }
 
-        set.applyTo(nestedScrollView);
+    protected void testBuildButtons2() {
+
+        GridView gridView = findViewById(R.id.gridview);
+        gridView.setAdapter(new ActionItemAdapter(this));
+
+//        gridView.setOnClickListener(new AdapterView.OnItemClickListener() {
+//            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+//                // Do Stuff
+//            }
+//        });
 
     }
 }
