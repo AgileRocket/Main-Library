@@ -4,9 +4,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import rocket.agile.com.mainlibrary.Adapters.ActionItemAdapter;
 import rocket.agile.com.mainlibrary.R;
 import rocket.agile.com.mainlibrary.model.DataManager;
@@ -145,11 +148,12 @@ public class LayoutView_Buttons_Grid extends LayoutManager {
         GridView gridView = findViewById(R.id.gridview);
         gridView.setAdapter(new ActionItemAdapter(this));
 
-//        gridView.setOnClickListener(new AdapterView.OnItemClickListener() {
-//            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-//                // Do Stuff
-//            }
-//        });
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(LayoutView_Buttons_Grid.this, dataManager.actionEmail.get(0).getName(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 }
