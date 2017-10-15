@@ -4,8 +4,8 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
+
 import rocket.agile.com.mainlibrary.R;
 import rocket.agile.com.mainlibrary.model.DataManager;
 
@@ -16,16 +16,18 @@ import rocket.agile.com.mainlibrary.model.DataManager;
 public class ActionItemAdapter extends BaseAdapter {
 
     private DataManager dataManager = DataManager.getInstance();
-
     private Context context;
+    private int actionItemCount;
 
-    public ActionItemAdapter(Context context) {
+    public ActionItemAdapter(Context context, int actionItemCount) {
+
         this.context = context;
+        this.actionItemCount = actionItemCount;
     }
 
     @Override
     public int getCount() {
-        return dataManager.actionEmail.size();
+        return actionItemCount;
     }
 
     @Override
@@ -46,8 +48,7 @@ public class ActionItemAdapter extends BaseAdapter {
         if(view == null) {
 
             imageView = new ImageView(this.context);
-            imageView.setLayoutParams(new GridView.LayoutParams(500, 500));
-//            imageView.setAdjustViewBounds(true);
+            imageView.setAdjustViewBounds(true);
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imageView.setPadding(8, 8, 8, 8);
         } else {
@@ -58,3 +59,4 @@ public class ActionItemAdapter extends BaseAdapter {
         return imageView;
     }
 }
+

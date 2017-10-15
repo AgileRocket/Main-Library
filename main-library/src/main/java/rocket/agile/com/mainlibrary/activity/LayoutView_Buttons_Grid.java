@@ -13,6 +13,9 @@ import android.widget.Toast;
 import rocket.agile.com.mainlibrary.Adapters.ActionItemAdapter;
 import rocket.agile.com.mainlibrary.R;
 import rocket.agile.com.mainlibrary.model.DataManager;
+import rocket.agile.com.mainlibrary.model.actionItems.ActionCall;
+import rocket.agile.com.mainlibrary.model.actionItems.ActionEmail;
+import rocket.agile.com.mainlibrary.model.actionItems.ActionStaff;
 
 /**
  * Created by keithkowalski on 6/19/17.
@@ -25,11 +28,13 @@ import rocket.agile.com.mainlibrary.model.DataManager;
 public class LayoutView_Buttons_Grid extends LayoutManager {
 
     private DataManager dataManager = DataManager.getInstance();
+    public int actionItemCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.buttons_activity_grid_buttons);
+        findAvailableClasses();
     }
 
     // Call update view in onResume, so it is called each time app enters foreground
@@ -56,8 +61,12 @@ public class LayoutView_Buttons_Grid extends LayoutManager {
         appTitleImageView.setImageResource(R.drawable.agile_rocket_logo);
         appTitleImageView.setVisibility(View.VISIBLE);
 
+        // GridView Settings
+        GridView gridView = findViewById(R.id.gridview);
+        gridView.setHorizontalScrollBarEnabled(false);
 
-//        testBuildButtons1();
+
+        // Set Button Layout Grid
         testBuildButtons2();
     }
 
@@ -146,7 +155,7 @@ public class LayoutView_Buttons_Grid extends LayoutManager {
     protected void testBuildButtons2() {
 
         GridView gridView = findViewById(R.id.gridview);
-        gridView.setAdapter(new ActionItemAdapter(this));
+        gridView.setAdapter(new ActionItemAdapter(this, actionItemCount));
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -155,5 +164,37 @@ public class LayoutView_Buttons_Grid extends LayoutManager {
             }
         });
 
+    }
+
+    public void findAvailableClasses() {
+
+        for (Class actionClass : dataManager.actionClasses) {
+            switch (actionClass.getSimpleName()) {
+                case "ActionEmail":
+                    if (dataManager.actionEmail.size() > 0) {
+                        for (ActionEmail actionEmail : dataManager.actionEmail) {
+                            actionItemCount++;
+                        }
+                    }
+                    break;
+
+                case "ActionCall":
+                    if (dataManager.actionCall.size() > 0) {
+                        for (ActionCall actionCall : dataManager.actionCall) {
+                            actionItemCount++;
+                        }
+                    }
+                    break;
+                case "ActionStaff":
+                    if (dataManager.actionStaff.size() > 0) {
+                        for (ActionStaff actionStaff : dataManager.actionStaff) {
+                            actionItemCount++;
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }
