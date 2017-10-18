@@ -19,10 +19,9 @@ import rocket.agile.com.mainlibrary.model.actionItems.ActionStaff;
 
 /**
  * Created by keithkowalski on 6/19/17.
- *
+ * <p>
  * Purpose:  Present grid layout view to users
  * Function: A) Grid of buttons is created, based on action items set by admin
- *
  */
 
 public class LayoutView_Buttons_Grid extends LayoutManager {
@@ -166,6 +165,9 @@ public class LayoutView_Buttons_Grid extends LayoutManager {
 
     }
 
+
+    // TODO: Create custom list which holds the exact instances of each class you will need to create a button for.
+    // TODO: List will be able to provide appropriate size to adapter class (list.length)
     public void findAvailableClasses() {
 
         for (Class actionClass : dataManager.actionClasses) {
@@ -177,7 +179,6 @@ public class LayoutView_Buttons_Grid extends LayoutManager {
                         }
                     }
                     break;
-
                 case "ActionCall":
                     if (dataManager.actionCall.size() > 0) {
                         for (ActionCall actionCall : dataManager.actionCall) {
