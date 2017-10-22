@@ -1,16 +1,17 @@
 package rocket.agile.com.mainlibrary.Adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
-import rocket.agile.com.mainlibrary.R;
+import com.joanzapata.iconify.IconDrawable;
+
+import java.util.ArrayList;
+
 import rocket.agile.com.mainlibrary.model.DataManager;
-import rocket.agile.com.mainlibrary.model.actionItems.ActionCall;
-import rocket.agile.com.mainlibrary.model.actionItems.ActionEmail;
-import rocket.agile.com.mainlibrary.model.actionItems.ActionStaff;
 
 /**
  * Created by KeithK on 10/12/17.
@@ -20,35 +21,36 @@ public class ActionItemAdapter extends BaseAdapter {
 
     private DataManager dataManager = DataManager.getInstance();
     private Context context;
-    private int actionItemCount;
+    private ArrayList<Object> availableActionItemsList;
 
-    public ActionItemAdapter(Context context, int actionItemCount) {
-
+    public ActionItemAdapter(Context context, ArrayList<Object> objectArrayList) {
         this.context = context;
-        this.actionItemCount = actionItemCount;
+        this.availableActionItemsList = objectArrayList;
     }
 
     @Override
     public int getCount() {
 
-        return actionItemCount;
+        return availableActionItemsList.size();
     }
 
     @Override
     public Object getItem(int i) {
 
         // TODO: i is the index of the custom array created in activity that calls this adapter (example: http://www.coderzheaven.com/2012/02/29/custom-gridview-in-android-a-simple-example/)
-        return i;
+        return availableActionItemsList.get(i);
     }
 
     @Override
     public long getItemId(int i) {
+
         return i;
     }
 
     public View getView(int i, View view, ViewGroup viewGroup) {
 
         ImageView imageView;
+        String className = null;
 
         if(view == null) {
 
@@ -57,43 +59,34 @@ public class ActionItemAdapter extends BaseAdapter {
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imageView.setPadding(8, 8, 8, 8);
 
-//        imageView.setImageResource(this, dataManager.actionEmail.get(0).getFAIcon()));
-
-            for (Class actionClass : dataManager.actionClasses) {
-                switch (actionClass.getSimpleName()) {
-                    case "ActionEmail":
-                        if (dataManager.actionEmail.size() > 0) {
-                            for (ActionEmail actionEmail : dataManager.actionEmail) {
-                                imageView.setImageResource(R.color.colorPrimary);
-                                return imageView;
-                            }
-                        }
-                        break;
-                    case "ActionCall":
-                        if (dataManager.actionCall.size() > 0) {
-                            for (ActionCall actionCall : dataManager.actionCall) {
-                                imageView.setImageResource(R.color.colorAccent);
-                                return imageView;
-                            }
-                        }
-                        break;
-                    case "ActionStaff":
-                        if (dataManager.actionStaff.size() > 0) {
-                            for (ActionStaff actionStaff : dataManager.actionStaff) {
-                                imageView.setImageResource(R.color.colorPrimaryDark);
-                                return imageView;
-                            }
-                        }
-                        break;
-                    default:
-                        break;
-                }
+            // Filter out class name from provided string name of each available actionItem class
+            String rawName = availableActionItemsList.get(i).getClass().getSimpleName();
+            if(rawName.endsWith("RealmProxy")) {
+                className = rawName.substring(0, rawName.indexOf("RealmProxy"));
             }
 
+            switch(className) {
+                case "ActionEmail":
+                    imageView.setImageDrawable(new IconDrawable(this.context, dataManager.actionEmail.get(0).getFAIcon())
+                            .color(Color.RED)
+                            .sizeDp(20));
+                    break;
+                case "ActionCall":
+                    imageView.setImageDrawable(new IconDrawable(this.context, dataManager.actionCall.get(0).getFAIcon())
+                            .color(Color.RED)
+                            .sizeDp(20));
+                    break;
+                case "ActionStaff":
+                    imageView.setImageDrawable(new IconDrawable(this.context, dataManager.actionStaff.get(0).getFAIcon())
+                            .color(Color.RED)
+                            .sizeDp(20));
+                    break;
+                default:
+                    break;
+            }
         } else {
             imageView = (ImageView) view;
         }
-
         return imageView;
     }
 }

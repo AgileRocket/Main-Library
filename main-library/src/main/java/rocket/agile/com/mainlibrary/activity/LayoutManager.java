@@ -11,10 +11,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.joanzapata.iconify.Iconify;
+import com.joanzapata.iconify.fonts.FontAwesomeModule;
+
 import rocket.agile.com.mainlibrary.R;
-import rocket.agile.com.mainlibrary.model.ApplicationLifeCycleTracker;
 import rocket.agile.com.mainlibrary.model.DataManager;
-import rocket.agile.com.mainlibrary.model.actionItems.ActionEmail;
 
 /**
  * Created by keithkowalski on 6/19/17.
@@ -38,6 +39,12 @@ public class LayoutManager extends AppCompatActivity {
 
     // Call dataManager singleton
     DataManager dataManager = DataManager.getInstance();
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        Iconify.with(new FontAwesomeModule());
+        super.onCreate(savedInstanceState);
+    }
 
     // Affects all classes that extend LayoutManager
     @Override

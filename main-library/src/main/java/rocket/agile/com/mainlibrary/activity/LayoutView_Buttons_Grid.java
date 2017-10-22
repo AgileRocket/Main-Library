@@ -3,12 +3,15 @@ package rocket.agile.com.mainlibrary.activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 import rocket.agile.com.mainlibrary.Adapters.ActionItemAdapter;
 import rocket.agile.com.mainlibrary.R;
@@ -27,13 +30,13 @@ import rocket.agile.com.mainlibrary.model.actionItems.ActionStaff;
 public class LayoutView_Buttons_Grid extends LayoutManager {
 
     private DataManager dataManager = DataManager.getInstance();
-    public int actionItemCount = 0;
+    public ArrayList<Object> availableActionItems = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.buttons_activity_grid_buttons);
-        findAvailableClasses();
+        buildAvailableActionItemsList();
     }
 
     // Call update view in onResume, so it is called each time app enters foreground
@@ -64,6 +67,10 @@ public class LayoutView_Buttons_Grid extends LayoutManager {
         GridView gridView = findViewById(R.id.gridview);
         gridView.setHorizontalScrollBarEnabled(false);
 
+        Log.d("AvailableActionItemsList", availableActionItems.size() + "");
+
+
+        // TODO: Consider adding map to determine which actionItem was added based on counter; this value will determine the index to reference in 'onItemClick' for each actionItem
 
         // Set Button Layout Grid
         testBuildButtons2();
@@ -154,7 +161,7 @@ public class LayoutView_Buttons_Grid extends LayoutManager {
     protected void testBuildButtons2() {
 
         GridView gridView = findViewById(R.id.gridview);
-        gridView.setAdapter(new ActionItemAdapter(this, actionItemCount));
+        gridView.setAdapter(new ActionItemAdapter(this, availableActionItems));
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -165,31 +172,28 @@ public class LayoutView_Buttons_Grid extends LayoutManager {
 
     }
 
-
-    // TODO: Create custom list which holds the exact instances of each class you will need to create a button for.
-    // TODO: List will be able to provide appropriate size to adapter class (list.length)
-    public void findAvailableClasses() {
+    public void buildAvailableActionItemsList() {
 
         for (Class actionClass : dataManager.actionClasses) {
             switch (actionClass.getSimpleName()) {
                 case "ActionEmail":
                     if (dataManager.actionEmail.size() > 0) {
                         for (ActionEmail actionEmail : dataManager.actionEmail) {
-                            actionItemCount++;
+                            availableActionItems.add(actionEmail);
                         }
                     }
                     break;
                 case "ActionCall":
                     if (dataManager.actionCall.size() > 0) {
                         for (ActionCall actionCall : dataManager.actionCall) {
-                            actionItemCount++;
+                            availableActionItems.add(actionCall);
                         }
                     }
                     break;
                 case "ActionStaff":
                     if (dataManager.actionStaff.size() > 0) {
                         for (ActionStaff actionStaff : dataManager.actionStaff) {
-                            actionItemCount++;
+                            availableActionItems.add(actionStaff);
                         }
                     }
                     break;
