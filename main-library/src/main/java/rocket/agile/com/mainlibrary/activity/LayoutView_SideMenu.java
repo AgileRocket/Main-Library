@@ -170,7 +170,7 @@ public class LayoutView_SideMenu extends LayoutManager
 
     //    Set each button based on data passed in from list data
     public void buildMenu(String title, String icon, int itemID) {
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         // Add item to menu
         Menu menu = navigationView.getMenu();

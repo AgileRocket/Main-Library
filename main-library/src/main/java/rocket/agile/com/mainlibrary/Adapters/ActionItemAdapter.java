@@ -11,6 +11,7 @@ import com.joanzapata.iconify.IconDrawable;
 
 import java.util.ArrayList;
 
+import rocket.agile.com.mainlibrary.model.Custom.ActionItemData;
 import rocket.agile.com.mainlibrary.model.DataManager;
 
 /**
@@ -21,11 +22,12 @@ public class ActionItemAdapter extends BaseAdapter {
 
     private DataManager dataManager = DataManager.getInstance();
     private Context context;
-    private ArrayList<Object> availableActionItemsList;
+    private ArrayList<ActionItemData> availableActionItemsList;
+    int actionItemIndex;
 
-    public ActionItemAdapter(Context context, ArrayList<Object> objectArrayList) {
+    public ActionItemAdapter(Context context, ArrayList<ActionItemData> actionItemDataArrayList) {
         this.context = context;
-        this.availableActionItemsList = objectArrayList;
+        this.availableActionItemsList = actionItemDataArrayList;
     }
 
     @Override
@@ -37,14 +39,14 @@ public class ActionItemAdapter extends BaseAdapter {
     @Override
     public Object getItem(int i) {
 
-        // TODO: i is the index of the custom array created in activity that calls this adapter (example: http://www.coderzheaven.com/2012/02/29/custom-gridview-in-android-a-simple-example/)
-        return availableActionItemsList.get(i);
+        return availableActionItemsList.get(i).actionItem;
     }
 
     @Override
     public long getItemId(int i) {
 
-        return i;
+        // Get index of actionItem stored
+        return availableActionItemsList.get(i).actionItemIndex;
     }
 
     public View getView(int i, View view, ViewGroup viewGroup) {
@@ -60,24 +62,26 @@ public class ActionItemAdapter extends BaseAdapter {
             imageView.setPadding(8, 8, 8, 8);
 
             // Filter out class name from provided string name of each available actionItem class
-            String rawName = availableActionItemsList.get(i).getClass().getSimpleName();
+            String rawName = availableActionItemsList.get(i).actionItem.getClass().getSimpleName();
             if(rawName.endsWith("RealmProxy")) {
                 className = rawName.substring(0, rawName.indexOf("RealmProxy"));
             }
+            // Get index of actionItem stored
+            actionItemIndex = availableActionItemsList.get(i).actionItemIndex;
 
             switch(className) {
                 case "ActionEmail":
-                    imageView.setImageDrawable(new IconDrawable(this.context, dataManager.actionEmail.get(0).getFAIcon())
+                    imageView.setImageDrawable(new IconDrawable(this.context, dataManager.actionEmail.get(actionItemIndex).getFAIcon())
                             .color(Color.RED)
                             .sizeDp(20));
                     break;
                 case "ActionCall":
-                    imageView.setImageDrawable(new IconDrawable(this.context, dataManager.actionCall.get(0).getFAIcon())
+                    imageView.setImageDrawable(new IconDrawable(this.context, dataManager.actionCall.get(actionItemIndex).getFAIcon())
                             .color(Color.RED)
                             .sizeDp(20));
                     break;
                 case "ActionStaff":
-                    imageView.setImageDrawable(new IconDrawable(this.context, dataManager.actionStaff.get(0).getFAIcon())
+                    imageView.setImageDrawable(new IconDrawable(this.context, dataManager.actionStaff.get(actionItemIndex).getFAIcon())
                             .color(Color.RED)
                             .sizeDp(20));
                     break;
@@ -89,5 +93,7 @@ public class ActionItemAdapter extends BaseAdapter {
         }
         return imageView;
     }
+
+
 }
 

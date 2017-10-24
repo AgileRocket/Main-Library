@@ -15,10 +15,8 @@ import java.util.ArrayList;
 
 import rocket.agile.com.mainlibrary.Adapters.ActionItemAdapter;
 import rocket.agile.com.mainlibrary.R;
+import rocket.agile.com.mainlibrary.model.Custom.ActionItemData;
 import rocket.agile.com.mainlibrary.model.DataManager;
-import rocket.agile.com.mainlibrary.model.actionItems.ActionCall;
-import rocket.agile.com.mainlibrary.model.actionItems.ActionEmail;
-import rocket.agile.com.mainlibrary.model.actionItems.ActionStaff;
 
 /**
  * Created by keithkowalski on 6/19/17.
@@ -30,7 +28,7 @@ import rocket.agile.com.mainlibrary.model.actionItems.ActionStaff;
 public class LayoutView_Buttons_Grid extends LayoutManager {
 
     private DataManager dataManager = DataManager.getInstance();
-    public ArrayList<Object> availableActionItems = new ArrayList<>();
+    public ArrayList<ActionItemData> availableActionItems = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,11 +64,6 @@ public class LayoutView_Buttons_Grid extends LayoutManager {
         // GridView Settings
         GridView gridView = findViewById(R.id.gridview);
         gridView.setHorizontalScrollBarEnabled(false);
-
-        Log.d("AvailableActionItemsList", availableActionItems.size() + "");
-
-
-        // TODO: Consider adding map to determine which actionItem was added based on counter; this value will determine the index to reference in 'onItemClick' for each actionItem
 
         // Set Button Layout Grid
         testBuildButtons2();
@@ -160,13 +153,16 @@ public class LayoutView_Buttons_Grid extends LayoutManager {
 
     protected void testBuildButtons2() {
 
-        GridView gridView = findViewById(R.id.gridview);
+        final GridView gridView = findViewById(R.id.gridview);
         gridView.setAdapter(new ActionItemAdapter(this, availableActionItems));
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(LayoutView_Buttons_Grid.this, dataManager.actionEmail.get(0).getName(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(LayoutView_Buttons_Grid.this, dataManager.actionEmail.get((int)id).getName(), Toast.LENGTH_SHORT).show();
+
+                Log.d("ID TAPPED", gridView.getItemAtPosition(position).getClass().getSimpleName());
+                
             }
         });
 
@@ -174,27 +170,26 @@ public class LayoutView_Buttons_Grid extends LayoutManager {
 
     public void buildAvailableActionItemsList() {
 
+        ActionItemData actionItemData;
+
         for (Class actionClass : dataManager.actionClasses) {
             switch (actionClass.getSimpleName()) {
                 case "ActionEmail":
-                    if (dataManager.actionEmail.size() > 0) {
-                        for (ActionEmail actionEmail : dataManager.actionEmail) {
-                            availableActionItems.add(actionEmail);
-                        }
+                    for(int i = 0; i < dataManager.actionEmail.size(); i++) {
+                        actionItemData = new ActionItemData(dataManager.actionEmail.get(i), i);
+                        availableActionItems.add(actionItemData);
                     }
                     break;
                 case "ActionCall":
-                    if (dataManager.actionCall.size() > 0) {
-                        for (ActionCall actionCall : dataManager.actionCall) {
-                            availableActionItems.add(actionCall);
-                        }
+                    for(int i = 0; i < dataManager.actionCall.size(); i++) {
+                        actionItemData = new ActionItemData(dataManager.actionCall.get(i), i);
+                        availableActionItems.add(actionItemData);
                     }
                     break;
                 case "ActionStaff":
-                    if (dataManager.actionStaff.size() > 0) {
-                        for (ActionStaff actionStaff : dataManager.actionStaff) {
-                            availableActionItems.add(actionStaff);
-                        }
+                    for(int i = 0; i < dataManager.actionStaff.size(); i++) {
+                        actionItemData = new ActionItemData(dataManager.actionStaff.get(i), i);
+                        availableActionItems.add(actionItemData);
                     }
                     break;
                 default:
