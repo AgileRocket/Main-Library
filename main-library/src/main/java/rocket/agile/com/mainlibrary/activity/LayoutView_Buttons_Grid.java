@@ -153,21 +153,41 @@ public class LayoutView_Buttons_Grid extends LayoutManager {
 
     protected void testBuildButtons2() {
 
+
         final GridView gridView = findViewById(R.id.gridview);
         gridView.setAdapter(new ActionItemAdapter(this, availableActionItems));
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(LayoutView_Buttons_Grid.this, dataManager.actionEmail.get((int)id).getName(), Toast.LENGTH_SHORT).show();
 
-                Log.d("ID TAPPED", gridView.getItemAtPosition(position).getClass().getSimpleName());
-                
+                String classNameOfItemTapped = null;
+
+                // Filter out class name from provided string name of each available actionItem class
+                String rawClassName = gridView.getItemAtPosition(position).getClass().getSimpleName();
+                if(rawClassName.endsWith("RealmProxy")) {
+                    classNameOfItemTapped = rawClassName.substring(0, rawClassName.indexOf("RealmProxy"));
+                }
+
+                switch (classNameOfItemTapped) {
+
+                    case "ActionEmail":
+                        Toast.makeText(LayoutView_Buttons_Grid.this, dataManager.actionEmail.get((int)id).getName(), Toast.LENGTH_SHORT).show();
+                        break;
+                    case "ActionCall":
+                        Toast.makeText(LayoutView_Buttons_Grid.this, dataManager.actionCall.get((int)id).getName(), Toast.LENGTH_SHORT).show();
+                        break;
+                    default: break;
+                }
+
+                Log.d("ID TAPPED",rawClassName);
+
             }
         });
 
     }
 
+    // Add custom type to list; purpose of this type is to track appropriate index values.  Flat-mapping these values would be ideal, but is only available in the latest Android JDKs
     public void buildAvailableActionItemsList() {
 
         ActionItemData actionItemData;
