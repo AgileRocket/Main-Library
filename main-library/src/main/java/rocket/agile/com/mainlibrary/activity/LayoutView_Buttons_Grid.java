@@ -1,22 +1,27 @@
 package rocket.agile.com.mainlibrary.activity;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import java.util.ArrayList;
-
 import rocket.agile.com.mainlibrary.Adapters.ActionItemAdapter;
 import rocket.agile.com.mainlibrary.R;
 import rocket.agile.com.mainlibrary.model.Custom.ActionItemData;
 import rocket.agile.com.mainlibrary.model.DataManager;
+import rocket.agile.com.mainlibrary.model.DataManagerHelperMethods;
+import rocket.agile.com.mainlibrary.model.actionItems.ActionCall;
+import rocket.agile.com.mainlibrary.model.actionItems.ActionEmail;
 
 /**
  * Created by keithkowalski on 6/19/17.
@@ -27,14 +32,15 @@ import rocket.agile.com.mainlibrary.model.DataManager;
 
 public class LayoutView_Buttons_Grid extends LayoutManager {
 
+    private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
     private DataManager dataManager = DataManager.getInstance();
-    public ArrayList<ActionItemData> availableActionItems = new ArrayList<>();
+//    public ArrayList<ActionItemData> availableActionItems = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.buttons_activity_grid_buttons);
-        buildAvailableActionItemsList();
+        DataManagerHelperMethods.buildAvailableActionItemsList();
     }
 
     // Call update view in onResume, so it is called each time app enters foreground
@@ -66,97 +72,17 @@ public class LayoutView_Buttons_Grid extends LayoutManager {
         gridView.setHorizontalScrollBarEnabled(false);
 
         // Set Button Layout Grid
-        testBuildButtons2();
+        setGridViewAndListenForUserTaps();
     }
 
-//    protected void testBuildButtons1() {
-//
-//        //---- TEST BUILD BUTTONS ---- //
-//        // Constraint layout (scroll view)
-//        ConstraintLayout nestedScrollView = (ConstraintLayout) findViewById(R.id.nested_scroll_view);
-//
-//        // Scroll view vertical / horizontal guides
-//        Guideline buttonsVerticalGuideline = (Guideline) findViewById(R.id.button_guideline_vertical);
-//        Guideline buttonsHorizontalGuideline = (Guideline) findViewById(R.id.button_guideline_horizontal);
-//
-//        // Dynamic Button
-//        IconButton button1 = new IconButton(this);
-//        button1.setText("TEST 1");
-//        button1.setBackgroundColor(Color.BLUE);
-//
-//        IconButton button2 = new IconButton(this);
-//        button2.setText("TEST 2");
-//        button2.setBackgroundColor(Color.BLUE);
-//
-//        IconButton button3 = new IconButton(this);
-//        button3.setText("TEST 3");
-//        button3.setBackgroundColor(Color.BLUE);
-//
-//        IconButton button4 = new IconButton(this);
-//        button4.setText("TEST 4");
-//        button4.setBackgroundColor(Color.BLUE);
-//
-//        IconButton button5 = new IconButton(this);
-//        button5.setText("TEST 5");
-//        button5.setBackgroundColor(Color.BLUE);
-//
-//        IconButton button6 = new IconButton(this);
-//        button6.setText("TEST 6");
-//        button6.setBackgroundColor(Color.BLUE);
-//
-//
-//        // Constraint set to be used for dynamic button
-//        ConstraintSet set = new ConstraintSet();
-//
-//        // Set constraints for dynamic button
-//        set.clone(nestedScrollView);
-//        nestedScrollView.addView(button1);
-//        nestedScrollView.addView(button2);
-////        nestedScrollView.addView(button3);
-////        nestedScrollView.addView(button4);
-////        nestedScrollView.addView(button5);
-////        nestedScrollView.addView(button6);
-//
-//
-//        set.connect(button1.getId(), ConstraintSet.TOP, nestedScrollView.getId(), ConstraintSet.TOP);
-//        set.connect(button1.getId(), ConstraintSet.LEFT, nestedScrollView.getId(), ConstraintSet.LEFT);
-//        set.connect(button1.getId(), ConstraintSet.RIGHT, buttonsVerticalGuideline.getId(), ConstraintSet.LEFT, 16);
-//        set.connect(button1.getId(), ConstraintSet.BOTTOM, buttonsHorizontalGuideline.getId(), ConstraintSet.BOTTOM, 16);
-//
-////        set.connect(button2.getId(), ConstraintSet.TOP, nestedScrollView.getId(), ConstraintSet.TOP);
-////        set.connect(button2.getId(), ConstraintSet.LEFT, buttonsVerticalGuideline.getId(), ConstraintSet.RIGHT, 16);
-////        set.connect(button2.getId(), ConstraintSet.RIGHT, nestedScrollView.getId(), ConstraintSet.RIGHT);
-////        set.connect(button2.getId(), ConstraintSet.BOTTOM, buttonsHorizontalGuideline.getId(), ConstraintSet.BOTTOM, 16);
-////
-////        set.connect(button3.getId(), ConstraintSet.TOP, nestedScrollView.getId(), ConstraintSet.TOP);
-////        set.connect(button3.getId(), ConstraintSet.LEFT, nestedScrollView.getId(), ConstraintSet.LEFT);
-////        set.connect(button3.getId(), ConstraintSet.RIGHT, buttonsVerticalGuideline.getId(), ConstraintSet.LEFT, 16);
-////        set.connect(button3.getId(), ConstraintSet.BOTTOM, buttonsHorizontalGuideline.getId(), ConstraintSet.BOTTOM, 16);
-////
-////        set.connect(button4.getId(), ConstraintSet.TOP, nestedScrollView.getId(), ConstraintSet.TOP);
-////        set.connect(button4.getId(), ConstraintSet.LEFT, nestedScrollView.getId(), ConstraintSet.LEFT);
-////        set.connect(button4.getId(), ConstraintSet.RIGHT, buttonsVerticalGuideline.getId(), ConstraintSet.LEFT, 16);
-////        set.connect(button4.getId(), ConstraintSet.BOTTOM, buttonsHorizontalGuideline.getId(), ConstraintSet.BOTTOM, 16);
-////
-////        set.connect(button5.getId(), ConstraintSet.TOP, nestedScrollView.getId(), ConstraintSet.TOP);
-////        set.connect(button5.getId(), ConstraintSet.LEFT, nestedScrollView.getId(), ConstraintSet.LEFT);
-////        set.connect(button5.getId(), ConstraintSet.RIGHT, buttonsVerticalGuideline.getId(), ConstraintSet.LEFT, 16);
-////        set.connect(button5.getId(), ConstraintSet.BOTTOM, buttonsHorizontalGuideline.getId(), ConstraintSet.BOTTOM, 16);
-////
-////        set.connect(button6.getId(), ConstraintSet.TOP, nestedScrollView.getId(), ConstraintSet.TOP);
-////        set.connect(button6.getId(), ConstraintSet.LEFT, nestedScrollView.getId(), ConstraintSet.LEFT);
-////        set.connect(button6.getId(), ConstraintSet.RIGHT, buttonsVerticalGuideline.getId(), ConstraintSet.LEFT, 16);
-////        set.connect(button6.getId(), ConstraintSet.BOTTOM, buttonsHorizontalGuideline.getId(), ConstraintSet.BOTTOM, 16);
-//
-//        set.applyTo(nestedScrollView);
-//    }
-
-    protected void testBuildButtons2() {
-
+    protected void setGridViewAndListenForUserTaps() {
 
         final GridView gridView = findViewById(R.id.gridview);
-        gridView.setAdapter(new ActionItemAdapter(this, availableActionItems));
 
+        // Adapter is responsible for setting buttons in the gridview (see ActionItemAdapter class)
+        gridView.setAdapter(new ActionItemAdapter(this, dataManager.availableActionItems));
+
+        // Listen for user touches
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -170,51 +96,31 @@ public class LayoutView_Buttons_Grid extends LayoutManager {
                 }
 
                 switch (classNameOfItemTapped) {
-
                     case "ActionEmail":
-                        Toast.makeText(LayoutView_Buttons_Grid.this, dataManager.actionEmail.get((int)id).getName(), Toast.LENGTH_SHORT).show();
+                        ActionEmail actionEmail = dataManager.actionEmail.get((int)id);
+                        final Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                        emailIntent.setType("plain/text");
+                        emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{actionEmail.getEmailAddress()});
+                        emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, actionEmail.getSubject());
+                        startActivity(emailIntent);
                         break;
+
                     case "ActionCall":
-                        Toast.makeText(LayoutView_Buttons_Grid.this, dataManager.actionCall.get((int)id).getName(), Toast.LENGTH_SHORT).show();
+                        ActionCall actionCall = dataManager.actionCall.get((int)id);
+                        int permissionCheck = ContextCompat.checkSelfPermission(LayoutView_Buttons_Grid.this, Manifest.permission.CALL_PHONE);
+                        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+                            ActivityCompat.requestPermissions(LayoutView_Buttons_Grid.this, new String[]{Manifest.permission.CALL_PHONE}, MY_PERMISSIONS_REQUEST_CALL_PHONE);
+                        }
+                        CallUsActivity callUsActivity = new CallUsActivity(actionCall.getName(), LayoutView_Buttons_Grid.this);
+                        callUsActivity.callAlertDialog();
                         break;
-                    default: break;
+
+                    default:
+                        break;
                 }
-
                 Log.d("ID TAPPED",rawClassName);
-
             }
         });
 
-    }
-
-    // Add custom type to list; purpose of this type is to track appropriate index values.  Flat-mapping these values would be ideal, but is only available in the latest Android JDKs
-    public void buildAvailableActionItemsList() {
-
-        ActionItemData actionItemData;
-
-        for (Class actionClass : dataManager.actionClasses) {
-            switch (actionClass.getSimpleName()) {
-                case "ActionEmail":
-                    for(int i = 0; i < dataManager.actionEmail.size(); i++) {
-                        actionItemData = new ActionItemData(dataManager.actionEmail.get(i), i);
-                        availableActionItems.add(actionItemData);
-                    }
-                    break;
-                case "ActionCall":
-                    for(int i = 0; i < dataManager.actionCall.size(); i++) {
-                        actionItemData = new ActionItemData(dataManager.actionCall.get(i), i);
-                        availableActionItems.add(actionItemData);
-                    }
-                    break;
-                case "ActionStaff":
-                    for(int i = 0; i < dataManager.actionStaff.size(); i++) {
-                        actionItemData = new ActionItemData(dataManager.actionStaff.get(i), i);
-                        availableActionItems.add(actionItemData);
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
     }
 }

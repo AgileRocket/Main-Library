@@ -1,6 +1,8 @@
 package rocket.agile.com.mainlibrary.model;
 
 import android.app.ProgressDialog;
+
+import java.util.ArrayList;
 import java.util.List;
 import io.realm.RealmResults;
 import rocket.agile.com.mainlibrary.activity.LayoutManager;
@@ -9,6 +11,7 @@ import rocket.agile.com.mainlibrary.activity.LayoutView_Buttons_Long;
 import rocket.agile.com.mainlibrary.activity.LayoutView_SideMenu;
 import rocket.agile.com.mainlibrary.activity.LayoutView_TabBar;
 import rocket.agile.com.mainlibrary.activity.MasterView;
+import rocket.agile.com.mainlibrary.model.Custom.ActionItemData;
 import rocket.agile.com.mainlibrary.model.actionItems.ActionCall;
 import rocket.agile.com.mainlibrary.model.actionItems.ActionEmail;
 import rocket.agile.com.mainlibrary.model.actionItems.ActionStaff;
@@ -92,8 +95,9 @@ public class DataManager {
     //    GOOGLE+
     public static String google;
 
-//----- Action Item List -----------------
+//----- Action Item Lists -----------------
     public static Class[] actionClasses = {ActionEmail.class, ActionCall.class, ActionStaff.class};  // includes all possible actions, regardless if they have data
+    public static ArrayList<ActionItemData> availableActionItems = new ArrayList<>();
 
 //----- Fragment Data --------------------
 
@@ -105,7 +109,6 @@ public class DataManager {
 
     //    Staff
     public static RealmResults<ActionStaff> actionStaff = null;
-
 
 //----- DEBUG TAGS --------------------
     public static final String MASTER_VIEW_TAG = MasterView.class.getSimpleName();

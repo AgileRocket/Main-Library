@@ -11,6 +11,7 @@ import io.realm.RealmModel;
 import io.realm.RealmResults;
 import rocket.agile.com.mainlibrary.Interface.ActionModel;
 import rocket.agile.com.mainlibrary.R;
+import rocket.agile.com.mainlibrary.model.Custom.ActionItemData;
 import rocket.agile.com.mainlibrary.model.actionItems.ActionCall;
 import rocket.agile.com.mainlibrary.model.actionItems.ActionEmail;
 import rocket.agile.com.mainlibrary.model.actionItems.ActionStaff;
@@ -71,5 +72,37 @@ public class DataManagerHelperMethods extends DataManager {
         getActionEmails();
         getActionCall();
         getActionStaff();
+    }
+
+    // Add custom type to list; purpose of this type is to track appropriate index values.
+    // Flat-mapping these values would be ideal, but is only available in the latest Android JDKs
+    public static void buildAvailableActionItemsList() {
+
+        ActionItemData actionItemData;
+
+        for (Class actionClass : actionClasses) {
+            switch (actionClass.getSimpleName()) {
+                case "ActionEmail":
+                    for(int i = 0; i < actionEmail.size(); i++) {
+                        actionItemData = new ActionItemData(actionEmail.get(i), i);
+                        availableActionItems.add(actionItemData);
+                    }
+                    break;
+                case "ActionCall":
+                    for(int i = 0; i < actionCall.size(); i++) {
+                        actionItemData = new ActionItemData(actionCall.get(i), i);
+                        availableActionItems.add(actionItemData);
+                    }
+                    break;
+                case "ActionStaff":
+                    for(int i = 0; i < actionStaff.size(); i++) {
+                        actionItemData = new ActionItemData(actionStaff.get(i), i);
+                        availableActionItems.add(actionItemData);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

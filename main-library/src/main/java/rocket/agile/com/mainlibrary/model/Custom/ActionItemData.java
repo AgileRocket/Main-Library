@@ -2,6 +2,10 @@ package rocket.agile.com.mainlibrary.model.Custom;
 
 /**
  * Created by keithkowalski on 10/23/17.
+ *
+ *  The purpose of this class is to capture the action item and it's index from its Realm List.
+ *  This will allow it to be properly referenced in other classes.
+ *
  */
 
 public class ActionItemData {
