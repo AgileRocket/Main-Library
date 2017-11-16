@@ -14,10 +14,8 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import java.util.ArrayList;
 import rocket.agile.com.mainlibrary.Adapters.ActionItemAdapter;
 import rocket.agile.com.mainlibrary.R;
-import rocket.agile.com.mainlibrary.model.Custom.ActionItemData;
 import rocket.agile.com.mainlibrary.model.DataManager;
 import rocket.agile.com.mainlibrary.model.DataManagerHelperMethods;
 import rocket.agile.com.mainlibrary.model.actionItems.ActionCall;
@@ -34,7 +32,6 @@ public class LayoutView_Buttons_Grid extends LayoutManager {
 
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
     private DataManager dataManager = DataManager.getInstance();
-//    public ArrayList<ActionItemData> availableActionItems = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
