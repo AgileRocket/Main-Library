@@ -23,7 +23,7 @@
             android:id="@+id/button_long_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="app_title"
+            android:text="@string/app_title"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -38,6 +38,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:contentDescription="@string/todo"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -48,18 +49,15 @@
 
     </android.support.constraint.ConstraintLayout>
 
-    <ScrollView
+    <ListView
+        android:id="@+id/listview"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title_bar">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </ScrollView>
+        app:layout_constraintTop_toBottomOf="@+id/title_bar" />
 
 </android.support.constraint.ConstraintLayout>

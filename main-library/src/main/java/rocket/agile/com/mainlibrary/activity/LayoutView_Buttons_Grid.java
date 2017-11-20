@@ -14,7 +14,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import rocket.agile.com.mainlibrary.Adapters.ActionItemAdapter;
+import rocket.agile.com.mainlibrary.Adapters.ActionItemAdapterGridView;
 import rocket.agile.com.mainlibrary.R;
 import rocket.agile.com.mainlibrary.model.DataManager;
 import rocket.agile.com.mainlibrary.model.DataManagerHelperMethods;
@@ -76,8 +76,8 @@ public class LayoutView_Buttons_Grid extends LayoutManager {
 
         final GridView gridView = findViewById(R.id.gridview);
 
-        // Adapter is responsible for setting buttons in the gridview (see ActionItemAdapter class)
-        gridView.setAdapter(new ActionItemAdapter(this, dataManager.availableActionItems));
+        // Adapter is responsible for setting buttons in the gridview (see ActionItemAdapterGridView class)
+        gridView.setAdapter(new ActionItemAdapterGridView(this));
 
         // Listen for user touches
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -118,6 +118,5 @@ public class LayoutView_Buttons_Grid extends LayoutManager {
                 Log.d("ID TAPPED",rawClassName);
             }
         });
-
     }
 }
