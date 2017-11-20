@@ -31,17 +31,19 @@ public class ActionItemAdapterListView extends BaseAdapter {
 
     @Override
     public int getCount() {
+
         return dataManager.availableActionItems.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return dataManager.availableActionItems.get(position);
+
+        return dataManager.availableActionItems.get(position).actionItem;
     }
 
     @Override
     public long getItemId(int position) {
-        return position;
+        return dataManager.availableActionItems.get(position).actionItemIndex;
     }
 
     @Override
@@ -69,6 +71,10 @@ public class ActionItemAdapterListView extends BaseAdapter {
         holder.titleTextView = convertView.findViewById(R.id.listview_action_item_title);
         holder.iconImageView = convertView.findViewById(R.id.listview_action_item_icon);
 
+        // Row Styling
+        holder.rowView.setBackgroundColor(Color.BLACK);
+
+
         // Filter out class name from provided string name of each available actionItem class
         String rawName = dataManager.availableActionItems.get(position).actionItem.getClass().getSimpleName();
         if(rawName.endsWith("RealmProxy")) {
@@ -80,7 +86,6 @@ public class ActionItemAdapterListView extends BaseAdapter {
         switch(className) {
             case "ActionEmail":
                 // Get title element
-                holder.rowView.setBackgroundColor(Color.TRANSPARENT);
                 holder.titleTextView.setText(dataManager.actionEmail.get(actionItemIndex).getName());
                 holder.titleTextView.setTextColor(Color.RED);
                 holder.iconImageView.setImageDrawable(new IconDrawable(this.context, dataManager.actionEmail.get(actionItemIndex).getFAIcon())
@@ -88,7 +93,6 @@ public class ActionItemAdapterListView extends BaseAdapter {
                         .sizeDp(20));
                 break;
             case "ActionCall":
-                holder.rowView.setBackgroundColor(Color.TRANSPARENT);
                 holder.titleTextView.setText(dataManager.actionCall.get(actionItemIndex).getName());
                 holder.titleTextView.setTextColor(Color.RED);
                 holder.iconImageView.setImageDrawable(new IconDrawable(this.context, dataManager.actionCall.get(actionItemIndex).getFAIcon())
@@ -96,7 +100,6 @@ public class ActionItemAdapterListView extends BaseAdapter {
                         .sizeDp(20));
                 break;
             case "ActionStaff":
-                holder.rowView.setBackgroundColor(Color.TRANSPARENT);
                 holder.titleTextView.setText(dataManager.actionStaff.get(actionItemIndex).getName());
                 holder.titleTextView.setTextColor(Color.RED);
                 holder.iconImageView.setImageDrawable(new IconDrawable(this.context, dataManager.actionStaff.get(actionItemIndex).getFAIcon())
