@@ -56,13 +56,11 @@ public class LayoutView_SideMenu extends LayoutManager
 
         // Set FontAwesome Library to be active for this class
         Iconify.with(new FontAwesomeModule());
-
         setContentView(R.layout.side_menu_activity_nav_drawer_main);
-        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        toolbarHeader = (Toolbar) findViewById(R.id.toolbar);
+        toolbarHeader = findViewById(R.id.toolbar);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbarHeader, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -81,7 +79,7 @@ public class LayoutView_SideMenu extends LayoutManager
     // TODO: ActionItems will have a priority property; will dictate initial view when available
     private void updateView(Toolbar toolbarHeader) {
 
-        appTitle = (TextView) findViewById(R.id.app_name);
+        appTitle = findViewById(R.id.app_name);
         View primaryBackground = findViewById(R.id.id_main);
         View titleBar = findViewById(R.id.appBarLayout);
 
@@ -191,7 +189,7 @@ public class LayoutView_SideMenu extends LayoutManager
         AboutUsFragment aboutUsFragment = new AboutUsFragment();
 
         // Title Bar Name
-        appTitle = (TextView) findViewById(R.id.app_name);
+        appTitle = findViewById(R.id.app_name);
 
         // Set actionItem title as key that tells our fragment which actionItem name was tapped
         String actionTitle = item.getTitle().toString();    // item is MenuItem passed in to this method
@@ -253,7 +251,7 @@ public class LayoutView_SideMenu extends LayoutManager
                 break;
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
