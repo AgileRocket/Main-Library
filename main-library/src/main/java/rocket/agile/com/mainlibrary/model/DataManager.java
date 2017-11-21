@@ -6,10 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 import io.realm.RealmResults;
 import rocket.agile.com.mainlibrary.activity.LayoutManager;
+import rocket.agile.com.mainlibrary.activity.LayoutView_BottomNavBar;
 import rocket.agile.com.mainlibrary.activity.LayoutView_Buttons_Grid;
 import rocket.agile.com.mainlibrary.activity.LayoutView_Buttons_Long;
 import rocket.agile.com.mainlibrary.activity.LayoutView_SideMenu;
-import rocket.agile.com.mainlibrary.activity.LayoutView_TabBar;
 import rocket.agile.com.mainlibrary.activity.MasterView;
 import rocket.agile.com.mainlibrary.model.Custom.ActionItemData;
 import rocket.agile.com.mainlibrary.model.actionItems.ActionCall;
@@ -47,7 +47,7 @@ public class DataManager {
 //----- LayoutManager Selected ---------
 
     //    LAYOUT THEME
-    public static int layoutValue = 3;     // TODO: GET FROM NETWORK CALL
+    public static int layoutValue = 1;     // TODO: GET FROM NETWORK CALL
 
 //----- Primary AppInfo ----------------
 
@@ -112,7 +112,7 @@ public class DataManager {
 
 //----- DEBUG TAGS --------------------
     public static final String MASTER_VIEW_TAG = MasterView.class.getSimpleName();
-    public static final String TAB_BAR_TAG = LayoutView_TabBar.class.getSimpleName();
+    public static final String TAB_BAR_TAG = LayoutView_BottomNavBar.class.getSimpleName();
     public static final String SIDE_MENU_TAG = LayoutView_SideMenu.class.getSimpleName();
     public static final String BUTTONS_LONG_TAG = LayoutView_Buttons_Long.class.getSimpleName();
     public static final String BUTTONS_GRID_TAG = LayoutView_Buttons_Grid.class.getSimpleName();

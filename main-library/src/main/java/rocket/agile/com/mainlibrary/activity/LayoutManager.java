@@ -80,7 +80,7 @@ public class LayoutManager extends AppCompatActivity {
                 context.startActivity(new Intent(context, LayoutView_SideMenu.class));
                 break;
             case 1:
-                context.startActivity(new Intent(context, LayoutView_TabBar.class));
+                context.startActivity(new Intent(context, LayoutView_BottomNavBar.class));
                 break;
             case 2:
                 context.startActivity(new Intent(context, LayoutView_Buttons_Grid.class));

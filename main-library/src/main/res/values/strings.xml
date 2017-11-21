@@ -17,4 +17,6 @@
     <string name="todo">TODO</string>
     <string name="app_title">app_title</string>
     <string name="textview">TextView</string>
+    <string name="title_activity_layout_view__bottom__tab__bar">LayoutView_Bottom_Tab_Bar</string>
+    <string name="title_activity_layout_view__bottom_nav_bar">LayoutView_BottomNavBar</string>
 </resources>

@@ -35,19 +35,20 @@
         </activity>
         <activity
             android:name=".activity.LayoutView_SideMenu"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait" />
-        <activity android:name=".activity.LayoutView_TabBar"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.LayoutView_Buttons_Grid"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.LayoutView_Buttons_Long"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait" />
-        <!--<activity android:name=".activity.CallUsActivity"></activity>-->
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <!-- <activity android:name=".activity.CallUsActivity"></activity> -->
+        <activity
+            android:name=".activity.LayoutView_BottomNavBar"
+            android:label="@string/title_activity_layout_view__bottom_nav_bar"></activity>
     </application>
 
 </manifest>
